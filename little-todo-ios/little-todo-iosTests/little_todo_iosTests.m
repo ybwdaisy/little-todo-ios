@@ -1,0 +1,37 @@
+//
+//  little_todo_iosTests.m
+//  little-todo-iosTests
+//
+//  Created by ybwdaisy on 2020/7/4.
+//  Copyright © 2020 ybwdaisy. All rights reserved.
+//
+
+#import <XCTest/XCTest.h>
+
+@interface little_todo_iosTests : XCTestCase
+
+@end
+
+@implementation little_todo_iosTests
+
+- (void)setUp {
+    // Put setup code here. This method is called before the invocation of each test method in the class.
+}
+
+- (void)tearDown {
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
+}
+
+- (void)testExample {
+    // This is an example of a functional test case.
+    // Use XCTAssert and related functions to verify your tests produce the correct results.
+}
+
+- (void)testPerformanceExample {
+    // This is an example of a performance test case.
+    [self measureBlock:^{
+        // Put the code you want to measure the time of here.
+    }];
+}
+
+@end
