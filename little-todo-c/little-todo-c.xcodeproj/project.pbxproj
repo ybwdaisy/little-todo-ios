@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B5583F5E24B5571E00DDD2D1 /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = B5583F5D24B5571E00DDD2D1 /* Person.m */; };
 		B5583F6124B55D2C00DDD2D1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5583F6024B55D2C00DDD2D1 /* main.m */; };
 /* End PBXBuildFile section */
 
@@ -24,8 +23,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		B5583F5C24B5571E00DDD2D1 /* Person.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
-		B5583F5D24B5571E00DDD2D1 /* Person.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		B5583F6024B55D2C00DDD2D1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		B57BDF7F24B169D8003515E8 /* little-todo-c */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "little-todo-c"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -60,8 +57,6 @@
 		B57BDF8124B169D8003515E8 /* little-todo-c */ = {
 			isa = PBXGroup;
 			children = (
-				B5583F5C24B5571E00DDD2D1 /* Person.h */,
-				B5583F5D24B5571E00DDD2D1 /* Person.m */,
 				B5583F6024B55D2C00DDD2D1 /* main.m */,
 			);
 			path = "little-todo-c";
@@ -125,7 +120,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5583F6124B55D2C00DDD2D1 /* main.m in Sources */,
-				B5583F5E24B5571E00DDD2D1 /* Person.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +238,7 @@
 		B57BDF8724B169D8003515E8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NQPG2DCKD;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -254,6 +249,7 @@
 		B57BDF8824B169D8003515E8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3NQPG2DCKD;
 				ENABLE_HARDENED_RUNTIME = YES;
