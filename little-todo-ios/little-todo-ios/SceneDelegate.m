@@ -10,7 +10,7 @@
 #import "FirstViewController.h"
 #import "SecondViewController.h"
 
-@interface SceneDelegate ()
+@interface SceneDelegate ()<UITabBarDelegate>
 
 @end
 
@@ -32,17 +32,29 @@
         firstViewController.tabBarItem.title = @"首页";
         firstViewController.tabBarItem.image = [UIImage imageNamed:@"first"];
         
-        SecondViewController * secondViewController = [[SecondViewController alloc] init];
+        SecondViewController *secondViewController = [[SecondViewController alloc] init];
         secondViewController.tabBarItem.title = @"我的";
         secondViewController.tabBarItem.image = [UIImage imageNamed:@"second"];
         
         [tabbarController setViewControllers:@[firstViewController, secondViewController]];
         
-        self.window.rootViewController = tabbarController;
+        tabbarController.delegate = self;
+        
+        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabbarController];
+        
+        self.window.rootViewController = navigationController;
         [self.window makeKeyAndVisible];
     }
     
     
+}
+
+- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController API_AVAILABLE(ios(3.0)) {
+    return YES;
+}
+
+- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
+    NSLog(@"didSelectViewController");
 }
 
 
