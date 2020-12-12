@@ -1,0 +1,578 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAB72573880300B60FCF /* AppDelegate.m */; };
+		B5B5FABB2573880300B60FCF /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FABA2573880300B60FCF /* SceneDelegate.m */; };
+		B5B5FABE2573880300B60FCF /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FABD2573880300B60FCF /* FirstViewController.m */; };
+		B5B5FAC12573880300B60FCF /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAC02573880300B60FCF /* SecondViewController.m */; };
+		B5B5FAC62573880400B60FCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FAC52573880400B60FCF /* Assets.xcassets */; };
+		B5B5FAC92573880400B60FCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FAC72573880400B60FCF /* LaunchScreen.storyboard */; };
+		B5B5FACC2573880400B60FCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FACB2573880400B60FCF /* main.m */; };
+		B5B5FAD62573880400B60FCF /* little_todo_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAD52573880400B60FCF /* little_todo_iosTests.m */; };
+		B5B5FAE12573880400B60FCF /* little_todo_iosUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAE02573880400B60FCF /* little_todo_iosUITests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B5B5FAD22573880400B60FCF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5B5FAAB2573880300B60FCF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B5B5FAB22573880300B60FCF;
+			remoteInfo = "little-todo-ios";
+		};
+		B5B5FADD2573880400B60FCF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B5B5FAAB2573880300B60FCF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B5B5FAB22573880300B60FCF;
+			remoteInfo = "little-todo-ios";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		B5B5FAB32573880300B60FCF /* little-todo-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "little-todo-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5B5FAB62573880300B60FCF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B5B5FAB72573880300B60FCF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B5B5FAB92573880300B60FCF /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		B5B5FABA2573880300B60FCF /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		B5B5FABC2573880300B60FCF /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		B5B5FABD2573880300B60FCF /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
+		B5B5FABF2573880300B60FCF /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		B5B5FAC02573880300B60FCF /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		B5B5FAC52573880400B60FCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B5B5FAC82573880400B60FCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		B5B5FACA2573880400B60FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5B5FACB2573880400B60FCF /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B5B5FAD12573880400B60FCF /* little-todo-iosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "little-todo-iosTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5B5FAD52573880400B60FCF /* little_todo_iosTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = little_todo_iosTests.m; sourceTree = "<group>"; };
+		B5B5FAD72573880400B60FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B5B5FADC2573880400B60FCF /* little-todo-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "little-todo-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B5B5FAE02573880400B60FCF /* little_todo_iosUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = little_todo_iosUITests.m; sourceTree = "<group>"; };
+		B5B5FAE22573880400B60FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B5B5FAB02573880300B60FCF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5B5FACE2573880400B60FCF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5B5FAD92573880400B60FCF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B5B5FAAA2573880300B60FCF = {
+			isa = PBXGroup;
+			children = (
+				B5B5FAB52573880300B60FCF /* little-todo-ios */,
+				B5B5FAD42573880400B60FCF /* little-todo-iosTests */,
+				B5B5FADF2573880400B60FCF /* little-todo-iosUITests */,
+				B5B5FAB42573880300B60FCF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B5B5FAB42573880300B60FCF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B5B5FAB32573880300B60FCF /* little-todo-ios.app */,
+				B5B5FAD12573880400B60FCF /* little-todo-iosTests.xctest */,
+				B5B5FADC2573880400B60FCF /* little-todo-iosUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B5B5FAB52573880300B60FCF /* little-todo-ios */ = {
+			isa = PBXGroup;
+			children = (
+				B5B5FAB62573880300B60FCF /* AppDelegate.h */,
+				B5B5FAB72573880300B60FCF /* AppDelegate.m */,
+				B5B5FAB92573880300B60FCF /* SceneDelegate.h */,
+				B5B5FABA2573880300B60FCF /* SceneDelegate.m */,
+				B5B5FABC2573880300B60FCF /* FirstViewController.h */,
+				B5B5FABD2573880300B60FCF /* FirstViewController.m */,
+				B5B5FABF2573880300B60FCF /* SecondViewController.h */,
+				B5B5FAC02573880300B60FCF /* SecondViewController.m */,
+				B5B5FAC52573880400B60FCF /* Assets.xcassets */,
+				B5B5FAC72573880400B60FCF /* LaunchScreen.storyboard */,
+				B5B5FACA2573880400B60FCF /* Info.plist */,
+				B5B5FACB2573880400B60FCF /* main.m */,
+			);
+			path = "little-todo-ios";
+			sourceTree = "<group>";
+		};
+		B5B5FAD42573880400B60FCF /* little-todo-iosTests */ = {
+			isa = PBXGroup;
+			children = (
+				B5B5FAD52573880400B60FCF /* little_todo_iosTests.m */,
+				B5B5FAD72573880400B60FCF /* Info.plist */,
+			);
+			path = "little-todo-iosTests";
+			sourceTree = "<group>";
+		};
+		B5B5FADF2573880400B60FCF /* little-todo-iosUITests */ = {
+			isa = PBXGroup;
+			children = (
+				B5B5FAE02573880400B60FCF /* little_todo_iosUITests.m */,
+				B5B5FAE22573880400B60FCF /* Info.plist */,
+			);
+			path = "little-todo-iosUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B5B5FAB22573880300B60FCF /* little-todo-ios */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5B5FAE52573880400B60FCF /* Build configuration list for PBXNativeTarget "little-todo-ios" */;
+			buildPhases = (
+				B5B5FAAF2573880300B60FCF /* Sources */,
+				B5B5FAB02573880300B60FCF /* Frameworks */,
+				B5B5FAB12573880300B60FCF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "little-todo-ios";
+			productName = "little-todo-ios";
+			productReference = B5B5FAB32573880300B60FCF /* little-todo-ios.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B5B5FAD02573880400B60FCF /* little-todo-iosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5B5FAE82573880400B60FCF /* Build configuration list for PBXNativeTarget "little-todo-iosTests" */;
+			buildPhases = (
+				B5B5FACD2573880400B60FCF /* Sources */,
+				B5B5FACE2573880400B60FCF /* Frameworks */,
+				B5B5FACF2573880400B60FCF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B5B5FAD32573880400B60FCF /* PBXTargetDependency */,
+			);
+			name = "little-todo-iosTests";
+			productName = "little-todo-iosTests";
+			productReference = B5B5FAD12573880400B60FCF /* little-todo-iosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B5B5FADB2573880400B60FCF /* little-todo-iosUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B5B5FAEB2573880400B60FCF /* Build configuration list for PBXNativeTarget "little-todo-iosUITests" */;
+			buildPhases = (
+				B5B5FAD82573880400B60FCF /* Sources */,
+				B5B5FAD92573880400B60FCF /* Frameworks */,
+				B5B5FADA2573880400B60FCF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B5B5FADE2573880400B60FCF /* PBXTargetDependency */,
+			);
+			name = "little-todo-iosUITests";
+			productName = "little-todo-iosUITests";
+			productReference = B5B5FADC2573880400B60FCF /* little-todo-iosUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B5B5FAAB2573880300B60FCF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1150;
+				ORGANIZATIONNAME = ybwdaisy;
+				TargetAttributes = {
+					B5B5FAB22573880300B60FCF = {
+						CreatedOnToolsVersion = 11.5;
+					};
+					B5B5FAD02573880400B60FCF = {
+						CreatedOnToolsVersion = 11.5;
+						TestTargetID = B5B5FAB22573880300B60FCF;
+					};
+					B5B5FADB2573880400B60FCF = {
+						CreatedOnToolsVersion = 11.5;
+						TestTargetID = B5B5FAB22573880300B60FCF;
+					};
+				};
+			};
+			buildConfigurationList = B5B5FAAE2573880300B60FCF /* Build configuration list for PBXProject "little-todo-ios" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B5B5FAAA2573880300B60FCF;
+			productRefGroup = B5B5FAB42573880300B60FCF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B5B5FAB22573880300B60FCF /* little-todo-ios */,
+				B5B5FAD02573880400B60FCF /* little-todo-iosTests */,
+				B5B5FADB2573880400B60FCF /* little-todo-iosUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B5B5FAB12573880300B60FCF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5B5FAC92573880400B60FCF /* LaunchScreen.storyboard in Resources */,
+				B5B5FAC62573880400B60FCF /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5B5FACF2573880400B60FCF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5B5FADA2573880400B60FCF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B5B5FAAF2573880300B60FCF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5B5FACC2573880400B60FCF /* main.m in Sources */,
+				B5B5FAC12573880300B60FCF /* SecondViewController.m in Sources */,
+				B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */,
+				B5B5FABE2573880300B60FCF /* FirstViewController.m in Sources */,
+				B5B5FABB2573880300B60FCF /* SceneDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5B5FACD2573880400B60FCF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5B5FAD62573880400B60FCF /* little_todo_iosTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5B5FAD82573880400B60FCF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B5B5FAE12573880400B60FCF /* little_todo_iosUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B5B5FAD32573880400B60FCF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B5B5FAB22573880300B60FCF /* little-todo-ios */;
+			targetProxy = B5B5FAD22573880400B60FCF /* PBXContainerItemProxy */;
+		};
+		B5B5FADE2573880400B60FCF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B5B5FAB22573880300B60FCF /* little-todo-ios */;
+			targetProxy = B5B5FADD2573880400B60FCF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		B5B5FAC72573880400B60FCF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B5B5FAC82573880400B60FCF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B5B5FAE32573880400B60FCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		B5B5FAE42573880400B60FCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B5B5FAE62573880400B60FCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "little-todo-ios/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ybwdaisy.little-todo-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B5B5FAE72573880400B60FCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "little-todo-ios/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ybwdaisy.little-todo-ios";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		B5B5FAE92573880400B60FCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "little-todo-iosTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ybwdaisy.little-todo-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/little-todo-ios.app/little-todo-ios";
+			};
+			name = Debug;
+		};
+		B5B5FAEA2573880400B60FCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "little-todo-iosTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ybwdaisy.little-todo-iosTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/little-todo-ios.app/little-todo-ios";
+			};
+			name = Release;
+		};
+		B5B5FAEC2573880400B60FCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "little-todo-iosUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ybwdaisy.little-todo-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "little-todo-ios";
+			};
+			name = Debug;
+		};
+		B5B5FAED2573880400B60FCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = "little-todo-iosUITests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ybwdaisy.little-todo-iosUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "little-todo-ios";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B5B5FAAE2573880300B60FCF /* Build configuration list for PBXProject "little-todo-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5B5FAE32573880400B60FCF /* Debug */,
+				B5B5FAE42573880400B60FCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5B5FAE52573880400B60FCF /* Build configuration list for PBXNativeTarget "little-todo-ios" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5B5FAE62573880400B60FCF /* Debug */,
+				B5B5FAE72573880400B60FCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5B5FAE82573880400B60FCF /* Build configuration list for PBXNativeTarget "little-todo-iosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5B5FAE92573880400B60FCF /* Debug */,
+				B5B5FAEA2573880400B60FCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B5B5FAEB2573880400B60FCF /* Build configuration list for PBXNativeTarget "little-todo-iosUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B5B5FAEC2573880400B60FCF /* Debug */,
+				B5B5FAED2573880400B60FCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B5B5FAAB2573880300B60FCF /* Project object */;
+}
