@@ -7,6 +7,8 @@
 //
 
 #import "SceneDelegate.h"
+#import "FirstViewController.h"
+#import "SecondViewController.h"
 
 @interface SceneDelegate ()
 
@@ -19,6 +21,28 @@
     // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
     // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
     // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+    if ([scene isKindOfClass:[UIWindowScene class]]) {
+        UIWindowScene *windowScene = (UIWindowScene *) scene;
+        UIWindow *window = [[UIWindow alloc] initWithWindowScene:windowScene];
+        self.window = window;
+        
+        UITabBarController *tabbarController = [[UITabBarController alloc] init];
+        
+        FirstViewController *firstViewController = [[FirstViewController alloc] init];
+        firstViewController.tabBarItem.title = @"首页";
+        firstViewController.tabBarItem.image = [UIImage imageNamed:@"first"];
+        
+        SecondViewController * secondViewController = [[SecondViewController alloc] init];
+        secondViewController.tabBarItem.title = @"我的";
+        secondViewController.tabBarItem.image = [UIImage imageNamed:@"second"];
+        
+        [tabbarController setViewControllers:@[firstViewController, secondViewController]];
+        
+        self.window.rootViewController = tabbarController;
+        [self.window makeKeyAndVisible];
+    }
+    
+    
 }
 
 

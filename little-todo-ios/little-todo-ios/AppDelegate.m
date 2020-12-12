@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "FirstViewController.h"
+#import "SecondViewController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +19,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    if (@available(iOS 13.0, *)) {
+        
+    } else {
+        
+    }
+    
     return YES;
 }
 
