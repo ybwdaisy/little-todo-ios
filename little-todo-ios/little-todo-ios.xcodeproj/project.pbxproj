@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B530493E25865F9300408189 /* ForthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B530493D25865F9300408189 /* ForthViewController.m */; };
+		B530494125865FC100408189 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B530494025865FC000408189 /* ThirdViewController.m */; };
 		B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAB72573880300B60FCF /* AppDelegate.m */; };
 		B5B5FABB2573880300B60FCF /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FABA2573880300B60FCF /* SceneDelegate.m */; };
 		B5B5FABE2573880300B60FCF /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FABD2573880300B60FCF /* FirstViewController.m */; };
@@ -36,6 +38,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B530493C25865F9300408189 /* ForthViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ForthViewController.h; sourceTree = "<group>"; };
+		B530493D25865F9300408189 /* ForthViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForthViewController.m; sourceTree = "<group>"; };
+		B530493F25865FC000408189 /* ThirdViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
+		B530494025865FC000408189 /* ThirdViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
 		B5B5FAB32573880300B60FCF /* little-todo-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "little-todo-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B5FAB62573880300B60FCF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B5B5FAB72573880300B60FCF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -113,6 +119,10 @@
 				B5B5FABD2573880300B60FCF /* FirstViewController.m */,
 				B5B5FABF2573880300B60FCF /* SecondViewController.h */,
 				B5B5FAC02573880300B60FCF /* SecondViewController.m */,
+				B530493F25865FC000408189 /* ThirdViewController.h */,
+				B530494025865FC000408189 /* ThirdViewController.m */,
+				B530493C25865F9300408189 /* ForthViewController.h */,
+				B530493D25865F9300408189 /* ForthViewController.m */,
 				B5B5FAC52573880400B60FCF /* Assets.xcassets */,
 				B5B5FAC72573880400B60FCF /* LaunchScreen.storyboard */,
 				B5B5FACA2573880400B60FCF /* Info.plist */,
@@ -272,7 +282,9 @@
 				B5B5FAC12573880300B60FCF /* SecondViewController.m in Sources */,
 				B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */,
 				B5B5FABE2573880300B60FCF /* FirstViewController.m in Sources */,
+				B530493E25865F9300408189 /* ForthViewController.m in Sources */,
 				B5B5FABB2573880300B60FCF /* SceneDelegate.m in Sources */,
+				B530494125865FC100408189 /* ThirdViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

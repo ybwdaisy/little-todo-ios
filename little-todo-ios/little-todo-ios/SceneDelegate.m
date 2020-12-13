@@ -9,8 +9,9 @@
 #import "SceneDelegate.h"
 #import "FirstViewController.h"
 #import "SecondViewController.h"
+#import "ThirdViewController.h"
 
-@interface SceneDelegate ()<UITabBarDelegate>
+@interface SceneDelegate ()<UITabBarDelegate, UITabBarControllerDelegate>
 
 @end
 
@@ -30,8 +31,9 @@
         
         FirstViewController *firstViewController = [[FirstViewController alloc] init];
         SecondViewController *secondViewController = [[SecondViewController alloc] init];
+        ThirdViewController *thirdViewController = [[ThirdViewController alloc] init];
         
-        [tabbarController setViewControllers:@[firstViewController, secondViewController]];
+        [tabbarController setViewControllers:@[thirdViewController, secondViewController, firstViewController]];
         
         tabbarController.delegate = self;
         
