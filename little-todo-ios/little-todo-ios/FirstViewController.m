@@ -14,6 +14,16 @@
 
 @implementation FirstViewController
 
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        self.tabBarItem.title = @"首页";
+        self.tabBarItem.image = [UIImage imageNamed:@"first"];
+//        self.navigationItem.title = @"收件箱";
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.

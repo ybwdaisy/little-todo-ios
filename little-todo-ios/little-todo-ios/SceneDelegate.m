@@ -29,12 +29,7 @@
         UITabBarController *tabbarController = [[UITabBarController alloc] init];
         
         FirstViewController *firstViewController = [[FirstViewController alloc] init];
-        firstViewController.tabBarItem.title = @"首页";
-        firstViewController.tabBarItem.image = [UIImage imageNamed:@"first"];
-        
         SecondViewController *secondViewController = [[SecondViewController alloc] init];
-        secondViewController.tabBarItem.title = @"我的";
-        secondViewController.tabBarItem.image = [UIImage imageNamed:@"second"];
         
         [tabbarController setViewControllers:@[firstViewController, secondViewController]];
         
