@@ -9,8 +9,9 @@
 #import "SceneDelegate.h"
 #import "FirstViewController.h"
 #import "SecondViewController.h"
+#import "ThirdViewController.h"
 
-@interface SceneDelegate ()<UITabBarDelegate>
+@interface SceneDelegate ()<UITabBarDelegate, UITabBarControllerDelegate>
 
 @end
 
@@ -29,14 +30,10 @@
         UITabBarController *tabbarController = [[UITabBarController alloc] init];
         
         FirstViewController *firstViewController = [[FirstViewController alloc] init];
-        firstViewController.tabBarItem.title = @"首页";
-        firstViewController.tabBarItem.image = [UIImage imageNamed:@"first"];
-        
         SecondViewController *secondViewController = [[SecondViewController alloc] init];
-        secondViewController.tabBarItem.title = @"我的";
-        secondViewController.tabBarItem.image = [UIImage imageNamed:@"second"];
+        ThirdViewController *thirdViewController = [[ThirdViewController alloc] init];
         
-        [tabbarController setViewControllers:@[firstViewController, secondViewController]];
+        [tabbarController setViewControllers:@[thirdViewController, secondViewController, firstViewController]];
         
         tabbarController.delegate = self;
         
