@@ -14,9 +14,19 @@
 
 @implementation ForthViewController
 
+- (instancetype) init {
+    self = [super init];
+    if (self) {
+        self.tabBarItem.title = @"视频";
+        self.tabBarItem.image = [UIImage imageNamed:@"second"];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 @end

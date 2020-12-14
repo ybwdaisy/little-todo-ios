@@ -8,7 +8,7 @@
 
 #import "ThirdViewController.h"
 
-@interface ThirdViewController ()
+@interface ThirdViewController () <UIScrollViewDelegate>
 
 @end
 
@@ -35,6 +35,8 @@
     scrollView.pagingEnabled = YES;
     scrollView.showsVerticalScrollIndicator = NO;
     
+    scrollView.delegate = self;
+    
     NSArray *bgColors = @[[UIColor redColor], [UIColor yellowColor], [UIColor greenColor], [UIColor cyanColor], [UIColor blueColor]];
     
     for (int i = 0; i < 5; i++) {
@@ -47,5 +49,31 @@
     
     [self.view addSubview:scrollView];
 }
+
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    NSLog(@"scrollViewDidScroll: %f", scrollView.contentOffset.y);
+}
+// called on start of dragging (may require some time and or distance to move)
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    NSLog(@"scrollViewWillBeginDragging");
+}
+// called on finger up if the user dragged. velocity is in points/millisecond. targetContentOffset may be changed to adjust where the scroll view comes to rest
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset API_AVAILABLE(ios(5.0)) {
+    NSLog(@"scrollViewWillEndDragging");
+}
+
+// called on finger up if the user dragged. decelerate is true if it will continue moving afterwards
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
+    NSLog(@"scrollViewDidEndDragging");
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    NSLog(@"scrollViewWillBeginDecelerating");
+}
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    NSLog(@"scrollViewDidEndDecelerating");
+}
+
 
 @end

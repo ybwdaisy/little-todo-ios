@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "YDTableViewCell.h"
 
 @interface FirstViewController ()<UITableViewDelegate>
 
@@ -56,7 +57,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    return 120;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -75,30 +76,14 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellId = @"cellId";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    YDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:cellId];
+        cell = [[YDTableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:cellId];
     }
     
-    cell.imageView.image = [UIImage imageNamed:@"first"];
-    cell.textLabel.text = [NSString stringWithFormat: @"标题 - %@", @(indexPath.row)];
-    cell.detailTextLabel.text = @"副标题";
+    [cell layoutTableViewCell];
     
-//    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(pushController)];
-//    [cell addGestureRecognizer:tapGesture];
-
     return cell;
-}
-
-- (CGFloat)getStatusBarHeight {
-    float statusBarHeight = 0;
-    if (@available(iOS 13.0, *)) {
-        UIStatusBarManager *statusBarManager = [UIApplication sharedApplication].windows.firstObject.windowScene.statusBarManager;
-        statusBarHeight = statusBarManager.statusBarFrame.size.height;
-    } else {
-        statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    }
-    return statusBarHeight;
 }
 
 @end

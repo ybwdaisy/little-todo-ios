@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		B530493E25865F9300408189 /* ForthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B530493D25865F9300408189 /* ForthViewController.m */; };
 		B530494125865FC100408189 /* ThirdViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B530494025865FC000408189 /* ThirdViewController.m */; };
+		B53049462587AB1300408189 /* YDTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B53049452587AB1300408189 /* YDTableViewCell.m */; };
 		B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAB72573880300B60FCF /* AppDelegate.m */; };
 		B5B5FABB2573880300B60FCF /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FABA2573880300B60FCF /* SceneDelegate.m */; };
 		B5B5FABE2573880300B60FCF /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FABD2573880300B60FCF /* FirstViewController.m */; };
@@ -42,6 +43,8 @@
 		B530493D25865F9300408189 /* ForthViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ForthViewController.m; sourceTree = "<group>"; };
 		B530493F25865FC000408189 /* ThirdViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ThirdViewController.h; sourceTree = "<group>"; };
 		B530494025865FC000408189 /* ThirdViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ThirdViewController.m; sourceTree = "<group>"; };
+		B53049442587AB1300408189 /* YDTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YDTableViewCell.h; sourceTree = "<group>"; };
+		B53049452587AB1300408189 /* YDTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YDTableViewCell.m; sourceTree = "<group>"; };
 		B5B5FAB32573880300B60FCF /* little-todo-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "little-todo-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B5FAB62573880300B60FCF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B5B5FAB72573880300B60FCF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -88,6 +91,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B53049422587AAA600408189 /* Widgets */ = {
+			isa = PBXGroup;
+			children = (
+				B53049442587AB1300408189 /* YDTableViewCell.h */,
+				B53049452587AB1300408189 /* YDTableViewCell.m */,
+			);
+			path = Widgets;
+			sourceTree = "<group>";
+		};
+		B53049432587AABB00408189 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B5B5FABC2573880300B60FCF /* FirstViewController.h */,
+				B5B5FABD2573880300B60FCF /* FirstViewController.m */,
+				B5B5FABF2573880300B60FCF /* SecondViewController.h */,
+				B5B5FAC02573880300B60FCF /* SecondViewController.m */,
+				B530493F25865FC000408189 /* ThirdViewController.h */,
+				B530494025865FC000408189 /* ThirdViewController.m */,
+				B530493C25865F9300408189 /* ForthViewController.h */,
+				B530493D25865F9300408189 /* ForthViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
 		B5B5FAAA2573880300B60FCF = {
 			isa = PBXGroup;
 			children = (
@@ -111,18 +138,12 @@
 		B5B5FAB52573880300B60FCF /* little-todo-ios */ = {
 			isa = PBXGroup;
 			children = (
+				B53049432587AABB00408189 /* Controllers */,
+				B53049422587AAA600408189 /* Widgets */,
 				B5B5FAB62573880300B60FCF /* AppDelegate.h */,
 				B5B5FAB72573880300B60FCF /* AppDelegate.m */,
 				B5B5FAB92573880300B60FCF /* SceneDelegate.h */,
 				B5B5FABA2573880300B60FCF /* SceneDelegate.m */,
-				B5B5FABC2573880300B60FCF /* FirstViewController.h */,
-				B5B5FABD2573880300B60FCF /* FirstViewController.m */,
-				B5B5FABF2573880300B60FCF /* SecondViewController.h */,
-				B5B5FAC02573880300B60FCF /* SecondViewController.m */,
-				B530493F25865FC000408189 /* ThirdViewController.h */,
-				B530494025865FC000408189 /* ThirdViewController.m */,
-				B530493C25865F9300408189 /* ForthViewController.h */,
-				B530493D25865F9300408189 /* ForthViewController.m */,
 				B5B5FAC52573880400B60FCF /* Assets.xcassets */,
 				B5B5FAC72573880400B60FCF /* LaunchScreen.storyboard */,
 				B5B5FACA2573880400B60FCF /* Info.plist */,
@@ -282,6 +303,7 @@
 				B5B5FAC12573880300B60FCF /* SecondViewController.m in Sources */,
 				B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */,
 				B5B5FABE2573880300B60FCF /* FirstViewController.m in Sources */,
+				B53049462587AB1300408189 /* YDTableViewCell.m in Sources */,
 				B530493E25865F9300408189 /* ForthViewController.m in Sources */,
 				B5B5FABB2573880300B60FCF /* SceneDelegate.m in Sources */,
 				B530494125865FC100408189 /* ThirdViewController.m in Sources */,
