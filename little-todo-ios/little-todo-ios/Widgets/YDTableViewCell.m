@@ -14,6 +14,7 @@
 @property(nonatomic, strong, readwrite) UILabel *sourceLabel;
 @property(nonatomic, strong, readwrite) UILabel *commentLabel;
 @property(nonatomic, strong, readwrite) UILabel *timeLabel;
+@property(nonatomic, strong, readwrite) UIImageView *rightImageView;
 
 @end
 
@@ -48,7 +49,13 @@
             self.timeLabel.font = [UIFont systemFontOfSize:12];
             self.timeLabel.textColor = [UIColor grayColor];
             self.timeLabel;
-       })];
+        })];
+        
+        [self.contentView addSubview:({
+            self.rightImageView = [[UIImageView alloc] initWithFrame:CGRectMake(330, 15, 70, 70)];
+//            self.rightImageView.contentMode = UIViewContentModeScaleAspectFit;
+            self.rightImageView;
+        })];
     }
     
     return self;
@@ -67,6 +74,9 @@
     self.timeLabel.text = @"2020-12-14";
     [self.timeLabel sizeToFit];
     self.timeLabel.frame = CGRectMake(self.commentLabel.frame.origin.x + self.commentLabel.frame.size.width + 10, self.timeLabel.frame.origin.y, self.timeLabel.frame.size.width, self.timeLabel.frame.size.height);
+    
+    
+    self.rightImageView.image = [UIImage imageNamed:@"avatar"];
 }
 
 @end
