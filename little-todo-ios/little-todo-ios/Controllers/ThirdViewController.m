@@ -42,12 +42,25 @@
     for (int i = 0; i < 5; i++) {
         [scrollView addSubview:({
             UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, scrollView.bounds.size.height * i, scrollView.bounds.size.width, scrollView.bounds.size.height)];
+            
+            [view addSubview:({
+                UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 200, 100, 100)];
+                view.backgroundColor = [UIColor brownColor];
+                UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(subViewClick)];
+                [view addGestureRecognizer:tapGesture];
+                view;
+            })];
+            
             view.backgroundColor = [bgColors objectAtIndex:i];
             view;
         })];
     }
     
     [self.view addSubview:scrollView];
+}
+
+- (void) subViewClick {
+    NSLog(@"subViewClick");
 }
 
 
