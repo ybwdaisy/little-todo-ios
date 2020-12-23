@@ -17,6 +17,7 @@
 - (instancetype) init {
     self = [super init];
     if (self) {
+        self.tabBarItem.title = @"设置";
         self.tabBarItem.image = [UIImage imageNamed:@"setting_inactive"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"setting_active"];
     }

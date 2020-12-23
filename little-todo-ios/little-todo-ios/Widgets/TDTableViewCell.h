@@ -1,5 +1,5 @@
 //
-//  YDTableViewCell.h
+//  TDTableViewCell.h
 //  little-todo-ios
 //
 //  Created by ybwdaisy on 2020/12/14.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface YDTableViewCell : UITableViewCell
+@interface TDTableViewCell : UITableViewCell
 
 - (void) layoutTableViewCell;
 
