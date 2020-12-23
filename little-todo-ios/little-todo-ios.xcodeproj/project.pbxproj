@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B53049462587AB1300408189 /* YDTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B53049452587AB1300408189 /* YDTableViewCell.m */; };
+		B53049462587AB1300408189 /* TDTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B53049452587AB1300408189 /* TDTableViewCell.m */; };
 		B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAB72573880300B60FCF /* AppDelegate.m */; };
 		B5B5FABB2573880300B60FCF /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FABA2573880300B60FCF /* SceneDelegate.m */; };
 		B5B5FABE2573880300B60FCF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FABD2573880300B60FCF /* HomeViewController.m */; };
@@ -37,8 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B53049442587AB1300408189 /* YDTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = YDTableViewCell.h; sourceTree = "<group>"; };
-		B53049452587AB1300408189 /* YDTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YDTableViewCell.m; sourceTree = "<group>"; };
+		B53049442587AB1300408189 /* TDTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDTableViewCell.h; sourceTree = "<group>"; };
+		B53049452587AB1300408189 /* TDTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TDTableViewCell.m; sourceTree = "<group>"; };
 		B5B5FAB32573880300B60FCF /* little-todo-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "little-todo-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B5FAB62573880300B60FCF /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B5B5FAB72573880300B60FCF /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -88,8 +88,8 @@
 		B53049422587AAA600408189 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
-				B53049442587AB1300408189 /* YDTableViewCell.h */,
-				B53049452587AB1300408189 /* YDTableViewCell.m */,
+				B53049442587AB1300408189 /* TDTableViewCell.h */,
+				B53049452587AB1300408189 /* TDTableViewCell.m */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -293,7 +293,7 @@
 				B5B5FAC12573880300B60FCF /* SettingViewController.m in Sources */,
 				B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */,
 				B5B5FABE2573880300B60FCF /* HomeViewController.m in Sources */,
-				B53049462587AB1300408189 /* YDTableViewCell.m in Sources */,
+				B53049462587AB1300408189 /* TDTableViewCell.m in Sources */,
 				B5B5FABB2573880300B60FCF /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
