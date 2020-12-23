@@ -1,5 +1,5 @@
 //
-//  FirstViewController.h
+//  HomeViewController.h
 //  little-todo-ios
 //
 //  Created by ybwdaisy on 2020/11/29.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface FirstViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@interface HomeViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 
 @end

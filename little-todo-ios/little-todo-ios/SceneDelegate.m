@@ -7,10 +7,8 @@
 //
 
 #import "SceneDelegate.h"
-#import "FirstViewController.h"
-#import "SecondViewController.h"
-#import "ThirdViewController.h"
-#import "ForthViewController.h"
+#import "HomeViewController.h"
+#import "SettingViewController.h"
 
 @interface SceneDelegate ()<UITabBarDelegate, UITabBarControllerDelegate>
 
@@ -30,12 +28,10 @@
         
         UITabBarController *tabbarController = [[UITabBarController alloc] init];
         
-        FirstViewController *firstViewController = [[FirstViewController alloc] init];
-        SecondViewController *secondViewController = [[SecondViewController alloc] init];
-        ThirdViewController *thirdViewController = [[ThirdViewController alloc] init];
-        ForthViewController *forthViewController = [[ForthViewController alloc] init];
+        HomeViewController *homeViewController = [[HomeViewController alloc] init];
+        SettingViewController *settingViewController = [[SettingViewController alloc] init];
         
-        [tabbarController setViewControllers:@[firstViewController, secondViewController, thirdViewController, forthViewController]];
+        [tabbarController setViewControllers:@[homeViewController, settingViewController]];
         
         tabbarController.delegate = self;
         
@@ -53,7 +49,7 @@
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-//    NSLog(@"didSelectViewController");
+    NSLog(@"didSelectViewController");
 }
 
 

@@ -1,26 +1,25 @@
 //
-//  FirstViewController.m
+//  HomeViewController.m
 //  little-todo-ios
 //
 //  Created by ybwdaisy on 2020/11/29.
 //  Copyright © 2020 ybwdaisy. All rights reserved.
 //
 
-#import "FirstViewController.h"
+#import "HomeViewController.h"
 #import "YDTableViewCell.h"
 
-@interface FirstViewController ()<UITableViewDelegate>
+@interface HomeViewController ()<UITableViewDelegate>
 
 @end
 
-@implementation FirstViewController
+@implementation HomeViewController
 
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.tabBarItem.title = @"首页";
-        self.tabBarItem.image = [UIImage imageNamed:@"first"];
-//        self.navigationItem.title = @"收件箱";
+        self.tabBarItem.image = [UIImage imageNamed:@"home_inactive"];
+        self.tabBarItem.selectedImage = [UIImage imageNamed:@"home_active"];
     }
     return self;
 }
