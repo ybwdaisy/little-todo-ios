@@ -22,8 +22,9 @@
 - (instancetype)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(nullable NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+        
         [self.contentView addSubview:({
-            self.title = [[UILabel alloc] initWithFrame:CGRectMake(20, 5, 375, 20)];
+            self.title = [[UILabel alloc] initWithFrame:CGRectMake(20, 15, 375, 20)];
             self.title.numberOfLines = 0;
             self.title.lineBreakMode = NSLineBreakByWordWrapping;
             self.title.font =[UIFont systemFontOfSize:16];
@@ -32,7 +33,7 @@
         })];
         
         [self.contentView addSubview:({
-            self.remark = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 5, 375, 20)];
+            self.remark = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 15, 375, 20)];
             self.remark.numberOfLines = 1;
             self.remark.font = [UIFont systemFontOfSize:12];
             self.remark.textColor = [UIColor lightGrayColor];
@@ -40,14 +41,14 @@
         })];
         
         [self.contentView addSubview:({
-            self.tagName = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 5 + self.remark.frame.size.height + 10, 375, 20)];
+            self.tagName = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 15 + self.remark.frame.size.height + 10, 375, 20)];
             self.tagName.font = [UIFont systemFontOfSize:14];
             self.tagName.textColor = [UIColor redColor];
             self.tagName;
         })];
         
         [self.contentView addSubview:({
-            self.time = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 5 + self.remark.frame.size.height + 5 + self.tagName.frame.size.height + 5, 375, 20)];
+            self.time = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 15 + self.remark.frame.size.height + 5 + self.tagName.frame.size.height + 5, 375, 20)];
             self.time.font = [UIFont systemFontOfSize:12];
             self.time.textColor = [UIColor blueColor];
             self.time;
