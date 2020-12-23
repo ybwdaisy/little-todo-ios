@@ -1,5 +1,5 @@
 //
-//  SecondViewController.h
+//  SettingViewController.h
 //  little-todo-ios
 //
 //  Created by ybwdaisy on 2020/11/29.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SecondViewController : UIViewController
+@interface SettingViewController : UIViewController
 
 
 @end

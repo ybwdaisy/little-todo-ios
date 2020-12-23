@@ -1,24 +1,24 @@
 //
-//  SecondViewController.m
+//  SettingViewController.m
 //  little-todo-ios
 //
 //  Created by ybwdaisy on 2020/11/29.
 //  Copyright © 2020 ybwdaisy. All rights reserved.
 //
 
-#import "SecondViewController.h"
+#import "SettingViewController.h"
 
-@interface SecondViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface SettingViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @end
 
-@implementation SecondViewController
+@implementation SettingViewController
 
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.tabBarItem.title = @"我的";
-        self.tabBarItem.image = [UIImage imageNamed:@"second"];
+        self.tabBarItem.image = [UIImage imageNamed:@"setting_inactive"];
+        self.tabBarItem.selectedImage = [UIImage imageNamed:@"setting_active"];
     }
     return self;
 }
@@ -54,7 +54,7 @@
 
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"UICollectionViewCell" forIndexPath:indexPath];
     
-    cell.backgroundColor = [UIColor greenColor];
+    cell.backgroundColor = [UIColor lightGrayColor];
     
     return cell;;
 }
