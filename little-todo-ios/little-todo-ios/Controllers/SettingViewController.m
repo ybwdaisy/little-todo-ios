@@ -8,7 +8,7 @@
 
 #import "SettingViewController.h"
 
-@interface SettingViewController ()
+@interface SettingViewController ()<UITableViewDelegate>
 
 @end
 
@@ -29,7 +29,42 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     
+    UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    
+    tableView.delegate = self;
+    tableView.dataSource = self;
+    
+    
+    [self.view addSubview:tableView];
+    
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 60;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 3;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
+    
+    if (!cell) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellId"];
+    }
+    
+    if (indexPath.row == 0) {
+        cell.textLabel.text = @"评价应用";
+    } else if (indexPath.row == 1) {
+        cell.textLabel.text = @"反馈与建议";
+    } else if (indexPath.row == 2) {
+        cell.textLabel.text = @"关于我们";
+    }
+    
+    
+    return cell;
+}
 
 @end
