@@ -30,11 +30,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
-    
     tableView.delegate = self;
     tableView.dataSource = self;
-    
-    
     [self.view addSubview:tableView];
     
 }
@@ -55,12 +52,18 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellId"];
     }
     
+    UIImageView *rightIcon = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 40, 20, 20, 20)];
+    rightIcon.image = [UIImage imageNamed:@"more"];
+    
     if (indexPath.row == 0) {
         cell.textLabel.text = @"评价应用";
+        [cell.contentView addSubview:rightIcon];
     } else if (indexPath.row == 1) {
         cell.textLabel.text = @"反馈与建议";
+        [cell.contentView addSubview:rightIcon];
     } else if (indexPath.row == 2) {
         cell.textLabel.text = @"关于我们";
+        [cell.contentView addSubview:rightIcon];
     }
     
     
