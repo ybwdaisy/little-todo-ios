@@ -22,7 +22,11 @@
         self.tabBarItem.image = [UIImage imageNamed:@"home_inactive"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"home_active"];
         self.title = @"收件箱";
-        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:nil];
+        
+        FAKFontAwesome *editIcon = [FAKFontAwesome editIconWithSize:30];
+        UIImage *editIconImage = [editIcon imageWithSize:CGSizeMake(30, 30)];
+        
+        self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithImage:editIconImage style:UIBarButtonItemStylePlain target:self action:nil];
     }
     return self;
 }

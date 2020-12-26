@@ -54,8 +54,11 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellId"];
     }
     
+    FAKFontAwesome *angleRightIcon = [FAKFontAwesome angleRightIconWithSize:20];
+    UIImage *angleRightIconImage = [angleRightIcon imageWithSize:CGSizeMake(20, 20)];
+    
     UIImageView *rightIcon = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 40, 20, 20, 20)];
-    rightIcon.image = [UIImage imageNamed:@"more"];
+    rightIcon.image = angleRightIconImage;
     
     if (indexPath.row == 0) {
         cell.textLabel.text = @"评价应用";
