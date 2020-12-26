@@ -21,6 +21,8 @@
         self.tabBarItem.title = @"首页";
         self.tabBarItem.image = [UIImage imageNamed:@"home_inactive"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"home_active"];
+        self.title = @"收件箱";
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"编辑" style:UIBarButtonItemStylePlain target:self action:nil];
     }
     return self;
 }
@@ -29,7 +31,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    self.navigationItem.title = @"收件箱";
+    self.tabBarController.navigationItem.title = self.title;
+    self.tabBarController.navigationItem.rightBarButtonItem = self.navigationItem.rightBarButtonItem;
 
     // 设置列表
     UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds];

@@ -49,7 +49,8 @@
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    NSLog(@"didSelectViewController");
+    viewController.tabBarController.navigationItem.title = viewController.title;
+    viewController.tabBarController.navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem;
 }
 
 
