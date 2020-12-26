@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,7 @@
 		B5B5FACC2573880400B60FCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FACB2573880400B60FCF /* main.m */; };
 		B5B5FAD62573880400B60FCF /* little_todo_iosTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAD52573880400B60FCF /* little_todo_iosTests.m */; };
 		B5B5FAE12573880400B60FCF /* little_todo_iosUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAE02573880400B60FCF /* little_todo_iosUITests.m */; };
+		F3132BF37B65BF97C4EB0449 /* Pods_little_todo_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6662E0B45199FA41B2E05FDA /* Pods_little_todo_ios.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6662E0B45199FA41B2E05FDA /* Pods_little_todo_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_little_todo_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53049442587AB1300408189 /* TDTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDTableViewCell.h; sourceTree = "<group>"; };
 		B53049452587AB1300408189 /* TDTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TDTableViewCell.m; sourceTree = "<group>"; };
 		B5B5FAB32573880300B60FCF /* little-todo-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "little-todo-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +60,8 @@
 		B5B5FADC2573880400B60FCF /* little-todo-iosUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "little-todo-iosUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5B5FAE02573880400B60FCF /* little_todo_iosUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = little_todo_iosUITests.m; sourceTree = "<group>"; };
 		B5B5FAE22573880400B60FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BC3CF9D96BFDEA45401BD08E /* Pods-little-todo-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-little-todo-ios.release.xcconfig"; path = "Target Support Files/Pods-little-todo-ios/Pods-little-todo-ios.release.xcconfig"; sourceTree = "<group>"; };
+		DBE1EF54C02B81FDDDE69262 /* Pods-little-todo-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-little-todo-ios.debug.xcconfig"; path = "Target Support Files/Pods-little-todo-ios/Pods-little-todo-ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3132BF37B65BF97C4EB0449 /* Pods_little_todo_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +90,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		29B349D83F61793354FE13F0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6662E0B45199FA41B2E05FDA /* Pods_little_todo_ios.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AC070F2FC04A38FB671B2017 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DBE1EF54C02B81FDDDE69262 /* Pods-little-todo-ios.debug.xcconfig */,
+				BC3CF9D96BFDEA45401BD08E /* Pods-little-todo-ios.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		B53049422587AAA600408189 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
@@ -112,6 +134,8 @@
 				B5B5FAD42573880400B60FCF /* little-todo-iosTests */,
 				B5B5FADF2573880400B60FCF /* little-todo-iosUITests */,
 				B5B5FAB42573880300B60FCF /* Products */,
+				AC070F2FC04A38FB671B2017 /* Pods */,
+				29B349D83F61793354FE13F0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -167,9 +191,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B5B5FAE52573880400B60FCF /* Build configuration list for PBXNativeTarget "little-todo-ios" */;
 			buildPhases = (
+				FE59560C9D732A97CDEBB5B3 /* [CP] Check Pods Manifest.lock */,
 				B5B5FAAF2573880300B60FCF /* Sources */,
 				B5B5FAB02573880300B60FCF /* Frameworks */,
 				B5B5FAB12573880300B60FCF /* Resources */,
+				CEF7F32B58A548681A7E52B8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -283,6 +309,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CEF7F32B58A548681A7E52B8 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-little-todo-ios/Pods-little-todo-ios-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-little-todo-ios/Pods-little-todo-ios-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-little-todo-ios/Pods-little-todo-ios-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FE59560C9D732A97CDEBB5B3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-little-todo-ios-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B5B5FAAF2573880300B60FCF /* Sources */ = {
@@ -453,14 +521,17 @@
 		};
 		B5B5FAE62573880400B60FCF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DBE1EF54C02B81FDDDE69262 /* Pods-little-todo-ios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3NQPG2DCKD;
 				INFOPLIST_FILE = "little-todo-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ybwdaisy.little-todo-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -469,14 +540,17 @@
 		};
 		B5B5FAE72573880400B60FCF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC3CF9D96BFDEA45401BD08E /* Pods-little-todo-ios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 3NQPG2DCKD;
 				INFOPLIST_FILE = "little-todo-ios/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "ybwdaisy.little-todo-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
