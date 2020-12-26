@@ -23,10 +23,12 @@
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"home_active"];
         self.title = @"收件箱";
         
-        FAKFontAwesome *editIcon = [FAKFontAwesome editIconWithSize:30];
-        UIImage *editIconImage = [editIcon imageWithSize:CGSizeMake(30, 30)];
+        FAKFontAwesome *barsIcon = [FAKFontAwesome barsIconWithSize:20];
+        UIImage *barsIconImage = [barsIcon imageWithSize:CGSizeMake(20, 20)];
         
-        self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithImage:editIconImage style:UIBarButtonItemStylePlain target:self action:nil];
+        self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithImage:barsIconImage style:UIBarButtonSystemItemAction target:self action:nil];
+        
+        self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
     }
     return self;
 }
