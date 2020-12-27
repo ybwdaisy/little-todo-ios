@@ -32,6 +32,7 @@
     self.tabBarController.navigationItem.title = self.title;
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
+    tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     tableView.delegate = self;
     tableView.dataSource = self;
     [self.view addSubview:tableView];
@@ -51,7 +52,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cellId"];
     
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"cellId"];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellId"];
     }
     
     FAKFontAwesome *angleRightIcon = [FAKFontAwesome angleRightIconWithSize:20];
@@ -60,17 +61,26 @@
     UIImageView *rightIcon = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 40, 20, 20, 20)];
     rightIcon.image = angleRightIconImage;
     
-    if (indexPath.row == 0) {
-        cell.textLabel.text = @"评价应用";
-        [cell.contentView addSubview:rightIcon];
-    } else if (indexPath.row == 1) {
-        cell.textLabel.text = @"反馈与建议";
-        [cell.contentView addSubview:rightIcon];
-    } else if (indexPath.row == 2) {
-        cell.textLabel.text = @"关于我们";
+    if (indexPath.row <= 2) {
         [cell.contentView addSubview:rightIcon];
     }
     
+    if (indexPath.row == 0) {
+        cell.textLabel.text = @"评价应用";
+        FAKFontAwesome *heartOIcon = [FAKFontAwesome heartOIconWithSize:20];
+        UIImage *heartOIconImage = [heartOIcon imageWithSize:CGSizeMake(20, 20)];
+        cell.imageView.image = heartOIconImage;
+    } else if (indexPath.row == 1) {
+        cell.textLabel.text = @"反馈与建议";
+        FAKFontAwesome *envelopeOIcon = [FAKFontAwesome envelopeOIconWithSize:20];
+        UIImage *envelopeOIconImage = [envelopeOIcon imageWithSize:CGSizeMake(20, 20)];
+        cell.imageView.image = envelopeOIconImage;
+    } else if (indexPath.row == 2) {
+        cell.textLabel.text = @"关于我们";
+        FAKFontAwesome *handPointerOIcon = [FAKFontAwesome handPointerOIconWithSize:20];
+        UIImage *handPointerOIconImage = [handPointerOIcon imageWithSize:CGSizeMake(20, 20)];
+        cell.imageView.image = handPointerOIconImage;
+    }
     
     return cell;
 }
