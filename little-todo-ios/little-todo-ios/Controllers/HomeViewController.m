@@ -18,16 +18,14 @@
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.tabBarItem.title = @"首页";
+        self.title = @"收件箱";
         self.tabBarItem.image = [UIImage imageNamed:@"home_inactive"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"home_active"];
-        self.title = @"收件箱";
         
         FAKFontAwesome *barsIcon = [FAKFontAwesome barsIconWithSize:20];
         UIImage *barsIconImage = [barsIcon imageWithSize:CGSizeMake(20, 20)];
         
-        self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithImage:barsIconImage style:UIBarButtonSystemItemAction target:self action:nil];
-        
+        self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithImage:barsIconImage style:UIBarButtonItemStylePlain target:self action:nil];
         self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
     }
     return self;
@@ -46,6 +44,19 @@
     tableView.delegate = self;
     
     [self.view addSubview:tableView];
+    
+    // 添加按钮
+    FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:40];
+    UIImageView *plusIconImageView = [[UIImageView alloc] initWithImage:[plusIcon imageWithSize:CGSizeMake(40, 40)]];
+    
+    UIView *plusButtonContainerView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 100, self.view.frame.size.height - 200, 60, 60)];
+    plusButtonContainerView.backgroundColor = UIColor.orangeColor;
+    plusButtonContainerView.layer.cornerRadius = 30;
+    
+    plusIconImageView.center = CGPointMake(plusButtonContainerView.frame.size.width / 2, plusButtonContainerView.frame.size.height / 2);
+    
+    [plusButtonContainerView addSubview:plusIconImageView];
+    [self.view addSubview:plusButtonContainerView];
 
 }
 
@@ -64,7 +75,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 20;
+    return 10;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -73,7 +84,6 @@
     if (!cell) {
         cell = [[TDTableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:cellId];
     }
-    
     [cell layoutTableViewCell];
     
     return cell;

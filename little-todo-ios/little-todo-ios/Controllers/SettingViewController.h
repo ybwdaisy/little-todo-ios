@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "FontAwesomeKit/FAKFontAwesome.h"
 
-@interface SettingViewController : UIViewController
+@interface SettingViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 
 
 @end

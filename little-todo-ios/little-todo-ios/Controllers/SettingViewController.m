@@ -17,10 +17,9 @@
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.tabBarItem.title = @"设置";
+        self.title = @"设置";
         self.tabBarItem.image = [UIImage imageNamed:@"setting_inactive"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"setting_active"];
-        self.title = @"设置";
     }
     return self;
 }
@@ -33,8 +32,10 @@
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    tableView.delegate = self;
+    
     tableView.dataSource = self;
+    tableView.delegate = self;
+    
     [self.view addSubview:tableView];
     
 }
