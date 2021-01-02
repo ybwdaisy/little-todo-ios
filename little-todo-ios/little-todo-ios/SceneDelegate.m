@@ -37,6 +37,8 @@
         
         UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabbarController];
         
+//        navigationController.navigationBar.hidden = YES;
+        
         self.window.rootViewController = navigationController;
         [self.window makeKeyAndVisible];
     }
