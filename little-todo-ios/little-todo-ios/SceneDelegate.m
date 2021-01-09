@@ -27,17 +27,14 @@
         self.window = window;
         
         UITabBarController *tabbarController = [[UITabBarController alloc] init];
-        
-        HomeViewController *homeViewController = [[HomeViewController alloc] init];
-        SettingViewController *settingViewController = [[SettingViewController alloc] init];
+    
+        UINavigationController *homeViewController = [[UINavigationController alloc] initWithRootViewController:[[HomeViewController alloc] init]];
+        UINavigationController *settingViewController = [[UINavigationController alloc] initWithRootViewController:[[SettingViewController alloc] init]];
         
         [tabbarController setViewControllers:@[homeViewController, settingViewController]];
-        
         tabbarController.delegate = self;
-        
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabbarController];
-        
-        self.window.rootViewController = navigationController;
+
+        self.window.rootViewController = tabbarController;
         [self.window makeKeyAndVisible];
     }
     
@@ -49,8 +46,7 @@
 }
 
 - (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    viewController.tabBarController.navigationItem.title = viewController.title;
-    viewController.tabBarController.navigationItem.rightBarButtonItem = viewController.navigationItem.rightBarButtonItem;
+    NSLog(@"didSelectViewController");
 }
 
 

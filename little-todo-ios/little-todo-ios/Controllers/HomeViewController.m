@@ -18,13 +18,12 @@
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.title = @"收件箱";
         self.tabBarItem.image = [UIImage imageNamed:@"home_inactive"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"home_active"];
         
+        self.navigationItem.title = @"收件箱";
         FAKFontAwesome *barsIcon = [FAKFontAwesome barsIconWithSize:20];
         UIImage *barsIconImage = [barsIcon imageWithSize:CGSizeMake(20, 20)];
-        
         self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithImage:barsIconImage style:UIBarButtonItemStylePlain target:self action:nil];
         self.navigationItem.rightBarButtonItem.tintColor = [UIColor blackColor];
     }
@@ -35,9 +34,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tabBarController.navigationItem.title = self.title;
-    self.tabBarController.navigationItem.rightBarButtonItem = self.navigationItem.rightBarButtonItem;
-
     // 设置列表
     UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
     tableView.dataSource = self;
@@ -46,8 +42,8 @@
     [self.view addSubview:tableView];
     
     // 添加按钮
-    FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:40];
-    UIImageView *plusIconImageView = [[UIImageView alloc] initWithImage:[plusIcon imageWithSize:CGSizeMake(40, 40)]];
+    FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:20];
+    UIImageView *plusIconImageView = [[UIImageView alloc] initWithImage:[plusIcon imageWithSize:CGSizeMake(20, 20)]];
     
     UIView *plusButtonContainerView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 100, self.view.frame.size.height - 200, 60, 60)];
     plusButtonContainerView.backgroundColor = UIColor.orangeColor;

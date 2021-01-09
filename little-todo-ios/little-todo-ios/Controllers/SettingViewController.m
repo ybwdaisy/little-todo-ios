@@ -17,9 +17,10 @@
 - (instancetype) init {
     self = [super init];
     if (self) {
-        self.title = @"设置";
         self.tabBarItem.image = [UIImage imageNamed:@"setting_inactive"];
         self.tabBarItem.selectedImage = [UIImage imageNamed:@"setting_active"];
+        
+        self.navigationItem.title = @"设置";
     }
     return self;
 }
@@ -28,7 +29,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    self.tabBarController.navigationItem.title = self.title;
     
     UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
