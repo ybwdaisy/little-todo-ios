@@ -11,6 +11,8 @@
 
 @interface HomeViewController ()<UITableViewDelegate>
 
+@property(nonatomic, readwrite) UIView *plusButtonContainerView;
+
 @end
 
 @implementation HomeViewController
@@ -45,14 +47,14 @@
     FAKFontAwesome *plusIcon = [FAKFontAwesome plusIconWithSize:20];
     UIImageView *plusIconImageView = [[UIImageView alloc] initWithImage:[plusIcon imageWithSize:CGSizeMake(20, 20)]];
     
-    UIView *plusButtonContainerView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width - 100, self.view.frame.size.height - 200, 60, 60)];
-    plusButtonContainerView.backgroundColor = UIColor.orangeColor;
-    plusButtonContainerView.layer.cornerRadius = 30;
+    self.plusButtonContainerView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, self.view.frame.size.height, 60, 60)];
+    self.plusButtonContainerView.backgroundColor = UIColor.orangeColor;
+    self.plusButtonContainerView.layer.cornerRadius = 30;
     
-    plusIconImageView.center = CGPointMake(plusButtonContainerView.frame.size.width / 2, plusButtonContainerView.frame.size.height / 2);
+    plusIconImageView.center = CGPointMake(self.plusButtonContainerView.frame.size.width / 2, self.plusButtonContainerView.frame.size.height / 2);
     
-    [plusButtonContainerView addSubview:plusIconImageView];
-    [self.view addSubview:plusButtonContainerView];
+    [self.plusButtonContainerView addSubview:plusIconImageView];
+    [self.view addSubview:self.plusButtonContainerView];
 
 }
 
@@ -106,6 +108,11 @@
     UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[trailingDeleteAction,trailingTopAction]];
     config.performsFirstActionWithFullSwipe = NO;
     return config;
+}
+
+- (void)viewSafeAreaInsetsDidChange NS_REQUIRES_SUPER API_AVAILABLE(ios(11.0), tvos(11.0)) {
+    [super viewSafeAreaInsetsDidChange];
+    [self.plusButtonContainerView setFrame:CGRectMake(self.view.frame.size.width - 80, self.view.frame.size.height - self.view.safeAreaInsets.bottom - 80, 60, 60)];
 }
 
 @end
