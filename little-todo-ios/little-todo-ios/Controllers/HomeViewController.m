@@ -8,7 +8,6 @@
 
 #import "HomeViewController.h"
 #import "TDTableViewCell.h"
-#import "SettingViewController.h"
 
 @interface HomeViewController ()<UITableViewDelegate>
 
