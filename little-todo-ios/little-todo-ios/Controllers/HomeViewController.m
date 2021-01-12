@@ -125,28 +125,35 @@
     
     UIView *modalView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     modalView.backgroundColor = [UIColor whiteColor];
-
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 50)];
     
-    UIButton *headerLeftButton = [[UIButton alloc]initWithFrame:CGRectMake(20, 15, 50, 50)];
+    CGFloat modelViewInnerWidth = self.view.frame.size.width - 40;
+    
+    UIButton *headerLeftButton = [[UIButton alloc]init];
     [headerLeftButton setTitle:@"取消" forState:UIControlStateNormal];
     [headerLeftButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [headerView addSubview:headerLeftButton];
+    [headerLeftButton.heightAnchor constraintEqualToConstant:50].active = TRUE;
+    [headerLeftButton.widthAnchor constraintEqualToConstant:50].active = TRUE;
     
-    UILabel *headerTitle = [[UILabel alloc]initWithFrame:CGRectMake(20 + headerLeftButton.frame.size.width, 15, self.view.frame.size.width - 140, 50)];
+    UILabel *headerTitle = [[UILabel alloc]init];
     headerTitle.text = @"新建代办";
-    headerTitle.font = [UIFont boldSystemFontOfSize:20];
+    headerTitle.font = [UIFont boldSystemFontOfSize:18];
     [headerTitle setTextAlignment:NSTextAlignmentCenter];
-    [headerView addSubview:headerTitle];
     
-    UIButton *headerRightButton = [[UIButton alloc]initWithFrame:CGRectMake(20 + headerLeftButton.frame.size.width + headerTitle.frame.size.width, 15, 50, 50)];
+    UIButton *headerRightButton = [[UIButton alloc]init];
     [headerRightButton setTitle:@"确认" forState:UIControlStateNormal];
     [headerRightButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
-    [headerView addSubview:headerRightButton];
+    [headerRightButton.heightAnchor constraintEqualToConstant:50].active = TRUE;
+    [headerRightButton.widthAnchor constraintEqualToConstant:50].active = TRUE;
+    
+    UIStackView *headerView = [[UIStackView alloc]initWithArrangedSubviews:@[headerLeftButton, headerTitle, headerRightButton]];
+    [headerView setFrame:CGRectMake(20, 10, modelViewInnerWidth, 50)];
+    headerView.axis = UILayoutConstraintAxisHorizontal;
+    headerView.alignment = UIStackViewAlignmentCenter;
+    headerView.distribution = UIStackViewDistributionEqualSpacing;
     
     [modalView addSubview:headerView];
     
-    UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(20, 90, self.view.frame.size.width - 40, self.view.frame.size.height) textContainer:nil];
+    UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(20, 70, modelViewInnerWidth, self.view.frame.size.height) textContainer:nil];
     textView.text = @"请输入";
     textView.editable = YES;
     textView.font = [UIFont systemFontOfSize:16];
