@@ -72,7 +72,7 @@
     plusIconImageView.center = CGPointMake(self.plusButtonContainerView.frame.size.width / 2, self.plusButtonContainerView.frame.size.height / 2);
     
     // 添加事件
-    UITapGestureRecognizer *tapAddTodo = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAddTodoButton)];
+    UITapGestureRecognizer *tapAddTodo = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addNewTodo)];
     [self.plusButtonContainerView addGestureRecognizer:tapAddTodo];
     
     [self.plusButtonContainerView addSubview:plusIconImageView];
@@ -204,7 +204,6 @@
         @"time": @"明天, 09:00",
     }];
     [self.todoTableView reloadData];
-    [self.modalViewController setAccessibilityElementsHidden:NO];
 }
 
 - (NSString *)return16LetterAndNumber{
