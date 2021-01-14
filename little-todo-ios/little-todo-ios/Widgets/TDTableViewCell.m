@@ -59,11 +59,10 @@
     return self;
 }
 
-- (void) layoutTableViewCell {
-    self.title.text = @"我是一个任务，红红火火恍恍惚惚";
-    self.remark.text = @"我是一个备注哦";
-    self.tagName.text = @"紧急重要";
-    self.time.text = @"明天, 07:00";
+- (void) layoutTableViewCell:(NSDictionary *)cellData {
+    self.title.text = [cellData objectForKey:@"title"];
+    self.remark.text = [cellData objectForKey:@"remark"];
+    self.tagName.text = [cellData objectForKey:@"tagName"];
+    self.time.text = [cellData objectForKey:@"time"];
 }
-
 @end

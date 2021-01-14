@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TDTableViewCell : UITableViewCell
 
-- (void) layoutTableViewCell;
+- (void) layoutTableViewCell:(NSDictionary *)cellData;
 
 @end
 
