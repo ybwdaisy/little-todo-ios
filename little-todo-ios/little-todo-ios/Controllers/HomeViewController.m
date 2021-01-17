@@ -14,6 +14,7 @@
 @property(nonatomic, readwrite) UITableView *todoTableView;
 @property(nonatomic, readwrite) NSMutableArray *todoListData;
 @property(nonatomic, readwrite) UIView *plusButtonContainerView;
+@property(nonatomic, readwrite) UIColor *modalViewBgColor;
 
 @end
 
@@ -38,6 +39,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    self.modalViewBgColor = [[UIColor alloc]initWithRed:246/255.0 green:247/255.0 blue:249/255.0 alpha:1];
     
     self.todoListData = [[NSMutableArray alloc]init];
     [self.todoListData addObject:@{
@@ -72,7 +75,7 @@
     plusIconImageView.center = CGPointMake(self.plusButtonContainerView.frame.size.width / 2, self.plusButtonContainerView.frame.size.height / 2);
     
     // 添加事件
-    UITapGestureRecognizer *tapAddTodo = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addNewTodo)];
+    UITapGestureRecognizer *tapAddTodo = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapAddTodoButton)];
     [self.plusButtonContainerView addGestureRecognizer:tapAddTodo];
     
     [self.plusButtonContainerView addSubview:plusIconImageView];
@@ -153,7 +156,7 @@
     UIViewController *modalViewController = [[UIViewController alloc]init];
     
     UIView *modalView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    modalView.backgroundColor = [UIColor whiteColor];
+    modalView.backgroundColor = self.modalViewBgColor;
     
     CGFloat modelViewInnerWidth = self.view.frame.size.width - 40;
     
@@ -164,12 +167,12 @@
     [headerLeftButton.widthAnchor constraintEqualToConstant:50].active = TRUE;
     
     UILabel *headerTitle = [[UILabel alloc]init];
-    headerTitle.text = @"新建代办";
+    headerTitle.text = @"新建代办事项";
     headerTitle.font = [UIFont boldSystemFontOfSize:18];
     [headerTitle setTextAlignment:NSTextAlignmentCenter];
     
     UIButton *headerRightButton = [[UIButton alloc]init];
-    [headerRightButton setTitle:@"确认" forState:UIControlStateNormal];
+    [headerRightButton setTitle:@"添加" forState:UIControlStateNormal];
     [headerRightButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [headerRightButton.heightAnchor constraintEqualToConstant:50].active = TRUE;
     [headerRightButton.widthAnchor constraintEqualToConstant:50].active = TRUE;
@@ -185,11 +188,35 @@
     
     [modalView addSubview:headerView];
     
-    UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(20, 70, modelViewInnerWidth, self.view.frame.size.height) textContainer:nil];
-    textView.text = @"请输入代办事项";
-    textView.editable = YES;
-    textView.font = [UIFont systemFontOfSize:16];
-    [modalView addSubview:textView];
+    UIView *topSectionView = [[UIView alloc]initWithFrame:CGRectMake(20, 70, modelViewInnerWidth, 180.5)];
+    topSectionView.backgroundColor = [UIColor whiteColor];
+    topSectionView.layer.cornerRadius = 6;
+    
+    UITextView *titleTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 10, topSectionView.frame.size.width - 20, 40) textContainer:nil];
+    titleTextView.text = @"";
+    titleTextView.editable = YES;
+    titleTextView.font = [UIFont systemFontOfSize:16];
+    UILabel *titlePlaceholder = [self makePlaceholderWithTitle:@"标题"];
+    [titleTextView addSubview:titlePlaceholder];
+    [titleTextView setValue:titlePlaceholder forKey:@"_placeholderLabel"];
+    [topSectionView addSubview:titleTextView];
+    
+    UIView *divideLineView = [[UIView alloc] initWithFrame:CGRectMake(10, 60, topSectionView.frame.size.width - 20, 0.5)];
+    divideLineView.backgroundColor = [UIColor lightGrayColor];
+    [topSectionView addSubview:divideLineView];
+    
+    UITextView *remarkTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 70.5, topSectionView.frame.size.width - 20, 100) textContainer:nil];
+    remarkTextView.text = @"";
+    remarkTextView.editable = YES;
+    remarkTextView.font = [UIFont systemFontOfSize:16];
+    UILabel *remarkPlaceholder = [self makePlaceholderWithTitle:@"备注"];
+    [remarkTextView addSubview:remarkPlaceholder];
+    [remarkTextView setValue:remarkPlaceholder forKey:@"_placeholderLabel"];
+    [topSectionView addSubview:remarkTextView];
+    
+    [modalView addSubview:topSectionView];
+    
+    
     
     [modalViewController.view addSubview:modalView];
     modalViewController.modalPresentationStyle = UIModalPresentationPopover;
@@ -215,6 +242,17 @@
         result = (NSMutableString *)[result stringByAppendingString:[NSString stringWithFormat:@"%c",tempStr]];
     }
     return result;
+}
+
+- (UILabel *)makePlaceholderWithTitle:(NSString *)title {
+    UILabel *placeholder = [[UILabel alloc] init];
+    placeholder.text = title;
+    placeholder.numberOfLines = 0;
+    placeholder.textColor = [UIColor lightGrayColor];
+    placeholder.font = [UIFont systemFontOfSize:16];
+    [placeholder sizeToFit];
+    
+    return placeholder;
 }
 
 
