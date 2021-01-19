@@ -15,6 +15,8 @@
 @property(nonatomic, readwrite) NSMutableArray *todoListData;
 @property(nonatomic, readwrite) UIView *plusButtonContainerView;
 @property(nonatomic, readwrite) UIColor *modalViewBgColor;
+@property(nonatomic, readwrite) NSString *todoTitleText;
+@property(nonatomic, readwrite) NSString *todoRemarkText;
 
 @end
 
@@ -35,6 +37,10 @@
     return self;
 }
 
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"UITextViewTextDidChangeNotification" object:nil];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -48,12 +54,6 @@
         @"remark": [self return16LetterAndNumber],
         @"tagName": @"紧急任务",
         @"time": @"明天, 07:00",
-    }];
-    [self.todoListData addObject:@{
-        @"title": [[NSString alloc]initWithFormat:@"我是标题，哈哈哈%@", [self return16LetterAndNumber]],
-        @"remark": [self return16LetterAndNumber],
-        @"tagName": @"",
-        @"time": @"明天, 08:00",
     }];
 
     // 设置列表
@@ -80,6 +80,9 @@
     
     [self.plusButtonContainerView addSubview:plusIconImageView];
     [self.view addSubview:self.plusButtonContainerView];
+    
+    // 监听输入
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onTodoTextChanged:) name:@"UITextViewTextDidChangeNotification" object:nil];
 
 }
 
@@ -166,6 +169,9 @@
     [headerLeftButton.heightAnchor constraintEqualToConstant:50].active = TRUE;
     [headerLeftButton.widthAnchor constraintEqualToConstant:50].active = TRUE;
     
+    UITapGestureRecognizer *tapCancelAddTodo = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(cancelAddTodo)];
+    [headerLeftButton addGestureRecognizer:tapCancelAddTodo];
+    
     UILabel *headerTitle = [[UILabel alloc]init];
     headerTitle.text = @"新建代办事项";
     headerTitle.font = [UIFont boldSystemFontOfSize:18];
@@ -193,6 +199,7 @@
     topSectionView.layer.cornerRadius = 6;
     
     UITextView *titleTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 10, topSectionView.frame.size.width - 20, 40) textContainer:nil];
+    titleTextView.tag = 1;
     titleTextView.text = @"";
     titleTextView.editable = YES;
     titleTextView.font = [UIFont systemFontOfSize:16];
@@ -206,7 +213,7 @@
     [topSectionView addSubview:divideLineView];
     
     UITextView *remarkTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 70.5, topSectionView.frame.size.width - 20, 100) textContainer:nil];
-    remarkTextView.text = @"";
+    remarkTextView.tag = 2;
     remarkTextView.editable = YES;
     remarkTextView.font = [UIFont systemFontOfSize:16];
     UILabel *remarkPlaceholder = [self makePlaceholderWithTitle:@"备注"];
@@ -216,8 +223,6 @@
     
     [modalView addSubview:topSectionView];
     
-    
-    
     [modalViewController.view addSubview:modalView];
     modalViewController.modalPresentationStyle = UIModalPresentationPopover;
     [self presentViewController:modalViewController animated:YES completion:nil];
@@ -225,12 +230,19 @@
 
 - (void)addNewTodo {
     [self.todoListData addObject:@{
-        @"title": [[NSString alloc]initWithFormat:@"我是标题，哈哈哈%@", [self return16LetterAndNumber]],
-        @"remark": [self return16LetterAndNumber],
-        @"tagName": @"普通任务",
+        @"title": self.todoTitleText,
+        @"remark": self.todoRemarkText,
+        @"tagName": [self return16LetterAndNumber],
         @"time": @"明天, 09:00",
     }];
+    [self dismissViewControllerAnimated:YES completion:nil];
     [self.todoTableView reloadData];
+}
+
+- (void)cancelAddTodo {
+    self.todoTitleText = @"";
+    self.todoRemarkText = @"";
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (NSString *)return16LetterAndNumber{
@@ -255,6 +267,15 @@
     return placeholder;
 }
 
+- (void)onTodoTextChanged:(NSNotification *)obj {
+    UITextView *todoTextView = (UITextView *)obj.object;
+    if (todoTextView.tag == 1) {
+        self.todoTitleText = todoTextView.text;
+    }
+    if (todoTextView.tag == 2) {
+        self.todoRemarkText = todoTextView.text;
+    }
+}
 
 @end
  
