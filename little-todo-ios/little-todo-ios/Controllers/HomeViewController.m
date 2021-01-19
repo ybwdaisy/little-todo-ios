@@ -55,6 +55,9 @@
         @"tagName": @"紧急任务",
         @"time": @"明天, 07:00",
     }];
+    
+    self.todoTitleText = @"";
+    self.todoRemarkText = @"";
 
     // 设置列表
     UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
@@ -91,13 +94,13 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIViewController *viewController = [[UIViewController alloc] init];
-    viewController.view.backgroundColor = [UIColor whiteColor];
-    viewController.navigationItem.title = [NSString stringWithFormat: @"内容 - %@", @(indexPath.row)];
-
-    viewController.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"确定" style:UIBarButtonItemStylePlain target:self action:nil];
-
-    [self.navigationController pushViewController:viewController animated:YES];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"标题和备注不能为空" preferredStyle:UIAlertControllerStyleAlert];
+    
+    UIAlertAction *alertYesAction = [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [alert addAction:alertYesAction];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -214,6 +217,7 @@
     
     UITextView *remarkTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 70.5, topSectionView.frame.size.width - 20, 100) textContainer:nil];
     remarkTextView.tag = 2;
+    remarkTextView.text = @"";
     remarkTextView.editable = YES;
     remarkTextView.font = [UIFont systemFontOfSize:16];
     UILabel *remarkPlaceholder = [self makePlaceholderWithTitle:@"备注"];
@@ -229,6 +233,9 @@
 }
 
 - (void)addNewTodo {
+    if ([self.todoTitleText isEqualToString:@""] || [self.todoRemarkText isEqualToString:@""]) {
+        return;
+    }
     [self.todoListData addObject:@{
         @"title": self.todoTitleText,
         @"remark": self.todoRemarkText,
@@ -237,6 +244,8 @@
     }];
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.todoTableView reloadData];
+    self.todoTitleText = @"";
+    self.todoRemarkText = @"";
 }
 
 - (void)cancelAddTodo {
