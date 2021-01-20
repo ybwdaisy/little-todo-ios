@@ -14,6 +14,7 @@
 @property(nonatomic, readwrite) UITableView *todoTableView;
 @property(nonatomic, readwrite) NSMutableArray *todoListData;
 @property(nonatomic, readwrite) UIView *plusButtonContainerView;
+@property(nonatomic, readwrite) UIViewController *addTodoViewController;
 @property(nonatomic, readwrite) UIColor *modalViewBgColor;
 @property(nonatomic, readwrite) NSString *todoTitleText;
 @property(nonatomic, readwrite) NSString *todoRemarkText;
@@ -94,13 +95,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提示" message:@"标题和备注不能为空" preferredStyle:UIAlertControllerStyleAlert];
-    
-    UIAlertAction *alertYesAction = [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
-        [self dismissViewControllerAnimated:YES completion:nil];
-    }];
-    [alert addAction:alertYesAction];
-    [self presentViewController:alert animated:YES completion:nil];
+    NSLog(@"didSelectRow, %d", indexPath.row);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -159,7 +154,7 @@
 }
 
 - (void)tapAddTodoButton {
-    UIViewController *modalViewController = [[UIViewController alloc]init];
+    UIViewController *addTodoViewController = [[UIViewController alloc]init];
     
     UIView *modalView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     modalView.backgroundColor = self.modalViewBgColor;
@@ -227,13 +222,22 @@
     
     [modalView addSubview:topSectionView];
     
-    [modalViewController.view addSubview:modalView];
-    modalViewController.modalPresentationStyle = UIModalPresentationPopover;
-    [self presentViewController:modalViewController animated:YES completion:nil];
+    [addTodoViewController.view addSubview:modalView];
+    addTodoViewController.modalPresentationStyle = UIModalPresentationPopover;
+    
+    self.addTodoViewController = addTodoViewController;
+    
+    [self presentViewController:addTodoViewController animated:YES completion:nil];
 }
 
 - (void)addNewTodo {
     if ([self.todoTitleText isEqualToString:@""] || [self.todoRemarkText isEqualToString:@""]) {
+        UIAlertController *checkAlert = [UIAlertController alertControllerWithTitle:@"标题和备注不能为空" message:nil preferredStyle:UIAlertControllerStyleAlert];
+        [checkAlert addAction: [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
+            
+        }]];
+        [self.addTodoViewController presentViewController:checkAlert animated:YES completion:nil];
+        
         return;
     }
     [self.todoListData addObject:@{
@@ -249,9 +253,18 @@
 }
 
 - (void)cancelAddTodo {
-    self.todoTitleText = @"";
-    self.todoRemarkText = @"";
-    [self dismissViewControllerAnimated:YES completion:nil];
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [actionSheet addAction: [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    [actionSheet addAction: [UIAlertAction actionWithTitle:@"放弃更改" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        self.todoTitleText = @"";
+        self.todoRemarkText = @"";
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [self.addTodoViewController presentViewController:actionSheet animated:YES completion:nil];
+    
 }
 
 - (NSString *)return16LetterAndNumber{
