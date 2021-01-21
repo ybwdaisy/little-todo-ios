@@ -10,7 +10,6 @@
 
 @interface AddTodoViewController ()
 
-@property(nonatomic, readwrite) UIColor *modalViewBgColor;
 @property(nonatomic, readwrite) NSString *todoTitleText;
 @property(nonatomic, readwrite) NSString *todoRemarkText;
 
@@ -27,8 +26,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.modalViewBgColor = [[UIColor alloc]initWithRed:246/255.0 green:247/255.0 blue:249/255.0 alpha:1];
-    
     self.todoTitleText = @"";
     self.todoRemarkText = @"";
     
@@ -36,32 +33,19 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onTodoTextChanged:) name:@"UITextViewTextDidChangeNotification" object:nil];
     
     UIView *modalView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    modalView.backgroundColor = self.modalViewBgColor;
+    modalView.backgroundColor = [[UIColor alloc]initWithRed:246/255.0 green:247/255.0 blue:249/255.0 alpha:1];
     
     CGFloat modelViewInnerWidth = self.view.frame.size.width - 40;
     
-    UIButton *headerLeftButton = [[UIButton alloc]init];
-    [headerLeftButton setTitle:@"取消" forState:UIControlStateNormal];
-    [headerLeftButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [headerLeftButton.heightAnchor constraintEqualToConstant:50].active = TRUE;
-    [headerLeftButton.widthAnchor constraintEqualToConstant:50].active = TRUE;
-    
-    UITapGestureRecognizer *tapCancelAddTodo = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(cancelAddTodo)];
-    [headerLeftButton addGestureRecognizer:tapCancelAddTodo];
+    // 顶部视图
+    UIButton *headerLeftButton = [self makeButtonWidthTitleAndAction:@"取消" action:@selector(cancelAddTodo)];
     
     UILabel *headerTitle = [[UILabel alloc]init];
     headerTitle.text = @"新建代办事项";
     headerTitle.font = [UIFont boldSystemFontOfSize:18];
     [headerTitle setTextAlignment:NSTextAlignmentCenter];
     
-    UIButton *headerRightButton = [[UIButton alloc]init];
-    [headerRightButton setTitle:@"添加" forState:UIControlStateNormal];
-    [headerRightButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [headerRightButton.heightAnchor constraintEqualToConstant:50].active = TRUE;
-    [headerRightButton.widthAnchor constraintEqualToConstant:50].active = TRUE;
-    
-    UITapGestureRecognizer *tapAddNewTodo = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(addNewTodo)];
-    [headerRightButton addGestureRecognizer:tapAddNewTodo];
+    UIButton *headerRightButton = [self makeButtonWidthTitleAndAction:@"添加" action:@selector(addNewTodo)];
     
     UIStackView *headerView = [[UIStackView alloc]initWithArrangedSubviews:@[headerLeftButton, headerTitle, headerRightButton]];
     [headerView setFrame:CGRectMake(20, 10, modelViewInnerWidth, 50)];
@@ -71,11 +55,9 @@
     
     [modalView addSubview:headerView];
     
-    UIView *topSectionView = [[UIView alloc]initWithFrame:CGRectMake(20, 70, modelViewInnerWidth, 180.5)];
-    topSectionView.backgroundColor = [UIColor whiteColor];
-    topSectionView.layer.cornerRadius = 6;
-    
-    UITextView *titleTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 10, topSectionView.frame.size.width - 20, 40) textContainer:nil];
+    // 标题和备注视图
+    UITextView *titleTextView = [[UITextView alloc]init];
+    [titleTextView.heightAnchor constraintEqualToConstant:40].active = TRUE;
     titleTextView.tag = 1;
     titleTextView.text = @"";
     titleTextView.editable = YES;
@@ -83,13 +65,8 @@
     UILabel *titlePlaceholder = [self makePlaceholderWithTitle:@"标题"];
     [titleTextView addSubview:titlePlaceholder];
     [titleTextView setValue:titlePlaceholder forKey:@"_placeholderLabel"];
-    [topSectionView addSubview:titleTextView];
     
-    UIView *divideLineView = [[UIView alloc] initWithFrame:CGRectMake(10, 60, topSectionView.frame.size.width - 20, 0.5)];
-    divideLineView.backgroundColor = [UIColor lightGrayColor];
-    [topSectionView addSubview:divideLineView];
-    
-    UITextView *remarkTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 70.5, topSectionView.frame.size.width - 20, 100) textContainer:nil];
+    UITextView *remarkTextView = [[UITextView alloc]init];
     remarkTextView.tag = 2;
     remarkTextView.text = @"";
     remarkTextView.editable = YES;
@@ -97,12 +74,31 @@
     UILabel *remarkPlaceholder = [self makePlaceholderWithTitle:@"备注"];
     [remarkTextView addSubview:remarkPlaceholder];
     [remarkTextView setValue:remarkPlaceholder forKey:@"_placeholderLabel"];
-    [topSectionView addSubview:remarkTextView];
+    
+    UIStackView *topSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[titleTextView, remarkTextView]];
+    topSectionView.backgroundColor = [UIColor whiteColor];
+    topSectionView.layer.cornerRadius = 6;
+    [topSectionView setFrame:CGRectMake(20, 100, modelViewInnerWidth, 160)];
+
+    topSectionView.spacing = 0;
+    topSectionView.axis = UILayoutConstraintAxisVertical;
     
     [modalView addSubview:topSectionView];
     
     [self.view addSubview:modalView];
     self.modalPresentationStyle = UIModalPresentationPopover;
+}
+
+- (UIButton *)makeButtonWidthTitleAndAction:(NSString *)name action:(nullable SEL)action {
+    UIButton *button = [[UIButton alloc]init];
+    [button setTitle:name forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [button.heightAnchor constraintEqualToConstant:50].active = TRUE;
+    [button.widthAnchor constraintEqualToConstant:50].active = TRUE;
+    
+    UITapGestureRecognizer *tapCancelAddTodo = [[UITapGestureRecognizer alloc]initWithTarget:self action:action];
+    [button addGestureRecognizer:tapCancelAddTodo];
+    return button;
 }
 
 - (UILabel *)makePlaceholderWithTitle:(NSString *)title {
