@@ -56,29 +56,18 @@
     [modalView addSubview:headerView];
     
     // 标题和备注视图
-    UITextView *titleTextView = [[UITextView alloc]init];
-    [titleTextView.heightAnchor constraintEqualToConstant:40].active = TRUE;
-    titleTextView.tag = 1;
-    titleTextView.text = @"";
-    titleTextView.editable = YES;
-    titleTextView.font = [UIFont systemFontOfSize:16];
-    UILabel *titlePlaceholder = [self makePlaceholderWithTitle:@"标题"];
-    [titleTextView addSubview:titlePlaceholder];
-    [titleTextView setValue:titlePlaceholder forKey:@"_placeholderLabel"];
+    UITextView *titleTextView = [self makeTextView:1 placeholderText:@"标题" height:40.0];
     
-    UITextView *remarkTextView = [[UITextView alloc]init];
-    remarkTextView.tag = 2;
-    remarkTextView.text = @"";
-    remarkTextView.editable = YES;
-    remarkTextView.font = [UIFont systemFontOfSize:16];
-    UILabel *remarkPlaceholder = [self makePlaceholderWithTitle:@"备注"];
-    [remarkTextView addSubview:remarkPlaceholder];
-    [remarkTextView setValue:remarkPlaceholder forKey:@"_placeholderLabel"];
+    UIView *divideLine = [[UIView alloc]init];
+    [divideLine.heightAnchor constraintEqualToConstant:0.5].active = TRUE;
+    divideLine.backgroundColor = [[UIColor alloc]initWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1];
     
-    UIStackView *topSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[titleTextView, remarkTextView]];
+    UITextView *remarkTextView = [self makeTextView:2 placeholderText:@"备注" height:0.0];
+    
+    UIStackView *topSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[titleTextView, divideLine, remarkTextView]];
     topSectionView.backgroundColor = [UIColor whiteColor];
-    topSectionView.layer.cornerRadius = 6;
-    [topSectionView setFrame:CGRectMake(20, 100, modelViewInnerWidth, 160)];
+    topSectionView.layer.cornerRadius = 10;
+    [topSectionView setFrame:CGRectMake(20, 100, modelViewInnerWidth, 160.5)];
 
     topSectionView.spacing = 0;
     topSectionView.axis = UILayoutConstraintAxisVertical;
@@ -87,6 +76,28 @@
     
     [self.view addSubview:modalView];
     self.modalPresentationStyle = UIModalPresentationPopover;
+}
+
+- (UITextView *)makeTextView:(int)tag placeholderText:(NSString *)placeholderText height:(double)height {
+    UITextView *textView = [[UITextView alloc]init];
+    if (height) {
+        [textView.heightAnchor constraintEqualToConstant:height].active = TRUE;
+    }
+    textView.tag = tag;
+    textView.text = @"";
+    textView.editable = YES;
+    textView.font = [UIFont systemFontOfSize:16];
+    
+    UILabel *placeholder = [[UILabel alloc] init];
+    placeholder.text = placeholderText;
+    placeholder.numberOfLines = 0;
+    placeholder.textColor = [UIColor lightGrayColor];
+    placeholder.font = [UIFont systemFontOfSize:16];
+    [placeholder sizeToFit];
+    
+    [textView addSubview:placeholder];
+    [textView setValue:placeholder forKey:@"_placeholderLabel"];
+    return textView;
 }
 
 - (UIButton *)makeButtonWidthTitleAndAction:(NSString *)name action:(nullable SEL)action {
@@ -99,17 +110,6 @@
     UITapGestureRecognizer *tapCancelAddTodo = [[UITapGestureRecognizer alloc]initWithTarget:self action:action];
     [button addGestureRecognizer:tapCancelAddTodo];
     return button;
-}
-
-- (UILabel *)makePlaceholderWithTitle:(NSString *)title {
-    UILabel *placeholder = [[UILabel alloc] init];
-    placeholder.text = title;
-    placeholder.numberOfLines = 0;
-    placeholder.textColor = [UIColor lightGrayColor];
-    placeholder.font = [UIFont systemFontOfSize:16];
-    [placeholder sizeToFit];
-    
-    return placeholder;
 }
 
 - (void)onTodoTextChanged:(NSNotification *)obj {
