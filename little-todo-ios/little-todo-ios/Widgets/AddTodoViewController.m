@@ -8,12 +8,15 @@
 
 #import "AddTodoViewController.h"
 
-@interface AddTodoViewController ()
+@interface AddTodoViewController () <UIPickerViewDelegate>
 
 @property(nonatomic, readwrite) NSString *todoTitleText;
 @property(nonatomic, readwrite) NSString *todoRemarkText;
 @property(nonatomic, readwrite) UITextView *todoDateTimeView;
+@property(nonatomic, readwrite) NSString *todoDateTimeText;
 @property(nonatomic, strong) UIDatePicker *datePicker;
+@property(nonatomic, readwrite) NSArray *priorityList;
+@property(nonatomic, readwrite) NSString *todoPriorityText;
 
 @end
 
@@ -30,6 +33,7 @@
     
     self.todoTitleText = @"";
     self.todoRemarkText = @"";
+    self.priorityList = [[NSArray alloc] initWithObjects:@"高",@"中",@"低", nil];
     
     // 监听输入
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onTodoTextChanged:) name:@"UITextViewTextDidChangeNotification" object:nil];
@@ -93,9 +97,28 @@
     [modalView addSubview:self.todoDateTimeView];
     
     // 优先级模块
+    UIPickerView *priorityPickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(20, 340, modelViewInnerWidth, 100)];
+    priorityPickerView.dataSource = self;
+    priorityPickerView.delegate = self;
+    
+    [modalView addSubview:priorityPickerView];
+    // 重复模式模块
     
     [self.view addSubview:modalView];
     self.modalPresentationStyle = UIModalPresentationPopover;
+}
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return self.priorityList.count;
+}
+
+- (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    self.todoPriorityText = [self.priorityList objectAtIndex:row];
+    return self.todoPriorityText;
 }
 
 - (UITextView *)makeTextView:(int)tag placeholderText:(NSString *)placeholderText height:(double)height {
@@ -156,12 +179,13 @@
     [self.addTodoVCDelegate addTodo:@{
         @"title": self.todoTitleText,
         @"remark": self.todoRemarkText,
-        @"tagName": [self return16LetterAndNumber],
-        @"time": self.todoDateTimeView.text,
+        @"tagName": self.todoPriorityText,
+        @"time": self.todoDateTimeText,
     }];
     self.todoTitleText = @"";
     self.todoRemarkText = @"";
-    self.todoDateTimeView.text = @"";
+    self.todoDateTimeText = @"";
+    self.todoPriorityText = @"";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -173,6 +197,8 @@
     [actionSheet addAction: [UIAlertAction actionWithTitle:@"放弃更改" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
         self.todoTitleText = @"";
         self.todoRemarkText = @"";
+        self.todoDateTimeText = @"";
+        self.todoPriorityText = @"";
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
     
@@ -180,21 +206,11 @@
     
 }
 
-- (NSString *)return16LetterAndNumber{
-    NSString * strAll = @"0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    NSString * result = [[NSMutableString alloc]initWithCapacity:16];
-    for (int i = 0; i < 16; i++) {
-        NSInteger index = arc4random() % (strAll.length-1);
-        char tempStr = [strAll characterAtIndex:index];
-        result = (NSMutableString *)[result stringByAppendingString:[NSString stringWithFormat:@"%c",tempStr]];
-    }
-    return result;
-}
-
 - (void)dateChange:(UIDatePicker *)datePicker {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy年MM月dd日 HH:mm";
     self.todoDateTimeView.text = [formatter stringFromDate:datePicker.date];
+    self.todoDateTimeText = self.todoDateTimeView.text;
 }
 
 @end
