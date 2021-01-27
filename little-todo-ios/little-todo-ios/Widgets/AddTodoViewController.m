@@ -12,6 +12,8 @@
 
 @property(nonatomic, readwrite) NSString *todoTitleText;
 @property(nonatomic, readwrite) NSString *todoRemarkText;
+@property(nonatomic, readwrite) UITextView *todoDateTimeView;
+@property(nonatomic, strong) UIDatePicker *datePicker;
 
 @end
 
@@ -55,7 +57,7 @@
     
     [modalView addSubview:headerView];
     
-    // 标题和备注视图
+    // 标题和备注模块
     UITextView *titleTextView = [self makeTextView:1 placeholderText:@"标题" height:40.0];
     
     UIView *divideLine = [[UIView alloc]init];
@@ -64,15 +66,33 @@
     
     UITextView *remarkTextView = [self makeTextView:2 placeholderText:@"备注" height:0.0];
     
-    UIStackView *topSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[titleTextView, divideLine, remarkTextView]];
-    topSectionView.backgroundColor = [UIColor whiteColor];
-    topSectionView.layer.cornerRadius = 10;
-    [topSectionView setFrame:CGRectMake(20, 100, modelViewInnerWidth, 160.5)];
-
-    topSectionView.spacing = 0;
-    topSectionView.axis = UILayoutConstraintAxisVertical;
+    UIStackView *inputSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[titleTextView, divideLine, remarkTextView]];
+    inputSectionView.backgroundColor = [UIColor whiteColor];
+    inputSectionView.layer.cornerRadius = 10;
+    [inputSectionView setFrame:CGRectMake(20, 100, modelViewInnerWidth, 160.5)];
+    inputSectionView.spacing = 0;
+    inputSectionView.axis = UILayoutConstraintAxisVertical;
     
-    [modalView addSubview:topSectionView];
+    [modalView addSubview:inputSectionView];
+    
+    // 日期与时间模块
+    self.todoDateTimeView = [[UITextView alloc]init];
+    [self.todoDateTimeView setFrame:CGRectMake(20, 280, modelViewInnerWidth, 40)];
+    self.todoDateTimeView.font = [UIFont systemFontOfSize:16];
+    
+    UIDatePicker *datePicker = [[UIDatePicker alloc]init];
+    datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
+    datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    [datePicker setDate:[NSDate date] animated:YES];
+    [datePicker setMinimumDate:[NSDate date]];
+    [datePicker setMinuteInterval:5];
+    [datePicker addTarget:self action:@selector(dateChange:) forControlEvents:UIControlEventValueChanged];
+    self.datePicker = datePicker;
+    self.todoDateTimeView.inputView = datePicker;
+    
+    [modalView addSubview:self.todoDateTimeView];
+    
+    // 优先级模块
     
     [self.view addSubview:modalView];
     self.modalPresentationStyle = UIModalPresentationPopover;
@@ -137,10 +157,11 @@
         @"title": self.todoTitleText,
         @"remark": self.todoRemarkText,
         @"tagName": [self return16LetterAndNumber],
-        @"time": @"明天, 09:00",
+        @"time": self.todoDateTimeView.text,
     }];
     self.todoTitleText = @"";
     self.todoRemarkText = @"";
+    self.todoDateTimeView.text = @"";
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -168,6 +189,12 @@
         result = (NSMutableString *)[result stringByAppendingString:[NSString stringWithFormat:@"%c",tempStr]];
     }
     return result;
+}
+
+- (void)dateChange:(UIDatePicker *)datePicker {
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    formatter.dateFormat = @"yyyy年MM月dd日 HH:mm";
+    self.todoDateTimeView.text = [formatter stringFromDate:datePicker.date];
 }
 
 @end
