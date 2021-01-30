@@ -45,12 +45,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     self.todoListData = [[NSMutableArray alloc]init];
-    [self.todoListData addObject:@{
-        @"title": @"我是标题",
-        @"remark": @"我是备注",
-        @"tagName": @"紧急任务",
-        @"time": @"明天, 07:00",
-    }];
 
     // 设置列表
     UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
