@@ -12,9 +12,8 @@
 
 @property(nonatomic, readwrite) NSString *todoTitleText;
 @property(nonatomic, readwrite) NSString *todoRemarkText;
-@property(nonatomic, readwrite) UITextView *todoDateTimeView;
 @property(nonatomic, readwrite) NSString *todoDateTimeText;
-@property(nonatomic, strong) UIDatePicker *datePicker;
+@property(nonatomic, readwrite) UIDatePicker *datePicker;
 @property(nonatomic, readwrite) NSArray *priorityList;
 @property(nonatomic, readwrite) NSString *todoPriorityText;
 
@@ -80,9 +79,6 @@
     [modalView addSubview:inputSectionView];
     
     // 日期与时间模块
-    self.todoDateTimeView = [[UITextView alloc]init];
-    [self.todoDateTimeView setFrame:CGRectMake(20, 280, modelViewInnerWidth, 40)];
-    self.todoDateTimeView.font = [UIFont systemFontOfSize:16];
     
     UIDatePicker *datePicker = [[UIDatePicker alloc]init];
     datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
@@ -92,16 +88,31 @@
     [datePicker setMinuteInterval:5];
     [datePicker addTarget:self action:@selector(dateChange:) forControlEvents:UIControlEventValueChanged];
     self.datePicker = datePicker;
-    self.todoDateTimeView.inputView = datePicker;
     
-    [modalView addSubview:self.todoDateTimeView];
+    UILabel *datePickerTitle = [[UILabel alloc]init];
+    datePickerTitle.text = @"日期与时间";
+    
+    UIStackView *datePickerView = [[UIStackView alloc]initWithArrangedSubviews:@[datePickerTitle, datePicker]];
+    [datePickerView setFrame:CGRectMake(20, 280, modelViewInnerWidth, 40)];
+    datePickerView.axis = UILayoutConstraintAxisHorizontal;
+    datePickerView.spacing = 10;
+    
+    [modalView addSubview:datePickerView];
     
     // 优先级模块
-    UIPickerView *priorityPickerView = [[UIPickerView alloc]initWithFrame:CGRectMake(20, 340, modelViewInnerWidth, 100)];
-    priorityPickerView.dataSource = self;
+    UIPickerView *priorityPickerView = [[UIPickerView alloc]init];
     priorityPickerView.delegate = self;
+    priorityPickerView.dataSource = self;
     
-    [modalView addSubview:priorityPickerView];
+    UILabel *priorityTitle = [[UILabel alloc]init];
+    priorityTitle.text = @"优先级";
+    
+    UIStackView *priorityView = [[UIStackView alloc]initWithArrangedSubviews:@[priorityTitle, priorityPickerView]];
+    [priorityView setFrame:CGRectMake(20, 340, modelViewInnerWidth, 100)];
+    priorityView.axis = UILayoutConstraintAxisHorizontal;
+    
+    [modalView addSubview:priorityView];
+
     // 重复模式模块
     
     [self.view addSubview:modalView];
@@ -209,8 +220,7 @@
 - (void)dateChange:(UIDatePicker *)datePicker {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
     formatter.dateFormat = @"yyyy年MM月dd日 HH:mm";
-    self.todoDateTimeView.text = [formatter stringFromDate:datePicker.date];
-    self.todoDateTimeText = self.todoDateTimeView.text;
+    self.todoDateTimeText = [formatter stringFromDate:datePicker.date];
 }
 
 @end
