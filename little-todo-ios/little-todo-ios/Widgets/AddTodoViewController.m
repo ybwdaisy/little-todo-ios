@@ -32,7 +32,7 @@
     
     self.todoTitleText = @"";
     self.todoRemarkText = @"";
-    self.priorityList = [[NSArray alloc] initWithObjects:@"高",@"中",@"低", nil];
+    self.priorityList = [[NSArray alloc] initWithObjects:@"低", @"中", @"高", nil];
     
     // 监听输入
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onTodoTextChanged:) name:@"UITextViewTextDidChangeNotification" object:nil];
@@ -85,9 +85,10 @@
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     [datePicker setDate:[NSDate date] animated:YES];
     [datePicker setMinimumDate:[NSDate date]];
-    [datePicker setMinuteInterval:5];
+    // 初始值
+    [self dateChange:datePicker];
+    // 监听时间变化
     [datePicker addTarget:self action:@selector(dateChange:) forControlEvents:UIControlEventValueChanged];
-    self.datePicker = datePicker;
     
     UILabel *datePickerTitle = [[UILabel alloc]init];
     datePickerTitle.text = @"日期与时间";
@@ -102,7 +103,6 @@
     // 优先级模块
     UIPickerView *priorityPickerView = [[UIPickerView alloc]init];
     priorityPickerView.delegate = self;
-    priorityPickerView.dataSource = self;
     
     UILabel *priorityTitle = [[UILabel alloc]init];
     priorityTitle.text = @"优先级";
