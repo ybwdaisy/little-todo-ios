@@ -72,11 +72,9 @@
     UIStackView *inputSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[titleTextView, divideLine, remarkTextView]];
     inputSectionView.backgroundColor = [UIColor whiteColor];
     inputSectionView.layer.cornerRadius = 10;
-    [inputSectionView setFrame:CGRectMake(20, 100, modelViewInnerWidth, 160.5)];
     inputSectionView.spacing = 0;
     inputSectionView.axis = UILayoutConstraintAxisVertical;
-    
-    [modalView addSubview:inputSectionView];
+    [inputSectionView.heightAnchor constraintEqualToConstant:160].active = TRUE;
     
     // 日期与时间模块
     
@@ -93,27 +91,32 @@
     UILabel *datePickerTitle = [[UILabel alloc]init];
     datePickerTitle.text = @"日期与时间";
     
-    UIStackView *datePickerView = [[UIStackView alloc]initWithArrangedSubviews:@[datePickerTitle, datePicker]];
-    [datePickerView setFrame:CGRectMake(20, 280, modelViewInnerWidth, 40)];
-    datePickerView.axis = UILayoutConstraintAxisHorizontal;
-    datePickerView.spacing = 10;
-    
-    [modalView addSubview:datePickerView];
+    UIStackView *datePickerSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[datePickerTitle, datePicker]];
+    datePickerSectionView.axis = UILayoutConstraintAxisHorizontal;
+    datePickerSectionView.spacing = 10;
+    [datePickerSectionView.heightAnchor constraintEqualToConstant:40].active = TRUE;
     
     // 优先级模块
+
     UIPickerView *priorityPickerView = [[UIPickerView alloc]init];
     priorityPickerView.delegate = self;
     
     UILabel *priorityTitle = [[UILabel alloc]init];
     priorityTitle.text = @"优先级";
     
-    UIStackView *priorityView = [[UIStackView alloc]initWithArrangedSubviews:@[priorityTitle, priorityPickerView]];
-    [priorityView setFrame:CGRectMake(20, 340, modelViewInnerWidth, 100)];
-    priorityView.axis = UILayoutConstraintAxisHorizontal;
-    
-    [modalView addSubview:priorityView];
+    UIStackView *prioritySectionView = [[UIStackView alloc]initWithArrangedSubviews:@[priorityTitle, priorityPickerView]];
+    prioritySectionView.axis = UILayoutConstraintAxisHorizontal;
+    [datePickerSectionView.heightAnchor constraintEqualToConstant:100].active = TRUE;
 
     // 重复模式模块
+    
+    // 对所有子元素整体布局
+    UIStackView *modalContainerView = [[UIStackView alloc]initWithArrangedSubviews:@[inputSectionView, datePickerSectionView, prioritySectionView]];
+    [modalContainerView setFrame:CGRectMake(20, 100, modelViewInnerWidth, 340)];
+    modalContainerView.axis = UILayoutConstraintAxisVertical;
+    modalContainerView.spacing = 20;
+    
+    [modalView addSubview:modalContainerView];
     
     [self.view addSubview:modalView];
     self.modalPresentationStyle = UIModalPresentationPopover;
