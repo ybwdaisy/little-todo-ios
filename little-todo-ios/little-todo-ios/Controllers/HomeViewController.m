@@ -73,6 +73,8 @@
 
 }
 
+#pragma mark TableView Delegate
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 120;
 }
@@ -113,6 +115,7 @@
     config.performsFirstActionWithFullSwipe = NO;
     return config;
 }
+
 - (nullable UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) {
     UIContextualAction *trailingDeleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         [self.todoListData removeObjectAtIndex:indexPath.row];
@@ -131,10 +134,14 @@
     return config;
 }
 
+#pragma mark SafeAreaInsets
+
 - (void)viewSafeAreaInsetsDidChange NS_REQUIRES_SUPER API_AVAILABLE(ios(11.0), tvos(11.0)) {
     [super viewSafeAreaInsetsDidChange];
     [self.plusButtonContainerView setFrame:CGRectMake(self.view.frame.size.width - 80, self.view.frame.size.height - self.view.safeAreaInsets.bottom - 80, 50, 50)];
 }
+
+#pragma mark Custom Gesture Event
 
 - (void)tapAddTodoButton {
     AddTodoViewController *addTodoViewController = [[AddTodoViewController alloc]init];

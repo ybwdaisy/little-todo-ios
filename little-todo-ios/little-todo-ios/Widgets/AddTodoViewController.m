@@ -122,6 +122,8 @@
     self.modalPresentationStyle = UIModalPresentationPopover;
 }
 
+#pragma mark Priority UIPickerView Delegate
+
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
     return 1;
 }
@@ -134,6 +136,8 @@
     self.todoPriorityText = [self.priorityList objectAtIndex:row];
     return self.todoPriorityText;
 }
+
+#pragma mark Custom View Makers
 
 - (UITextView *)makeTextView:(int)tag placeholderText:(NSString *)placeholderText height:(double)height {
     UITextView *textView = [[UITextView alloc]init];
@@ -169,15 +173,7 @@
     return button;
 }
 
-- (void)onTodoTextChanged:(NSNotification *)obj {
-    UITextView *todoTextView = (UITextView *)obj.object;
-    if (todoTextView.tag == 1) {
-        self.todoTitleText = todoTextView.text;
-    }
-    if (todoTextView.tag == 2) {
-        self.todoRemarkText = todoTextView.text;
-    }
-}
+#pragma mark Custom Gesture Events
 
 - (void)addNewTodo {
     if ([self.todoTitleText isEqualToString:@""] || [self.todoRemarkText isEqualToString:@""]) {
@@ -219,6 +215,19 @@
     [self presentViewController:actionSheet animated:YES completion:nil];
     
 }
+
+#pragma mark Event Listeners
+
+- (void)onTodoTextChanged:(NSNotification *)obj {
+    UITextView *todoTextView = (UITextView *)obj.object;
+    if (todoTextView.tag == 1) {
+        self.todoTitleText = todoTextView.text;
+    }
+    if (todoTextView.tag == 2) {
+        self.todoRemarkText = todoTextView.text;
+    }
+}
+
 
 - (void)dateChange:(UIDatePicker *)datePicker {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
