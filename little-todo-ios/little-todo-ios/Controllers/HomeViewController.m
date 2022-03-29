@@ -135,6 +135,30 @@
     return config;
 }
 
+- (nullable UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point {
+    self.todoIndexPath = indexPath;
+    UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:nil actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+        UIAction *topAction = [UIAction actionWithTitle:@"Top" image:[UIImage systemImageNamed:@"pin"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self topTodo:nil];
+        }];
+        UIAction *doneAction = [UIAction actionWithTitle:@"Done" image:[UIImage systemImageNamed:@"bookmark"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self doneTodo:nil];
+        }];
+        UIAction *shareAction = [UIAction actionWithTitle:@"Share" image:[UIImage systemImageNamed:@"square.and.arrow.up"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self shareTodo:nil];
+        }];
+        UIAction *deleteAction = [UIAction actionWithTitle:@"Delete" image:[UIImage systemImageNamed:@"trash"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self deleteTodo:nil];
+        }];
+        deleteAction.attributes = UIMenuElementAttributesDestructive;
+        NSArray *menuActions = [NSArray arrayWithObjects:topAction, doneAction, shareAction, deleteAction, nil];
+        UIMenu *menu = [UIMenu menuWithTitle:@"Action Menus" children:menuActions];
+        return menu;
+    }];
+    return config;
+}
+
+
 #pragma mark SafeAreaInsets
 
 - (void)viewSafeAreaInsetsDidChange NS_REQUIRES_SUPER API_AVAILABLE(ios(11.0), tvos(11.0)) {
@@ -161,10 +185,11 @@
         menuController.arrowDirection = UIMenuControllerArrowDefault;
         
         UIMenuItem *topItem = [[UIMenuItem alloc]initWithTitle:@"Top" action:@selector(topTodo:)];
-        UIMenuItem *deleteItem = [[UIMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteTodo:)];
         UIMenuItem *doneItem = [[UIMenuItem alloc]initWithTitle:@"Done" action:@selector(doneTodo:)];
+        UIMenuItem *shareItem = [[UIMenuItem alloc]initWithTitle:@"Share" action:@selector(shareTodo:)];
+        UIMenuItem *deleteItem = [[UIMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteTodo:)];
 
-        NSArray *menuItems = [NSArray arrayWithObjects:topItem, deleteItem, doneItem, nil];
+        NSArray *menuItems = [NSArray arrayWithObjects:topItem, doneItem, shareItem, deleteItem, nil];
         [menuController setMenuItems:menuItems];
         [menuController showMenuFromView:self.todoTableView rect:cell.frame];
     }
@@ -184,11 +209,6 @@
     }
 }
 
-- (void)deleteTodo:(id)sender {
-    [self.todoListData removeObjectAtIndex:self.todoIndexPath.row];
-    [self.todoTableView reloadData];
-}
-
 - (void)doneTodo:(id)sender {
     if (self.todoIndexPath.row < [self.todoListData count] - 1) {
         [self.todoListData exchangeObjectAtIndex:self.todoIndexPath.row withObjectAtIndex: [self.todoListData count] - 1];
@@ -196,9 +216,19 @@
     }
 }
 
+- (void)shareTodo:(id)sender {
+    NSArray *activityItems = [NSArray arrayWithObjects: @"share todo text", nil];
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)deleteTodo:(id)sender {
+    [self.todoListData removeObjectAtIndex:self.todoIndexPath.row];
+    [self.todoTableView reloadData];
+}
 
 - (BOOL) canPerformAction:(SEL)action withSender:(id)sender {
-    return action == @selector(topTodo:) || action == @selector(deleteTodo:) || action == @selector(doneTodo:);
+    return action == @selector(topTodo:) || action == @selector(doneTodo:) || action == @selector(shareTodo:) || action == @selector(deleteTodo:);
 }
 
 @end
