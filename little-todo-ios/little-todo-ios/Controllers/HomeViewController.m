@@ -15,6 +15,7 @@
 @property(nonatomic, readwrite) UITableView *todoTableView;
 @property(nonatomic, readwrite) NSMutableArray *todoListData;
 @property(nonatomic, readwrite) UIView *plusButtonContainerView;
+@property(nonatomic, readwrite) NSIndexPath *todoIndexPath;
 
 @end
 
@@ -59,7 +60,7 @@
     UIImageView *plusIconImageView = [[UIImageView alloc] initWithImage:[plusIcon imageWithSize:CGSizeMake(20, 20)]];
     
     self.plusButtonContainerView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, self.view.frame.size.height, 50, 50)];
-    self.plusButtonContainerView.backgroundColor = UIColor.orangeColor;
+    self.plusButtonContainerView.backgroundColor = [[UIColor alloc]initWithRed:10/255.0 green:95/255.0 blue:240/255.0 alpha:1];
     self.plusButtonContainerView.layer.cornerRadius = 25;
     
     plusIconImageView.center = CGPointMake(self.plusButtonContainerView.frame.size.width / 2, self.plusButtonContainerView.frame.size.height / 2);
@@ -94,6 +95,10 @@
         cell = [[TDTableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:cellId];
     }
     [cell layoutTableViewCell:[self.todoListData objectAtIndex:indexPath.row]];
+    
+    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
+    [cell addGestureRecognizer:longPressGesture];
+    
     return cell;
 }
 
@@ -105,10 +110,8 @@
     
     UIContextualAction *leadingAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Done" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         // 完成的任务放在最后面
-        if (indexPath.row < [self.todoListData count] - 1) {
-            [self.todoListData exchangeObjectAtIndex:indexPath.row withObjectAtIndex: [self.todoListData count] - 1];
-            [self.todoTableView reloadData];
-        }
+        self.todoIndexPath = indexPath;
+        [self doneTodo:nil];
     }];
     leadingAction.backgroundColor = [UIColor colorWithRed:58.0f/255.0f green:197.0f/255.0f blue:105.0f/255.0f alpha:1];
     UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[leadingAction]];
@@ -118,21 +121,43 @@
 
 - (nullable UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) {
     UIContextualAction *trailingDeleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [self.todoListData removeObjectAtIndex:indexPath.row];
-        [self.todoTableView reloadData];
+        self.todoIndexPath = indexPath;
+        [self deleteTodo:nil];
     }];
     UIContextualAction *trailingTopAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Top" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         // 置顶的任务放最上面
-        if (indexPath.row > 0) {
-            [self.todoListData exchangeObjectAtIndex:indexPath.row withObjectAtIndex: 0];
-            [self.todoTableView reloadData];
-        }
+        self.todoIndexPath = indexPath;
+        [self topTodo:nil];
     }];
     trailingTopAction.backgroundColor = [UIColor colorWithRed:248.0f/255.0f green:128.0f/255.0f blue:66.0f/255.0f alpha:1];
     UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[trailingDeleteAction,trailingTopAction]];
     config.performsFirstActionWithFullSwipe = NO;
     return config;
 }
+
+- (nullable UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point {
+    self.todoIndexPath = indexPath;
+    UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:nil actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+        UIAction *topAction = [UIAction actionWithTitle:@"Top" image:[UIImage systemImageNamed:@"pin"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self topTodo:nil];
+        }];
+        UIAction *doneAction = [UIAction actionWithTitle:@"Done" image:[UIImage systemImageNamed:@"bookmark"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self doneTodo:nil];
+        }];
+        UIAction *shareAction = [UIAction actionWithTitle:@"Share" image:[UIImage systemImageNamed:@"square.and.arrow.up"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self shareTodo:nil];
+        }];
+        UIAction *deleteAction = [UIAction actionWithTitle:@"Delete" image:[UIImage systemImageNamed:@"trash"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self deleteTodo:nil];
+        }];
+        deleteAction.attributes = UIMenuElementAttributesDestructive;
+        NSArray *menuActions = [NSArray arrayWithObjects:topAction, doneAction, shareAction, deleteAction, nil];
+        UIMenu *menu = [UIMenu menuWithTitle:@"Action Menus" children:menuActions];
+        return menu;
+    }];
+    return config;
+}
+
 
 #pragma mark SafeAreaInsets
 
@@ -145,15 +170,65 @@
 
 - (void)tapAddTodoButton {
     AddTodoViewController *addTodoViewController = [[AddTodoViewController alloc]init];
-    
     addTodoViewController.addTodoVCDelegate = self;
-    
     [self presentViewController:addTodoViewController animated:YES completion:nil];
 }
+
+- (void)cellLongPress:(UIGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint location = [recognizer locationInView:self.todoTableView];
+        self.todoIndexPath = [self.todoTableView indexPathForRowAtPoint:location];
+        TDTableViewCell *cell = (TDTableViewCell *)recognizer.view;
+        [cell becomeFirstResponder];
+        
+        UIMenuController *menuController = [UIMenuController sharedMenuController];
+        menuController.arrowDirection = UIMenuControllerArrowDefault;
+        
+        UIMenuItem *topItem = [[UIMenuItem alloc]initWithTitle:@"Top" action:@selector(topTodo:)];
+        UIMenuItem *doneItem = [[UIMenuItem alloc]initWithTitle:@"Done" action:@selector(doneTodo:)];
+        UIMenuItem *shareItem = [[UIMenuItem alloc]initWithTitle:@"Share" action:@selector(shareTodo:)];
+        UIMenuItem *deleteItem = [[UIMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteTodo:)];
+
+        NSArray *menuItems = [NSArray arrayWithObjects:topItem, doneItem, shareItem, deleteItem, nil];
+        [menuController setMenuItems:menuItems];
+        [menuController showMenuFromView:self.todoTableView rect:cell.frame];
+    }
+}
+
+#pragma mark Custom Methods
 
 - (void)addTodo:(NSDictionary *)todo {
     [self.todoListData addObject:todo];
     [self.todoTableView reloadData];
+}
+
+- (void)topTodo:(id)sender {
+    if (self.todoIndexPath.row > 0) {
+        [self.todoListData exchangeObjectAtIndex:self.todoIndexPath.row withObjectAtIndex: 0];
+        [self.todoTableView reloadData];
+    }
+}
+
+- (void)doneTodo:(id)sender {
+    if (self.todoIndexPath.row < [self.todoListData count] - 1) {
+        [self.todoListData exchangeObjectAtIndex:self.todoIndexPath.row withObjectAtIndex: [self.todoListData count] - 1];
+        [self.todoTableView reloadData];
+    }
+}
+
+- (void)shareTodo:(id)sender {
+    NSArray *activityItems = [NSArray arrayWithObjects: @"share todo text", nil];
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+- (void)deleteTodo:(id)sender {
+    [self.todoListData removeObjectAtIndex:self.todoIndexPath.row];
+    [self.todoTableView reloadData];
+}
+
+- (BOOL) canPerformAction:(SEL)action withSender:(id)sender {
+    return action == @selector(topTodo:) || action == @selector(doneTodo:) || action == @selector(shareTodo:) || action == @selector(deleteTodo:);
 }
 
 @end

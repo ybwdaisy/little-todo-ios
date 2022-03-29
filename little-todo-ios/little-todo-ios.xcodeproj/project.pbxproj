@@ -11,7 +11,6 @@
 		B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAB72573880300B60FCF /* AppDelegate.m */; };
 		B5B5FABB2573880300B60FCF /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FABA2573880300B60FCF /* SceneDelegate.m */; };
 		B5B5FABE2573880300B60FCF /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FABD2573880300B60FCF /* HomeViewController.m */; };
-		B5B5FAC12573880300B60FCF /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAC02573880300B60FCF /* SettingViewController.m */; };
 		B5B5FAC62573880400B60FCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FAC52573880400B60FCF /* Assets.xcassets */; };
 		B5B5FAC92573880400B60FCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B5B5FAC72573880400B60FCF /* LaunchScreen.storyboard */; };
 		B5B5FACC2573880400B60FCF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FACB2573880400B60FCF /* main.m */; };
@@ -49,8 +48,6 @@
 		B5B5FABA2573880300B60FCF /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		B5B5FABC2573880300B60FCF /* HomeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
 		B5B5FABD2573880300B60FCF /* HomeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		B5B5FABF2573880300B60FCF /* SettingViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
-		B5B5FAC02573880300B60FCF /* SettingViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 		B5B5FAC52573880400B60FCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B5B5FAC82573880400B60FCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B5B5FACA2573880400B60FCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,8 +112,6 @@
 			children = (
 				B53049442587AB1300408189 /* TDTableViewCell.h */,
 				B53049452587AB1300408189 /* TDTableViewCell.m */,
-				B5DC753825B9AAE500DF625D /* AddTodoViewController.h */,
-				B5DC753925B9AAE500DF625D /* AddTodoViewController.m */,
 			);
 			path = Widgets;
 			sourceTree = "<group>";
@@ -126,8 +121,8 @@
 			children = (
 				B5B5FABC2573880300B60FCF /* HomeViewController.h */,
 				B5B5FABD2573880300B60FCF /* HomeViewController.m */,
-				B5B5FABF2573880300B60FCF /* SettingViewController.h */,
-				B5B5FAC02573880300B60FCF /* SettingViewController.m */,
+				B5DC753825B9AAE500DF625D /* AddTodoViewController.h */,
+				B5DC753925B9AAE500DF625D /* AddTodoViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -363,7 +358,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5B5FACC2573880400B60FCF /* main.m in Sources */,
-				B5B5FAC12573880300B60FCF /* SettingViewController.m in Sources */,
 				B5DC753A25B9AAE500DF625D /* AddTodoViewController.m in Sources */,
 				B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */,
 				B5B5FABE2573880300B60FCF /* HomeViewController.m in Sources */,

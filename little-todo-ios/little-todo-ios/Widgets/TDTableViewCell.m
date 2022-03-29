@@ -65,4 +65,9 @@
     self.tagName.text = [cellData objectForKey:@"tagName"];
     self.time.text = [cellData objectForKey:@"time"];
 }
+
+- (BOOL) canBecomeFirstResponder {
+    return YES;
+}
+
 @end
