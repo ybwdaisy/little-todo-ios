@@ -8,7 +8,7 @@
 
 #import "AddTodoViewController.h"
 
-@interface AddTodoViewController () <UIPickerViewDelegate>
+@interface AddTodoViewController ()
 
 @property(nonatomic, readwrite) NSString *todoTitleText;
 @property(nonatomic, readwrite) NSString *todoRemarkText;
@@ -16,6 +16,7 @@
 @property(nonatomic, readwrite) UIDatePicker *datePicker;
 @property(nonatomic, readwrite) NSArray *priorityList;
 @property(nonatomic, readwrite) NSString *todoPriorityText;
+@property(nonatomic, readwrite) UIButton *priorityButton;
 
 @end
 
@@ -32,6 +33,7 @@
     
     self.todoTitleText = @"";
     self.todoRemarkText = @"";
+    self.todoPriorityText = @"请选择";
     self.priorityList = [[NSArray alloc] initWithObjects:@"低", @"中", @"高", nil];
     
     // 监听输入
@@ -67,22 +69,20 @@
     [divideLine.heightAnchor constraintEqualToConstant:0.5].active = TRUE;
     divideLine.backgroundColor = [[UIColor alloc]initWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1];
     
-    UITextView *remarkTextView = [self makeTextView:2 placeholderText:@"备注" height:0.0];
+    UITextView *remarkTextView = [self makeTextView:2 placeholderText:@"备注" height:40.0];
     
     UIStackView *inputSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[titleTextView, divideLine, remarkTextView]];
     inputSectionView.backgroundColor = [UIColor whiteColor];
-    inputSectionView.layer.cornerRadius = 10;
     inputSectionView.spacing = 0;
     inputSectionView.axis = UILayoutConstraintAxisVertical;
-    [inputSectionView.heightAnchor constraintEqualToConstant:160].active = TRUE;
+    [inputSectionView.heightAnchor constraintEqualToConstant:80].active = TRUE;
     
     // 日期与时间模块
     
     UIDatePicker *datePicker = [[UIDatePicker alloc]init];
     datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
-    [datePicker setDate:[NSDate date] animated:YES];
-    [datePicker setMinimumDate:[NSDate date]];
+    datePicker.minuteInterval = 5;
     // 初始值
     [self dateChange:datePicker];
     // 监听时间变化
@@ -94,47 +94,29 @@
     UIStackView *datePickerSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[datePickerTitle, datePicker]];
     datePickerSectionView.axis = UILayoutConstraintAxisHorizontal;
     datePickerSectionView.spacing = 10;
-    [datePickerSectionView.heightAnchor constraintEqualToConstant:40].active = TRUE;
+    [datePickerSectionView.heightAnchor constraintEqualToConstant:50].active = TRUE;
     
     // 优先级模块
-
-    UIPickerView *priorityPickerView = [[UIPickerView alloc]init];
-    priorityPickerView.delegate = self;
     
     UILabel *priorityTitle = [[UILabel alloc]init];
     priorityTitle.text = @"优先级";
+    UIButton *priorityButton = [self makeButtonWidthTitleAndAction:@"请选择" action:@selector(selectPriority)];
+    self.priorityButton = priorityButton;
     
-    UIStackView *prioritySectionView = [[UIStackView alloc]initWithArrangedSubviews:@[priorityTitle, priorityPickerView]];
+    UIStackView *prioritySectionView = [[UIStackView alloc]initWithArrangedSubviews:@[priorityTitle, priorityButton]];
     prioritySectionView.axis = UILayoutConstraintAxisHorizontal;
-    [datePickerSectionView.heightAnchor constraintEqualToConstant:100].active = TRUE;
-
-    // 重复模式模块
+    [prioritySectionView.heightAnchor constraintEqualToConstant:50].active = TRUE;
     
     // 对所有子元素整体布局
     UIStackView *modalContainerView = [[UIStackView alloc]initWithArrangedSubviews:@[inputSectionView, datePickerSectionView, prioritySectionView]];
-    [modalContainerView setFrame:CGRectMake(20, 100, modelViewInnerWidth, 340)];
+    [modalContainerView setFrame:CGRectMake(20, 100, modelViewInnerWidth, 200)];
     modalContainerView.axis = UILayoutConstraintAxisVertical;
-    modalContainerView.spacing = 20;
+    modalContainerView.spacing = 10;
     
     [modalView addSubview:modalContainerView];
     
     [self.view addSubview:modalView];
     self.modalPresentationStyle = UIModalPresentationPopover;
-}
-
-#pragma mark Priority UIPickerView Delegate
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
-    return self.priorityList.count;
-}
-
-- (nullable NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component {
-    self.todoPriorityText = [self.priorityList objectAtIndex:row];
-    return self.todoPriorityText;
 }
 
 #pragma mark Custom View Makers
@@ -166,7 +148,7 @@
     [button setTitle:name forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
     [button.heightAnchor constraintEqualToConstant:50].active = TRUE;
-    [button.widthAnchor constraintEqualToConstant:50].active = TRUE;
+    [button.widthAnchor constraintEqualToConstant:60].active = TRUE;
     
     UITapGestureRecognizer *tapCancelAddTodo = [[UITapGestureRecognizer alloc]initWithTarget:self action:action];
     [button addGestureRecognizer:tapCancelAddTodo];
@@ -210,6 +192,24 @@
         self.todoDateTimeText = @"";
         self.todoPriorityText = @"";
         [self dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [self presentViewController:actionSheet animated:YES completion:nil];
+    
+}
+
+- (void)selectPriority {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"优先级" message:@"" preferredStyle:(UIAlertControllerStyleActionSheet)];
+    
+    for (int i = 0; i < self.priorityList.count; i++) {
+        [actionSheet addAction:[UIAlertAction actionWithTitle:self.priorityList[i] style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            NSString *priority = [self.priorityList objectAtIndex:i];
+            self.todoPriorityText = priority;
+            [self.priorityButton setTitle:priority forState:(UIControlStateNormal)];
+        }]];
+    }
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+        [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
     }]];
     
     [self presentViewController:actionSheet animated:YES completion:nil];

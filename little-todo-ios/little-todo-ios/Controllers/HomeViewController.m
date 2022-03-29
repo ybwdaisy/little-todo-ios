@@ -59,7 +59,7 @@
     UIImageView *plusIconImageView = [[UIImageView alloc] initWithImage:[plusIcon imageWithSize:CGSizeMake(20, 20)]];
     
     self.plusButtonContainerView = [[UIView alloc] initWithFrame:CGRectMake(self.view.frame.size.width, self.view.frame.size.height, 50, 50)];
-    self.plusButtonContainerView.backgroundColor = UIColor.orangeColor;
+    self.plusButtonContainerView.backgroundColor = [[UIColor alloc]initWithRed:10/255.0 green:95/255.0 blue:240/255.0 alpha:1];
     self.plusButtonContainerView.layer.cornerRadius = 25;
     
     plusIconImageView.center = CGPointMake(self.plusButtonContainerView.frame.size.width / 2, self.plusButtonContainerView.frame.size.height / 2);
