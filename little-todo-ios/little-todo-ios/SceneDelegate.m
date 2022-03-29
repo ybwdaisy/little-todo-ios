@@ -8,9 +8,8 @@
 
 #import "SceneDelegate.h"
 #import "HomeViewController.h"
-#import "SettingViewController.h"
 
-@interface SceneDelegate ()<UITabBarDelegate, UITabBarControllerDelegate>
+@interface SceneDelegate ()
 
 @end
 
@@ -25,30 +24,13 @@
         UIWindowScene *windowScene = (UIWindowScene *) scene;
         UIWindow *window = [[UIWindow alloc] initWithWindowScene:windowScene];
         self.window = window;
-        
-        UITabBarController *tabbarController = [[UITabBarController alloc] init];
-    
         UINavigationController *homeViewController = [[UINavigationController alloc] initWithRootViewController:[[HomeViewController alloc] init]];
-        UINavigationController *settingViewController = [[UINavigationController alloc] initWithRootViewController:[[SettingViewController alloc] init]];
-        
-        [tabbarController setViewControllers:@[homeViewController, settingViewController]];
-        tabbarController.delegate = self;
-
-        self.window.rootViewController = tabbarController;
+        self.window.rootViewController = homeViewController;
         [self.window makeKeyAndVisible];
     }
     
     
 }
-
-- (BOOL)tabBarController:(UITabBarController *)tabBarController shouldSelectViewController:(UIViewController *)viewController API_AVAILABLE(ios(3.0)) {
-    return YES;
-}
-
-- (void)tabBarController:(UITabBarController *)tabBarController didSelectViewController:(UIViewController *)viewController {
-    NSLog(@"didSelectViewController");
-}
-
 
 - (void)sceneDidDisconnect:(UIScene *)scene {
     // Called as the scene is being released by the system.

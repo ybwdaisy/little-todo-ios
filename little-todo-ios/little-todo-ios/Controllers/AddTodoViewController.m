@@ -46,7 +46,7 @@
     UIButton *headerLeftButton = [self makeButtonWidthTitleAndAction:@"取消" action:@selector(cancelAddTodo)];
     
     UILabel *headerTitle = [[UILabel alloc]init];
-    headerTitle.text = @"新建代办事项";
+    headerTitle.text = @"新建待办事项";
     headerTitle.font = [UIFont boldSystemFontOfSize:18];
     [headerTitle setTextAlignment:NSTextAlignmentCenter];
     
