@@ -15,6 +15,7 @@
 @property(nonatomic, readwrite) UITableView *todoTableView;
 @property(nonatomic, readwrite) NSMutableArray *todoListData;
 @property(nonatomic, readwrite) UIView *plusButtonContainerView;
+@property(nonatomic, readwrite) NSIndexPath *todoIndexPath;
 
 @end
 
@@ -94,6 +95,10 @@
         cell = [[TDTableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:cellId];
     }
     [cell layoutTableViewCell:[self.todoListData objectAtIndex:indexPath.row]];
+    
+    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
+    [cell addGestureRecognizer:longPressGesture];
+    
     return cell;
 }
 
@@ -105,10 +110,8 @@
     
     UIContextualAction *leadingAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Done" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         // 完成的任务放在最后面
-        if (indexPath.row < [self.todoListData count] - 1) {
-            [self.todoListData exchangeObjectAtIndex:indexPath.row withObjectAtIndex: [self.todoListData count] - 1];
-            [self.todoTableView reloadData];
-        }
+        self.todoIndexPath = indexPath;
+        [self doneTodo:nil];
     }];
     leadingAction.backgroundColor = [UIColor colorWithRed:58.0f/255.0f green:197.0f/255.0f blue:105.0f/255.0f alpha:1];
     UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[leadingAction]];
@@ -118,15 +121,13 @@
 
 - (nullable UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) {
     UIContextualAction *trailingDeleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        [self.todoListData removeObjectAtIndex:indexPath.row];
-        [self.todoTableView reloadData];
+        self.todoIndexPath = indexPath;
+        [self deleteTodo:nil];
     }];
     UIContextualAction *trailingTopAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Top" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         // 置顶的任务放最上面
-        if (indexPath.row > 0) {
-            [self.todoListData exchangeObjectAtIndex:indexPath.row withObjectAtIndex: 0];
-            [self.todoTableView reloadData];
-        }
+        self.todoIndexPath = indexPath;
+        [self topTodo:nil];
     }];
     trailingTopAction.backgroundColor = [UIColor colorWithRed:248.0f/255.0f green:128.0f/255.0f blue:66.0f/255.0f alpha:1];
     UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[trailingDeleteAction,trailingTopAction]];
@@ -145,15 +146,59 @@
 
 - (void)tapAddTodoButton {
     AddTodoViewController *addTodoViewController = [[AddTodoViewController alloc]init];
-    
     addTodoViewController.addTodoVCDelegate = self;
-    
     [self presentViewController:addTodoViewController animated:YES completion:nil];
 }
+
+- (void)cellLongPress:(UIGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        CGPoint location = [recognizer locationInView:self.todoTableView];
+        self.todoIndexPath = [self.todoTableView indexPathForRowAtPoint:location];
+        TDTableViewCell *cell = (TDTableViewCell *)recognizer.view;
+        [cell becomeFirstResponder];
+        
+        UIMenuController *menuController = [UIMenuController sharedMenuController];
+        menuController.arrowDirection = UIMenuControllerArrowDefault;
+        
+        UIMenuItem *topItem = [[UIMenuItem alloc]initWithTitle:@"Top" action:@selector(topTodo:)];
+        UIMenuItem *deleteItem = [[UIMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteTodo:)];
+        UIMenuItem *doneItem = [[UIMenuItem alloc]initWithTitle:@"Done" action:@selector(doneTodo:)];
+
+        NSArray *menuItems = [NSArray arrayWithObjects:topItem, deleteItem, doneItem, nil];
+        [menuController setMenuItems:menuItems];
+        [menuController showMenuFromView:self.todoTableView rect:cell.frame];
+    }
+}
+
+#pragma mark Custom Methods
 
 - (void)addTodo:(NSDictionary *)todo {
     [self.todoListData addObject:todo];
     [self.todoTableView reloadData];
+}
+
+- (void)topTodo:(id)sender {
+    if (self.todoIndexPath.row > 0) {
+        [self.todoListData exchangeObjectAtIndex:self.todoIndexPath.row withObjectAtIndex: 0];
+        [self.todoTableView reloadData];
+    }
+}
+
+- (void)deleteTodo:(id)sender {
+    [self.todoListData removeObjectAtIndex:self.todoIndexPath.row];
+    [self.todoTableView reloadData];
+}
+
+- (void)doneTodo:(id)sender {
+    if (self.todoIndexPath.row < [self.todoListData count] - 1) {
+        [self.todoListData exchangeObjectAtIndex:self.todoIndexPath.row withObjectAtIndex: [self.todoListData count] - 1];
+        [self.todoTableView reloadData];
+    }
+}
+
+
+- (BOOL) canPerformAction:(SEL)action withSender:(id)sender {
+    return action == @selector(topTodo:) || action == @selector(deleteTodo:) || action == @selector(doneTodo:);
 }
 
 @end

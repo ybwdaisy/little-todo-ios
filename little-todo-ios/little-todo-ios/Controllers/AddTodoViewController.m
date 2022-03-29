@@ -33,7 +33,7 @@
     
     self.todoTitleText = @"";
     self.todoRemarkText = @"";
-    self.todoPriorityText = @"请选择";
+    self.todoPriorityText = @"";
     self.priorityList = [[NSArray alloc] initWithObjects:@"低", @"中", @"高", nil];
     
     // 监听输入
