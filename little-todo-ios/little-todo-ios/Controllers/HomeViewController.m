@@ -9,6 +9,7 @@
 #import "HomeViewController.h"
 #import "TDTableViewCell.h"
 #import "AddTodoViewController.h"
+#import "Toast.h"
 
 @interface HomeViewController ()<UITableViewDelegate, AddTodoVCDelegate>
 
@@ -224,6 +225,7 @@
     NSDictionary *todo = self.todoListData[self.todoIndexPath.row];
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = [todo objectForKey:@"title"];
+    [self.view makeToast:@"Copied" duration:2.0 position:CSToastPositionCenter];
 }
 
 - (void)shareTodo:(id)sender {
