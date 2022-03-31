@@ -144,6 +144,9 @@
         UIAction *doneAction = [UIAction actionWithTitle:@"Done" image:[UIImage systemImageNamed:@"bookmark"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
             [self doneTodo:nil];
         }];
+        UIAction *copyAction = [UIAction actionWithTitle:@"Copy" image:[UIImage systemImageNamed:@"doc.on.doc"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self copyTodo:nil];
+        }];
         UIAction *shareAction = [UIAction actionWithTitle:@"Share" image:[UIImage systemImageNamed:@"square.and.arrow.up"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
             [self shareTodo:nil];
         }];
@@ -151,7 +154,7 @@
             [self deleteTodo:nil];
         }];
         deleteAction.attributes = UIMenuElementAttributesDestructive;
-        NSArray *menuActions = [NSArray arrayWithObjects:topAction, doneAction, shareAction, deleteAction, nil];
+        NSArray *menuActions = [NSArray arrayWithObjects:topAction, doneAction, copyAction, shareAction, deleteAction, nil];
         UIMenu *menu = [UIMenu menuWithTitle:@"Action Menus" children:menuActions];
         return menu;
     }];
@@ -186,10 +189,11 @@
         
         UIMenuItem *topItem = [[UIMenuItem alloc]initWithTitle:@"Top" action:@selector(topTodo:)];
         UIMenuItem *doneItem = [[UIMenuItem alloc]initWithTitle:@"Done" action:@selector(doneTodo:)];
+        UIMenuItem *copyItem = [[UIMenuItem alloc]initWithTitle:@"Copy" action:@selector(copyTodo:)];
         UIMenuItem *shareItem = [[UIMenuItem alloc]initWithTitle:@"Share" action:@selector(shareTodo:)];
         UIMenuItem *deleteItem = [[UIMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteTodo:)];
 
-        NSArray *menuItems = [NSArray arrayWithObjects:topItem, doneItem, shareItem, deleteItem, nil];
+        NSArray *menuItems = [NSArray arrayWithObjects:topItem, doneItem, copyItem, shareItem, deleteItem, nil];
         [menuController setMenuItems:menuItems];
         [menuController showMenuFromView:self.todoTableView rect:cell.frame];
     }
@@ -216,6 +220,12 @@
     }
 }
 
+- (void)copyTodo:(id)sender {
+    NSDictionary *todo = self.todoListData[self.todoIndexPath.row];
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = [todo objectForKey:@"title"];
+}
+
 - (void)shareTodo:(id)sender {
     NSArray *activityItems = [NSArray arrayWithObjects: @"share todo text", nil];
     UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:activityItems applicationActivities:nil];
@@ -227,8 +237,12 @@
     [self.todoTableView reloadData];
 }
 
-- (BOOL) canPerformAction:(SEL)action withSender:(id)sender {
-    return action == @selector(topTodo:) || action == @selector(doneTodo:) || action == @selector(shareTodo:) || action == @selector(deleteTodo:);
+- (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
+    return action == @selector(topTodo:)
+        || action == @selector(doneTodo:)
+        || action == @selector(copyTodo:)
+        ||action == @selector(shareTodo:)
+        || action == @selector(deleteTodo:);
 }
 
 @end
