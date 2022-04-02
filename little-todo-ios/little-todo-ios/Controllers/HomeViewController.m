@@ -82,7 +82,9 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"didSelectRow, %ld", (long)indexPath.row);
+    AddTodoViewController *addTodoViewController = [[AddTodoViewController alloc]initWithData:self.todoListData[indexPath.row]];
+    addTodoViewController.addTodoVCDelegate = self;
+    [self presentViewController:addTodoViewController animated:YES completion:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -243,7 +245,7 @@
     return action == @selector(topTodo:)
         || action == @selector(doneTodo:)
         || action == @selector(copyTodo:)
-        ||action == @selector(shareTodo:)
+        || action == @selector(shareTodo:)
         || action == @selector(deleteTodo:);
 }
 
