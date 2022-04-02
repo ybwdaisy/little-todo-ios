@@ -27,13 +27,20 @@
     return self;
 }
 
+-(instancetype)initWithData:(NSDictionary *)data {
+    self = [super init];
+    if (self) {
+        self.todoTitleText = [data objectForKey:@"title"];
+        self.todoRemarkText = [data objectForKey:@"remark"];
+        self.todoDateTimeText = [data objectForKey:@"time"];
+        self.todoPriorityText = [data objectForKey:@"tagName"];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    
-    self.todoTitleText = @"";
-    self.todoRemarkText = @"";
-    self.todoPriorityText = @"";
     self.priorityList = [[NSArray alloc] initWithObjects:@"低", @"中", @"高", nil];
     
     // 监听输入
@@ -63,13 +70,13 @@
     [modalView addSubview:headerView];
     
     // 标题和备注模块
-    UITextView *titleTextView = [self makeTextView:1 placeholderText:@"标题" height:40.0];
+    UITextView *titleTextView = [self makeTextView:1 value:self.todoTitleText placeholderText:@"标题" height:40.0];
     
     UIView *divideLine = [[UIView alloc]init];
     [divideLine.heightAnchor constraintEqualToConstant:0.5].active = TRUE;
     divideLine.backgroundColor = [[UIColor alloc]initWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1];
     
-    UITextView *remarkTextView = [self makeTextView:2 placeholderText:@"备注" height:40.0];
+    UITextView *remarkTextView = [self makeTextView:2 value:self.todoRemarkText placeholderText:@"备注" height:40.0];
     
     UIStackView *inputSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[titleTextView, divideLine, remarkTextView]];
     inputSectionView.backgroundColor = [UIColor whiteColor];
@@ -83,6 +90,12 @@
     datePicker.locale = [NSLocale localeWithLocaleIdentifier:@"zh"];
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     datePicker.minuteInterval = 5;
+    if (self.todoDateTimeText) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        formatter.dateFormat = @"yyyy/MM/dd HH:mm";
+        NSDate *date = [formatter dateFromString:self.todoDateTimeText];
+        [datePicker setDate:date];
+    }
     // 初始值
     [self dateChange:datePicker];
     // 监听时间变化
@@ -100,7 +113,7 @@
     
     UILabel *priorityTitle = [[UILabel alloc]init];
     priorityTitle.text = @"优先级";
-    UIButton *priorityButton = [self makeButtonWidthTitleAndAction:@"请选择" action:@selector(selectPriority)];
+    UIButton *priorityButton = [self makeButtonWidthTitleAndAction:self.todoPriorityText ? self.todoPriorityText : @"请选择" action:@selector(selectPriority)];
     self.priorityButton = priorityButton;
     
     UIStackView *prioritySectionView = [[UIStackView alloc]initWithArrangedSubviews:@[priorityTitle, priorityButton]];
@@ -121,25 +134,27 @@
 
 #pragma mark Custom View Makers
 
-- (UITextView *)makeTextView:(int)tag placeholderText:(NSString *)placeholderText height:(double)height {
+- (UITextView *)makeTextView:(int)tag value:(NSString*)value placeholderText:(NSString *)placeholderText height:(double)height {
     UITextView *textView = [[UITextView alloc]init];
     if (height) {
         [textView.heightAnchor constraintEqualToConstant:height].active = TRUE;
     }
     textView.tag = tag;
-    textView.text = @"";
+    textView.text = value;
     textView.editable = YES;
     textView.font = [UIFont systemFontOfSize:16];
     
-    UILabel *placeholder = [[UILabel alloc] init];
-    placeholder.text = placeholderText;
-    placeholder.numberOfLines = 0;
-    placeholder.textColor = [UIColor lightGrayColor];
-    placeholder.font = [UIFont systemFontOfSize:16];
-    [placeholder sizeToFit];
-    
-    [textView addSubview:placeholder];
-    [textView setValue:placeholder forKey:@"_placeholderLabel"];
+    if (value == nil) {
+        UILabel *placeholder = [[UILabel alloc] init];
+        placeholder.text = placeholderText;
+        placeholder.numberOfLines = 0;
+        placeholder.textColor = [UIColor lightGrayColor];
+        placeholder.font = [UIFont systemFontOfSize:16];
+        [placeholder sizeToFit];
+        [textView addSubview:placeholder];
+        [textView setValue:placeholder forKey:@"_placeholderLabel"];
+    }
+
     return textView;
 }
 
@@ -231,7 +246,7 @@
 
 - (void)dateChange:(UIDatePicker *)datePicker {
     NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
-    formatter.dateFormat = @"yyyy年MM月dd日 HH:mm";
+    formatter.dateFormat = @"yyyy/MM/dd HH:mm";
     self.todoDateTimeText = [formatter stringFromDate:datePicker.date];
 }
 
