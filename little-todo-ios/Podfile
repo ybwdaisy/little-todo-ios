@@ -7,8 +7,6 @@ target 'little-todo-ios' do
   use_frameworks!
 
   # Pods for little-todo-ios
-
-  pod 'FontAwesomeKit/FontAwesome'
   pod 'Toast', '~> 4.0.0'
 
 end

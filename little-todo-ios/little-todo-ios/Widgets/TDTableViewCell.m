@@ -50,7 +50,7 @@
         [self.contentView addSubview:({
             self.time = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 15 + self.remark.frame.size.height + 5 + self.tagName.frame.size.height + 5, 375, 20)];
             self.time.font = [UIFont systemFontOfSize:12];
-            self.time.textColor = [UIColor blueColor];
+            self.time.textColor = [UIColor systemBlueColor];
             self.time;
         })];
 
