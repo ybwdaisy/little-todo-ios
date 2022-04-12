@@ -161,7 +161,7 @@
 - (UIButton *)makeButtonWidthTitleAndAction:(NSString *)name action:(nullable SEL)action {
     UIButton *button = [[UIButton alloc]init];
     [button setTitle:name forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor systemBlueColor] forState:UIControlStateNormal];
     [button.heightAnchor constraintEqualToConstant:50].active = TRUE;
     [button.widthAnchor constraintEqualToConstant:60].active = TRUE;
     
