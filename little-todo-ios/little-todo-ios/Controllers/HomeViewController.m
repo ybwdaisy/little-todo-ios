@@ -16,6 +16,8 @@
 @property(nonatomic, readwrite) UITableView *todoTableView;
 @property(nonatomic, readwrite) NSMutableArray *todoListData;
 @property(nonatomic, readwrite) NSIndexPath *todoIndexPath;
+@property(nonatomic, readwrite) BOOL isContextMenu;
+
 
 @end
 
@@ -29,22 +31,10 @@
         
         self.navigationItem.title = @"收件箱";
         UIImage *rightIcon = [UIImage systemImageNamed:@"ellipsis.circle"];
-        self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithImage:rightIcon style:UIBarButtonItemStylePlain target:self action:nil];
+        self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:rightIcon style:UIBarButtonItemStylePlain target:self action:nil];
         self.navigationItem.rightBarButtonItem.tintColor = [UIColor systemBlueColor];
-        
-        if (@available(iOS 14.0, *)) {
-            UIAction *selectAction = [UIAction actionWithTitle:@"Select" image:[UIImage systemImageNamed:@"checkmark.circle"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-                [self selectTodo];
-            }];
-            UIAction *rankAction = [UIAction actionWithTitle:@"Rank" image:[UIImage systemImageNamed:@"arrow.up.arrow.down"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-                [self rankTodo];
-            }];
-            NSArray *menuActions = [NSArray arrayWithObjects:selectAction, rankAction, nil];
-            UIMenu *menu = [UIMenu menuWithTitle:@"" children:menuActions];
-            self.navigationItem.rightBarButtonItem.menu = menu;
-        } else {
-            // Fallback on earlier versions
-        }
+        self.navigationItem.rightBarButtonItem.title = @"完成";
+        self.navigationItem.rightBarButtonItem.menu = [self rightActionMenus];
     }
     return self;
 }
@@ -57,7 +47,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    self.isContextMenu = YES;
     self.todoListData = [[NSMutableArray alloc]init];
 
     // 设置列表
@@ -106,8 +96,10 @@
     }
     [cell layoutTableViewCell:[self.todoListData objectAtIndex:indexPath.row]];
     
-//    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
-//    [cell addGestureRecognizer:longPressGesture];
+    if (!self.isContextMenu) {
+        UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
+        [cell addGestureRecognizer:longPressGesture];
+    }
     
     return cell;
 }
@@ -117,58 +109,56 @@
 }
 
 - (nullable UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) {
-    
-    UIContextualAction *leadingAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Done" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        // 完成的任务放在最后面
+//    完成
+    UIContextualAction *doneAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"完成" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         self.todoIndexPath = indexPath;
         [self doneTodo:nil];
     }];
-    leadingAction.backgroundColor = [UIColor colorWithRed:58.0f/255.0f green:197.0f/255.0f blue:105.0f/255.0f alpha:1];
-    UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[leadingAction]];
+    doneAction.backgroundColor = [UIColor colorWithRed:58.0f/255.0f green:197.0f/255.0f blue:105.0f/255.0f alpha:1];
+//    置顶
+    UIContextualAction *topAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"置顶" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+        self.todoIndexPath = indexPath;
+        [self topTodo:nil];
+    }];
+    topAction.backgroundColor = [UIColor colorWithRed:248.0f/255.0f green:128.0f/255.0f blue:66.0f/255.0f alpha:1];
+
+    UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[doneAction, topAction]];
     config.performsFirstActionWithFullSwipe = NO;
     return config;
 }
 
 - (nullable UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) {
-    UIContextualAction *trailingDeleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"Delete" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
+//    删除
+    UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"删除" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         self.todoIndexPath = indexPath;
         [self deleteTodo:nil];
     }];
-    UIContextualAction *trailingTopAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"Top" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
-        // 置顶的任务放最上面
-        self.todoIndexPath = indexPath;
-        [self topTodo:nil];
-    }];
-    trailingTopAction.backgroundColor = [UIColor colorWithRed:248.0f/255.0f green:128.0f/255.0f blue:66.0f/255.0f alpha:1];
-    UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[trailingDeleteAction,trailingTopAction]];
+
+    UISwipeActionsConfiguration *config = [UISwipeActionsConfiguration configurationWithActions:@[deleteAction]];
     config.performsFirstActionWithFullSwipe = NO;
     return config;
 }
 
 - (nullable UIContextMenuConfiguration *)tableView:(UITableView *)tableView contextMenuConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath point:(CGPoint)point {
-    self.todoIndexPath = indexPath;
-    UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:nil actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
-        UIAction *topAction = [UIAction actionWithTitle:@"Top" image:[UIImage systemImageNamed:@"pin"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-            [self topTodo:nil];
+    if (self.isContextMenu) {
+        self.todoIndexPath = indexPath;
+        UIContextMenuConfiguration *config = [UIContextMenuConfiguration configurationWithIdentifier:nil previewProvider:nil actionProvider:^UIMenu * _Nullable(NSArray<UIMenuElement *> * _Nonnull suggestedActions) {
+            UIMenu *menu = [UIMenu menuWithTitle:@"" children:[self cellActionMenus]];
+            return menu;
         }];
-        UIAction *doneAction = [UIAction actionWithTitle:@"Done" image:[UIImage systemImageNamed:@"bookmark"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-            [self doneTodo:nil];
-        }];
-        UIAction *copyAction = [UIAction actionWithTitle:@"Copy" image:[UIImage systemImageNamed:@"doc.on.doc"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-            [self copyTodo:nil];
-        }];
-        UIAction *shareAction = [UIAction actionWithTitle:@"Share" image:[UIImage systemImageNamed:@"square.and.arrow.up"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-            [self shareTodo:nil];
-        }];
-        UIAction *deleteAction = [UIAction actionWithTitle:@"Delete" image:[UIImage systemImageNamed:@"trash"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-            [self deleteTodo:nil];
-        }];
-        deleteAction.attributes = UIMenuElementAttributesDestructive;
-        NSArray *menuActions = [NSArray arrayWithObjects:topAction, doneAction, copyAction, shareAction, deleteAction, nil];
-        UIMenu *menu = [UIMenu menuWithTitle:@"" children:menuActions];
-        return menu;
-    }];
-    return config;
+        return config;
+    }
+    return nil;
+}
+
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
+    NSLog(@"source: %ld, destination: %ld", (long)sourceIndexPath.row, (long)destinationIndexPath.row);
+    [self.todoListData exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex: destinationIndexPath.row];
+    [self.todoTableView reloadData];
 }
 
 #pragma mark Custom Gesture Event
@@ -180,7 +170,7 @@
 }
 
 - (void)cellLongPress:(UIGestureRecognizer *)recognizer {
-    if (recognizer.state == UIGestureRecognizerStateBegan) {
+    if (recognizer.state == UIGestureRecognizerStateBegan && !self.isContextMenu) {
         CGPoint location = [recognizer locationInView:self.todoTableView];
         self.todoIndexPath = [self.todoTableView indexPathForRowAtPoint:location];
         TDTableViewCell *cell = (TDTableViewCell *)recognizer.view;
@@ -188,15 +178,7 @@
         
         UIMenuController *menuController = [UIMenuController sharedMenuController];
         menuController.arrowDirection = UIMenuControllerArrowDefault;
-        
-        UIMenuItem *topItem = [[UIMenuItem alloc]initWithTitle:@"Top" action:@selector(topTodo:)];
-        UIMenuItem *doneItem = [[UIMenuItem alloc]initWithTitle:@"Done" action:@selector(doneTodo:)];
-        UIMenuItem *copyItem = [[UIMenuItem alloc]initWithTitle:@"Copy" action:@selector(copyTodo:)];
-        UIMenuItem *shareItem = [[UIMenuItem alloc]initWithTitle:@"Share" action:@selector(shareTodo:)];
-        UIMenuItem *deleteItem = [[UIMenuItem alloc]initWithTitle:@"Delete" action:@selector(deleteTodo:)];
-
-        NSArray *menuItems = [NSArray arrayWithObjects:topItem, doneItem, copyItem, shareItem, deleteItem, nil];
-        [menuController setMenuItems:menuItems];
+        [menuController setMenuItems:[self cellActionMenus]];
         [menuController showMenuFromView:self.todoTableView rect:cell.frame];
     }
 }
@@ -240,12 +222,59 @@
     [self.todoTableView reloadData];
 }
 
-- (void)selectTodo {
-    
+- (void)editTodo {
+    if (self.todoTableView.editing == NO) {
+        self.todoTableView.editing = YES;
+        self.navigationItem.rightBarButtonItem.image = nil;
+        self.navigationItem.rightBarButtonItem.action = @selector(editTodo);
+    } else {
+        self.todoTableView.editing = NO;
+        self.navigationItem.rightBarButtonItem.image = [UIImage systemImageNamed:@"ellipsis.circle"];
+        self.navigationItem.rightBarButtonItem.action = nil;
+        
+    }
 }
 
-- (void)rankTodo {
-    
+- (UIMenu *)rightActionMenus {
+    UIAction *editAction = [UIAction actionWithTitle:@"编辑列表" image:[UIImage systemImageNamed:@"pencil"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+        [self editTodo];
+    }];
+    NSArray *menuActions = [NSArray arrayWithObjects:editAction, nil];
+    UIMenu *menu = [UIMenu menuWithTitle:@"" children:menuActions];
+    return menu;
+}
+
+- (NSArray *)cellActionMenus {
+    if (self.isContextMenu) {
+        UIAction *topAction = [UIAction actionWithTitle:@"置顶" image:[UIImage systemImageNamed:@"pin"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self topTodo:nil];
+        }];
+        UIAction *doneAction = [UIAction actionWithTitle:@"完成" image:[UIImage systemImageNamed:@"bookmark"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self doneTodo:nil];
+        }];
+        UIAction *copyAction = [UIAction actionWithTitle:@"复制" image:[UIImage systemImageNamed:@"doc.on.doc"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self copyTodo:nil];
+        }];
+        UIAction *shareAction = [UIAction actionWithTitle:@"分享" image:[UIImage systemImageNamed:@"square.and.arrow.up"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self shareTodo:nil];
+        }];
+        UIAction *deleteAction = [UIAction actionWithTitle:@"删除" image:[UIImage systemImageNamed:@"trash"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+            [self deleteTodo:nil];
+        }];
+        deleteAction.attributes = UIMenuElementAttributesDestructive;
+        NSArray *menuActions = [NSArray arrayWithObjects:topAction, doneAction, copyAction, shareAction, deleteAction, nil];
+        return menuActions;
+    }
+
+    UIMenuItem *topItem = [[UIMenuItem alloc]initWithTitle:@"置顶" action:@selector(topTodo:)];
+    UIMenuItem *doneItem = [[UIMenuItem alloc]initWithTitle:@"完成" action:@selector(doneTodo:)];
+    UIMenuItem *copyItem = [[UIMenuItem alloc]initWithTitle:@"复制" action:@selector(copyTodo:)];
+    UIMenuItem *shareItem = [[UIMenuItem alloc]initWithTitle:@"分享" action:@selector(shareTodo:)];
+    UIMenuItem *deleteItem = [[UIMenuItem alloc]initWithTitle:@"删除" action:@selector(deleteTodo:)];
+
+    NSArray *menuItems = [NSArray arrayWithObjects:topItem, doneItem, copyItem, shareItem, deleteItem, nil];
+
+    return menuItems;
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
