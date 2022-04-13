@@ -31,6 +31,20 @@
         UIImage *rightIcon = [UIImage systemImageNamed:@"ellipsis.circle"];
         self.navigationItem.rightBarButtonItem =[[UIBarButtonItem alloc] initWithImage:rightIcon style:UIBarButtonItemStylePlain target:self action:nil];
         self.navigationItem.rightBarButtonItem.tintColor = [UIColor systemBlueColor];
+        
+        if (@available(iOS 14.0, *)) {
+            UIAction *selectAction = [UIAction actionWithTitle:@"Select" image:[UIImage systemImageNamed:@"checkmark.circle"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                [self selectTodo];
+            }];
+            UIAction *rankAction = [UIAction actionWithTitle:@"Rank" image:[UIImage systemImageNamed:@"arrow.up.arrow.down"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
+                [self rankTodo];
+            }];
+            NSArray *menuActions = [NSArray arrayWithObjects:selectAction, rankAction, nil];
+            UIMenu *menu = [UIMenu menuWithTitle:@"" children:menuActions];
+            self.navigationItem.rightBarButtonItem.menu = menu;
+        } else {
+            // Fallback on earlier versions
+        }
     }
     return self;
 }
@@ -92,8 +106,8 @@
     }
     [cell layoutTableViewCell:[self.todoListData objectAtIndex:indexPath.row]];
     
-    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
-    [cell addGestureRecognizer:longPressGesture];
+//    UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
+//    [cell addGestureRecognizer:longPressGesture];
     
     return cell;
 }
@@ -151,7 +165,7 @@
         }];
         deleteAction.attributes = UIMenuElementAttributesDestructive;
         NSArray *menuActions = [NSArray arrayWithObjects:topAction, doneAction, copyAction, shareAction, deleteAction, nil];
-        UIMenu *menu = [UIMenu menuWithTitle:@"Action Menus" children:menuActions];
+        UIMenu *menu = [UIMenu menuWithTitle:@"" children:menuActions];
         return menu;
     }];
     return config;
@@ -224,6 +238,14 @@
 - (void)deleteTodo:(id)sender {
     [self.todoListData removeObjectAtIndex:self.todoIndexPath.row];
     [self.todoTableView reloadData];
+}
+
+- (void)selectTodo {
+    
+}
+
+- (void)rankTodo {
+    
 }
 
 - (BOOL)canPerformAction:(SEL)action withSender:(id)sender {
