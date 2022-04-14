@@ -156,7 +156,6 @@
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    NSLog(@"source: %ld, destination: %ld", (long)sourceIndexPath.row, (long)destinationIndexPath.row);
     [self.todoListData exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex: destinationIndexPath.row];
     [self.todoTableView reloadData];
 }
