@@ -34,7 +34,11 @@
         self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithImage:rightIcon style:UIBarButtonItemStylePlain target:self action:nil];
         self.navigationItem.rightBarButtonItem.tintColor = [UIColor systemBlueColor];
         self.navigationItem.rightBarButtonItem.title = @"完成";
-        self.navigationItem.rightBarButtonItem.menu = [self rightActionMenus];
+        if (@available(iOS 14.0, *)) {
+            self.navigationItem.rightBarButtonItem.menu = [self rightActionMenus];
+        } else {
+            // Fallback on earlier versions
+        }
     }
     return self;
 }

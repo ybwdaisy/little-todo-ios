@@ -13,9 +13,9 @@
 @property(nonatomic, readwrite) NSString *todoTitleText;
 @property(nonatomic, readwrite) NSString *todoRemarkText;
 @property(nonatomic, readwrite) NSString *todoDateTimeText;
+@property(nonatomic, readwrite) NSString *todoPriorityText;
 @property(nonatomic, readwrite) UIDatePicker *datePicker;
 @property(nonatomic, readwrite) NSArray *priorityList;
-@property(nonatomic, readwrite) NSString *todoPriorityText;
 @property(nonatomic, readwrite) UIButton *priorityButton;
 
 @end
@@ -33,7 +33,7 @@
         self.todoTitleText = [data objectForKey:@"title"];
         self.todoRemarkText = [data objectForKey:@"remark"];
         self.todoDateTimeText = [data objectForKey:@"time"];
-        self.todoPriorityText = [data objectForKey:@"tagName"];
+        self.todoPriorityText = [data objectForKey:@"priority"];
     }
     return self;
 }
@@ -183,16 +183,13 @@
         return;
     }
     
-    [self.addTodoVCDelegate addTodo:@{
-        @"title": self.todoTitleText,
-        @"remark": self.todoRemarkText,
-        @"tagName": self.todoPriorityText,
-        @"time": self.todoDateTimeText,
-    }];
-    self.todoTitleText = @"";
-    self.todoRemarkText = @"";
-    self.todoDateTimeText = @"";
-    self.todoPriorityText = @"";
+    NSMutableDictionary *todo = [[NSMutableDictionary alloc]init];
+    [todo setObject:self.todoTitleText forKey:@"title"];
+    [todo setObject:self.todoRemarkText forKey:@"remark"];
+    [todo setObject:self.todoDateTimeText forKey:@"time"];
+    [todo setObject:self.todoPriorityText ? self.todoPriorityText : @"" forKey:@"priority"];
+    
+    [self.addTodoVCDelegate addTodo:todo];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -202,10 +199,6 @@
         
     }]];
     [actionSheet addAction: [UIAlertAction actionWithTitle:@"放弃更改" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        self.todoTitleText = @"";
-        self.todoRemarkText = @"";
-        self.todoDateTimeText = @"";
-        self.todoPriorityText = @"";
         [self dismissViewControllerAnimated:YES completion:nil];
     }]];
     
