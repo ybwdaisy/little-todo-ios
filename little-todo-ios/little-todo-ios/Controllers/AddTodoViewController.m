@@ -13,8 +13,11 @@
 @property(nonatomic, readwrite) NSString *todoTitleText;
 @property(nonatomic, readwrite) NSString *todoRemarkText;
 @property(nonatomic, readwrite) NSString *todoDateTimeText;
+@property(nonatomic, readwrite) NSString *todoRepeatText;
 @property(nonatomic, readwrite) NSString *todoPriorityText;
 @property(nonatomic, readwrite) UIDatePicker *datePicker;
+@property(nonatomic, readwrite) UIButton *repeatButton;
+@property(nonatomic, readwrite) NSArray *repeatList;
 @property(nonatomic, readwrite) NSArray *priorityList;
 @property(nonatomic, readwrite) UIButton *priorityButton;
 
@@ -33,6 +36,7 @@
         self.todoTitleText = [data objectForKey:@"title"];
         self.todoRemarkText = [data objectForKey:@"remark"];
         self.todoDateTimeText = [data objectForKey:@"time"];
+        self.todoRepeatText = [data objectForKey:@"repeat"];
         self.todoPriorityText = [data objectForKey:@"priority"];
     }
     return self;
@@ -41,6 +45,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.repeatList = [[NSArray alloc] initWithObjects:@"永不", @"每小时", @"每天", @"工作日", @"周末", @"每周", @"每两周", @"每月", @"每 3 个月", @"每 6 个月", @"每年", nil];
     self.priorityList = [[NSArray alloc] initWithObjects:@"低", @"中", @"高", nil];
     
     // 监听输入
@@ -109,6 +114,15 @@
     datePickerSectionView.spacing = 10;
     [datePickerSectionView.heightAnchor constraintEqualToConstant:50].active = TRUE;
     
+    // 重复模式
+    UILabel *repeatTitle = [[UILabel alloc]init];
+    repeatTitle.text = @"日期与时间";
+    UIButton *repeatButton = [self makeButtonWidthTitleAndAction:self.todoRepeatText ? self.todoRepeatText : @"请选择" action:@selector(selectRepeat)];
+    self.repeatButton = repeatButton;
+    UIStackView *repeatSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[repeatTitle, repeatButton]];
+    repeatSectionView.axis = UILayoutConstraintAxisHorizontal;
+    [repeatSectionView.heightAnchor constraintEqualToConstant:50].active = TRUE;
+    
     // 优先级模块
     
     UILabel *priorityTitle = [[UILabel alloc]init];
@@ -121,8 +135,8 @@
     [prioritySectionView.heightAnchor constraintEqualToConstant:50].active = TRUE;
     
     // 对所有子元素整体布局
-    UIStackView *modalContainerView = [[UIStackView alloc]initWithArrangedSubviews:@[inputSectionView, datePickerSectionView, prioritySectionView]];
-    [modalContainerView setFrame:CGRectMake(20, 100, modelViewInnerWidth, 200)];
+    UIStackView *modalContainerView = [[UIStackView alloc]initWithArrangedSubviews:@[inputSectionView, datePickerSectionView, repeatSectionView, prioritySectionView]];
+    [modalContainerView setFrame:CGRectMake(20, 100, modelViewInnerWidth, 300)];
     modalContainerView.axis = UILayoutConstraintAxisVertical;
     modalContainerView.spacing = 10;
     
@@ -163,7 +177,8 @@
     [button setTitle:name forState:UIControlStateNormal];
     [button setTitleColor:[UIColor systemBlueColor] forState:UIControlStateNormal];
     [button.heightAnchor constraintEqualToConstant:50].active = TRUE;
-    [button.widthAnchor constraintEqualToConstant:60].active = TRUE;
+    [button.widthAnchor constraintEqualToConstant:100].active = TRUE;
+    button.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
     
     UITapGestureRecognizer *tapCancelAddTodo = [[UITapGestureRecognizer alloc]initWithTarget:self action:action];
     [button addGestureRecognizer:tapCancelAddTodo];
@@ -173,7 +188,7 @@
 #pragma mark Custom Gesture Events
 
 - (void)addNewTodo {
-    if ([self.todoTitleText isEqualToString:@""] || [self.todoRemarkText isEqualToString:@""]) {
+    if (self.todoTitleText == nil || self.todoRemarkText == nil || [self.todoTitleText isEqualToString:@""] || [self.todoRemarkText isEqualToString:@""]) {
         UIAlertController *checkAlert = [UIAlertController alertControllerWithTitle:@"标题和备注不能为空" message:nil preferredStyle:UIAlertControllerStyleAlert];
         [checkAlert addAction: [UIAlertAction actionWithTitle:@"好" style:UIAlertActionStyleDefault handler:^(UIAlertAction * action) {
             
@@ -187,6 +202,7 @@
     [todo setObject:self.todoTitleText forKey:@"title"];
     [todo setObject:self.todoRemarkText forKey:@"remark"];
     [todo setObject:self.todoDateTimeText forKey:@"time"];
+    [todo setObject:self.todoRepeatText ? self.todoRepeatText : @"" forKey:@"repeat"];
     [todo setObject:self.todoPriorityText ? self.todoPriorityText : @"" forKey:@"priority"];
     
     [self.addTodoVCDelegate addTodo:todo];
@@ -204,6 +220,23 @@
     
     [self presentViewController:actionSheet animated:YES completion:nil];
     
+}
+
+- (void)selectRepeat {
+    UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"重复" message:@"" preferredStyle:(UIAlertControllerStyleActionSheet)];
+    
+    for (int i = 0; i < self.repeatList.count; i++) {
+        [actionSheet addAction:[UIAlertAction actionWithTitle:self.repeatList[i] style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            NSString *repeat = [self.repeatList objectAtIndex:i];
+            self.todoRepeatText = repeat;
+            [self.repeatButton setTitle:repeat forState:(UIControlStateNormal)];
+        }]];
+    }
+    [actionSheet addAction:[UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
+        [self.presentingViewController.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }]];
+    
+    [self presentViewController:actionSheet animated:YES completion:nil];
 }
 
 - (void)selectPriority {

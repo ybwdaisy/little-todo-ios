@@ -63,7 +63,7 @@
     self.title.text = [cellData objectForKey:@"title"];
     self.remark.text = [cellData objectForKey:@"remark"];
     self.priority.text = [cellData objectForKey:@"priority"];
-    self.time.text = [cellData objectForKey:@"time"];
+    self.time.text = [[cellData objectForKey:@"time"] stringByAppendingFormat:@"，%@", [cellData objectForKey:@"repeat"]];
 }
 
 - (BOOL) canBecomeFirstResponder {
