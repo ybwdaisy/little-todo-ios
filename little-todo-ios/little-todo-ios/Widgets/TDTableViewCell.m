@@ -12,7 +12,7 @@
 
 @property(nonatomic, strong, readwrite) UILabel *title;
 @property(nonatomic, strong, readwrite) UILabel *remark;
-@property(nonatomic, strong, readwrite) UILabel *tagName;
+@property(nonatomic, strong, readwrite) UILabel *priority;
 @property(nonatomic, strong, readwrite) UILabel *time;
 
 @end
@@ -41,14 +41,14 @@
         })];
         
         [self.contentView addSubview:({
-            self.tagName = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 15 + self.remark.frame.size.height + 10, 375, 20)];
-            self.tagName.font = [UIFont systemFontOfSize:14];
-            self.tagName.textColor = [UIColor redColor];
-            self.tagName;
+            self.priority = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 15 + self.remark.frame.size.height + 10, 375, 20)];
+            self.priority.font = [UIFont systemFontOfSize:14];
+            self.priority.textColor = [UIColor redColor];
+            self.priority;
         })];
         
         [self.contentView addSubview:({
-            self.time = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 15 + self.remark.frame.size.height + 5 + self.tagName.frame.size.height + 5, 375, 20)];
+            self.time = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 15 + self.remark.frame.size.height + 5 + self.priority.frame.size.height + 5, 375, 20)];
             self.time.font = [UIFont systemFontOfSize:12];
             self.time.textColor = [UIColor systemBlueColor];
             self.time;
@@ -62,7 +62,7 @@
 - (void) layoutTableViewCell:(NSDictionary *)cellData {
     self.title.text = [cellData objectForKey:@"title"];
     self.remark.text = [cellData objectForKey:@"remark"];
-    self.tagName.text = [cellData objectForKey:@"tagName"];
+    self.priority.text = [cellData objectForKey:@"priority"];
     self.time.text = [cellData objectForKey:@"time"];
 }
 
