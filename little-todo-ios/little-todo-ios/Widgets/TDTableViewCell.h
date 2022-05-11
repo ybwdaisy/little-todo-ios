@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TodoItem.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface TDTableViewCell : UITableViewCell
 
-- (void) layoutTableViewCell:(NSDictionary *)cellData;
+- (void) layoutTableViewCell:(TodoItem *)data;
 
 @end
 

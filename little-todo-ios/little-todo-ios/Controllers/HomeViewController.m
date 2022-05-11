@@ -14,10 +14,9 @@
 @interface HomeViewController ()<UITableViewDelegate, AddTodoVCDelegate>
 
 @property(nonatomic, readwrite) UITableView *todoTableView;
-@property(nonatomic, readwrite) NSMutableArray *todoListData;
+@property(nonatomic, readwrite) NSMutableArray<TodoItem *> *todoListData;
 @property(nonatomic, readwrite) NSIndexPath *todoIndexPath;
 @property(nonatomic, readwrite) BOOL isContextMenu;
-
 
 @end
 
@@ -188,7 +187,7 @@
 
 #pragma mark Custom Methods
 
-- (void)addTodo:(NSDictionary *)todo {
+- (void)addTodo:(TodoItem *)todo {
     [self.todoListData addObject:todo];
     [self.todoTableView reloadData];
 }
@@ -208,9 +207,9 @@
 }
 
 - (void)copyTodo:(id)sender {
-    NSDictionary *todo = self.todoListData[self.todoIndexPath.row];
+    TodoItem *todo = self.todoListData[self.todoIndexPath.row];
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = [todo objectForKey:@"title"];
+    pasteboard.string = todo.title;
     [self.view makeToast:@"Copied" duration:2.0 position:CSToastPositionCenter];
 }
 
