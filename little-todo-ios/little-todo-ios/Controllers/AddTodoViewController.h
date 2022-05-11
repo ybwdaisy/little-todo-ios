@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TodoItem.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol AddTodoVCDelegate <NSObject>
 
-- (void)addTodo:(NSDictionary *)todo;
+- (void)addTodo:(TodoItem *)todo;
 
 @end
 
@@ -20,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, weak) id<AddTodoVCDelegate> addTodoVCDelegate;
 
--(instancetype)initWithData:(NSDictionary *)data;
+-(instancetype)initWithData:(TodoItem *)data;
 
 @end
 

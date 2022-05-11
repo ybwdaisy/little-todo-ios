@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TodoItem.h"
 
 @interface HomeViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
-
 
 @end
 

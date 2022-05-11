@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B502A8A8282BB8CA007ED332 /* TodoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = B502A8A7282BB8CA007ED332 /* TodoItem.m */; };
 		B53049462587AB1300408189 /* TDTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = B53049452587AB1300408189 /* TDTableViewCell.m */; };
 		B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FAB72573880300B60FCF /* AppDelegate.m */; };
 		B5B5FABB2573880300B60FCF /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B5B5FABA2573880300B60FCF /* SceneDelegate.m */; };
@@ -39,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		6662E0B45199FA41B2E05FDA /* Pods_little_todo_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_little_todo_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B502A8A6282BB8CA007ED332 /* TodoItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodoItem.h; sourceTree = "<group>"; };
+		B502A8A7282BB8CA007ED332 /* TodoItem.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodoItem.m; sourceTree = "<group>"; };
 		B53049442587AB1300408189 /* TDTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TDTableViewCell.h; sourceTree = "<group>"; };
 		B53049452587AB1300408189 /* TDTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TDTableViewCell.m; sourceTree = "<group>"; };
 		B5B5FAB32573880300B60FCF /* little-todo-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "little-todo-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -107,6 +110,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B502A8A5282BB895007ED332 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				B502A8A6282BB8CA007ED332 /* TodoItem.h */,
+				B502A8A7282BB8CA007ED332 /* TodoItem.m */,
+			);
+			path = Objects;
+			sourceTree = "<group>";
+		};
 		B53049422587AAA600408189 /* Widgets */ = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +164,7 @@
 		B5B5FAB52573880300B60FCF /* little-todo-ios */ = {
 			isa = PBXGroup;
 			children = (
+				B502A8A5282BB895007ED332 /* Objects */,
 				B53049432587AABB00408189 /* Controllers */,
 				B53049422587AAA600408189 /* Widgets */,
 				B5B5FAB62573880300B60FCF /* AppDelegate.h */,
@@ -358,6 +371,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B5B5FACC2573880400B60FCF /* main.m in Sources */,
+				B502A8A8282BB8CA007ED332 /* TodoItem.m in Sources */,
 				B5DC753A25B9AAE500DF625D /* AddTodoViewController.m in Sources */,
 				B5B5FAB82573880300B60FCF /* AppDelegate.m in Sources */,
 				B5B5FABE2573880300B60FCF /* HomeViewController.m in Sources */,

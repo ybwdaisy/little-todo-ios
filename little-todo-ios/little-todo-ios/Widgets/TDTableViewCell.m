@@ -59,11 +59,11 @@
     return self;
 }
 
-- (void) layoutTableViewCell:(NSDictionary *)cellData {
-    self.title.text = [cellData objectForKey:@"title"];
-    self.remark.text = [cellData objectForKey:@"remark"];
-    self.priority.text = [cellData objectForKey:@"priority"];
-    self.time.text = [[cellData objectForKey:@"time"] stringByAppendingFormat:@"，%@", [cellData objectForKey:@"repeat"]];
+- (void) layoutTableViewCell:(TodoItem *)data {
+    self.title.text = data.title;
+    self.remark.text = data.remark;
+    self.priority.text = data.priority;
+    self.time.text = [data.datetime stringByAppendingFormat:@"，%@", data.repeat];
 }
 
 - (BOOL) canBecomeFirstResponder {
