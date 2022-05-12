@@ -109,7 +109,7 @@
     
     // 重复模式
     UILabel *repeatTitle = [[UILabel alloc]init];
-    repeatTitle.text = @"日期与时间";
+    repeatTitle.text = @"重复";
     UIButton *repeatButton = [self makeButtonWidthTitleAndAction:self.todo.repeat ? self.todo.repeat : @"请选择" contentHorizontalAlignment:UIControlContentHorizontalAlignmentRight action:@selector(selectRepeat)];
     self.repeatButton = repeatButton;
     UIStackView *repeatSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[repeatTitle, repeatButton]];

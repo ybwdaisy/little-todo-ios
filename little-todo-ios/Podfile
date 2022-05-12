@@ -8,5 +8,6 @@ target 'little-todo-ios' do
 
   # Pods for little-todo-ios
   pod 'Toast', '~> 4.0.0'
+  pod 'PureLayout'
 
 end

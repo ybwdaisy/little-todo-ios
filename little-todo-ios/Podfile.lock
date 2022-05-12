@@ -1,22 +1,20 @@
 PODS:
-  - FontAwesomeKit/Core (2.2.1)
-  - FontAwesomeKit/FontAwesome (2.2.1):
-    - FontAwesomeKit/Core
+  - PureLayout (3.1.9)
   - Toast (4.0.0)
 
 DEPENDENCIES:
-  - FontAwesomeKit/FontAwesome
+  - PureLayout
   - Toast (~> 4.0.0)
 
 SPEC REPOS:
   trunk:
-    - FontAwesomeKit
+    - PureLayout
     - Toast
 
 SPEC CHECKSUMS:
-  FontAwesomeKit: 3614979b3dbb0ec3f7fac1bd760b91f66c31db67
+  PureLayout: 5fb5e5429519627d60d079ccb1eaa7265ce7cf88
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: 57ed5d3093308b83b26f3665fee9b4f62f39fb60
+PODFILE CHECKSUM: b3e57ad6b4f4510b005b48750816528051e96e60
 
 COCOAPODS: 1.11.2
