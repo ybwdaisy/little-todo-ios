@@ -14,9 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property(nonatomic, readwrite) NSString *title;
 @property(nonatomic, readwrite) NSString *remark;
-@property(nonatomic, readwrite) NSString *datetime;
-@property(nonatomic, readwrite) NSString *repeat;
-@property(nonatomic, readwrite) NSString *priority;
+@property(nonatomic, nullable, readwrite) NSString *datetime;
+@property(nonatomic, nullable, readwrite) NSString *repeat;
+@property(nonatomic, nullable, readwrite) NSString *priority;
 
 @end
 

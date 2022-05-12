@@ -14,7 +14,7 @@
 @interface HomeViewController ()<UITableViewDelegate, AddTodoVCDelegate>
 
 @property(nonatomic, readwrite) UITableView *todoTableView;
-@property(nonatomic, readwrite) NSMutableArray<TodoItem *> *todoListData;
+@property(nonatomic, readwrite) NSMutableArray<TodoItem *> *todoList;
 @property(nonatomic, readwrite) NSIndexPath *todoIndexPath;
 @property(nonatomic, readwrite) BOOL isContextMenu;
 
@@ -51,12 +51,29 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.isContextMenu = YES;
-    self.todoListData = [[NSMutableArray alloc]init];
+//    self.todoList = [[NSMutableArray alloc]init];
+//    TodoItem *todo = [[TodoItem alloc]init];
+//    todo.title = @"New Reminder with Remark and Date and Time and Priority and Repeat";
+//    todo.remark = @"This is a very long note or remark, Test for newline styles. This is a very long note or remark, Test for newline styles.";
+//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+//    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
+//    NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
+//    todo.datetime = dateString;
+//    todo.repeat = @"每天";
+//    todo.priority = @"高";
+//    [self.todoList addObject:todo];
+//    TodoItem *todo1 = [[TodoItem alloc]init];
+//    todo1.title = @"New Reminder";
+//    todo1.remark = @"remark";
+//    [self.todoList addObject:todo1];
 
     // 设置列表
     UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
     tableView.dataSource = self;
     tableView.delegate = self;
+    tableView.autoresizesSubviews = FALSE;
+    tableView.rowHeight = UITableViewAutomaticDimension;
+    tableView.estimatedRowHeight = 100;
     self.todoTableView = tableView;
     [self.view addSubview:tableView];
     
@@ -77,27 +94,26 @@
 
 #pragma mark TableView Delegate
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 120;
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    AddTodoViewController *addTodoViewController = [[AddTodoViewController alloc]initWithData:self.todoListData[indexPath.row]];
+    AddTodoViewController *addTodoViewController = [[AddTodoViewController alloc]initWithData:self.todoList[indexPath.row]];
     addTodoViewController.addTodoVCDelegate = self;
     [self presentViewController:addTodoViewController animated:YES completion:nil];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [self.todoListData count];
+    return [self.todoList count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellId = @"cellId";
     TDTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
     if (!cell) {
-        cell = [[TDTableViewCell alloc] initWithStyle:(UITableViewCellStyleSubtitle) reuseIdentifier:cellId];
+        cell = [[TDTableViewCell alloc]initWithStyle:(UITableViewCellStyleDefault) reuseIdentifier:cellId];
     }
-    [cell layoutTableViewCell:[self.todoListData objectAtIndex:indexPath.row]];
+    [cell layoutTableViewCell:[self.todoList objectAtIndex:indexPath.row]];
+    
+    [cell setNeedsUpdateConstraints];
+    [cell updateConstraintsIfNeeded];
     
     if (!self.isContextMenu) {
         UILongPressGestureRecognizer *longPressGesture = [[UILongPressGestureRecognizer alloc]initWithTarget:self action:@selector(cellLongPress:)];
@@ -112,13 +128,12 @@
 }
 
 - (nullable UISwipeActionsConfiguration *)tableView:(UITableView *)tableView leadingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) {
-//    完成
     UIContextualAction *doneAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"完成" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         self.todoIndexPath = indexPath;
         [self doneTodo:nil];
     }];
     doneAction.backgroundColor = [UIColor colorWithRed:58.0f/255.0f green:197.0f/255.0f blue:105.0f/255.0f alpha:1];
-//    置顶
+
     UIContextualAction *topAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleNormal title:@"置顶" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         self.todoIndexPath = indexPath;
         [self topTodo:nil];
@@ -131,7 +146,6 @@
 }
 
 - (nullable UISwipeActionsConfiguration *)tableView:(UITableView *)tableView trailingSwipeActionsConfigurationForRowAtIndexPath:(NSIndexPath *)indexPath API_AVAILABLE(ios(11.0)) API_UNAVAILABLE(tvos) {
-//    删除
     UIContextualAction *deleteAction = [UIContextualAction contextualActionWithStyle:UIContextualActionStyleDestructive title:@"删除" handler:^(UIContextualAction * _Nonnull action, __kindof UIView * _Nonnull sourceView, void (^ _Nonnull completionHandler)(BOOL)) {
         self.todoIndexPath = indexPath;
         [self deleteTodo:nil];
@@ -159,7 +173,7 @@
 }
 
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath {
-    [self.todoListData exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex: destinationIndexPath.row];
+    [self.todoList exchangeObjectAtIndex:sourceIndexPath.row withObjectAtIndex: destinationIndexPath.row];
     [self.todoTableView reloadData];
 }
 
@@ -188,26 +202,26 @@
 #pragma mark Custom Methods
 
 - (void)addTodo:(TodoItem *)todo {
-    [self.todoListData addObject:todo];
+    [self.todoList addObject:todo];
     [self.todoTableView reloadData];
 }
 
 - (void)topTodo:(id)sender {
     if (self.todoIndexPath.row > 0) {
-        [self.todoListData exchangeObjectAtIndex:self.todoIndexPath.row withObjectAtIndex: 0];
+        [self.todoList exchangeObjectAtIndex:self.todoIndexPath.row withObjectAtIndex: 0];
         [self.todoTableView reloadData];
     }
 }
 
 - (void)doneTodo:(id)sender {
-    if (self.todoIndexPath.row < [self.todoListData count] - 1) {
-        [self.todoListData exchangeObjectAtIndex:self.todoIndexPath.row withObjectAtIndex: [self.todoListData count] - 1];
+    if (self.todoIndexPath.row < [self.todoList count] - 1) {
+        [self.todoList exchangeObjectAtIndex:self.todoIndexPath.row withObjectAtIndex: [self.todoList count] - 1];
         [self.todoTableView reloadData];
     }
 }
 
 - (void)copyTodo:(id)sender {
-    TodoItem *todo = self.todoListData[self.todoIndexPath.row];
+    TodoItem *todo = self.todoList[self.todoIndexPath.row];
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = todo.title;
     [self.view makeToast:@"Copied" duration:2.0 position:CSToastPositionCenter];
@@ -220,7 +234,7 @@
 }
 
 - (void)deleteTodo:(id)sender {
-    [self.todoListData removeObjectAtIndex:self.todoIndexPath.row];
+    [self.todoList removeObjectAtIndex:self.todoIndexPath.row];
     [self.todoTableView reloadData];
 }
 

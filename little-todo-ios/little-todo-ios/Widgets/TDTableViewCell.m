@@ -7,13 +7,17 @@
 //
 
 #import "TDTableViewCell.h"
+#import <PureLayout/PureLayout.h>
+
+#define kLabelHorizontalInsets      15.0f
+#define kLabelVerticalInsets        10.0f
 
 @interface TDTableViewCell ()
 
 @property(nonatomic, strong, readwrite) UILabel *title;
 @property(nonatomic, strong, readwrite) UILabel *remark;
-@property(nonatomic, strong, readwrite) UILabel *priority;
 @property(nonatomic, strong, readwrite) UILabel *time;
+@property (nonatomic, assign) BOOL didSetupConstraints;
 
 @end
 
@@ -23,51 +27,89 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         
-        [self.contentView addSubview:({
-            self.title = [[UILabel alloc] initWithFrame:CGRectMake(20, 15, 375, 20)];
-            self.title.numberOfLines = 0;
-            self.title.lineBreakMode = NSLineBreakByWordWrapping;
-            self.title.font =[UIFont systemFontOfSize:16];
-            self.title.textColor = [UIColor blackColor];
-            self.title;
-        })];
+        self.title = [UILabel newAutoLayoutView];
+        self.title.numberOfLines = 0;
+        self.title.font =[UIFont systemFontOfSize:16];
+        self.title.textColor = [UIColor blackColor];
+        self.title.lineBreakMode = NSLineBreakByTruncatingTail;
         
-        [self.contentView addSubview:({
-            self.remark = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 15, 375, 20)];
-            self.remark.numberOfLines = 1;
-            self.remark.font = [UIFont systemFontOfSize:12];
-            self.remark.textColor = [UIColor lightGrayColor];
-            self.remark;
-        })];
+        self.remark = [UILabel newAutoLayoutView];
+        self.remark.numberOfLines = 0;
+        self.remark.font = [UIFont systemFontOfSize:12];
+        self.remark.textColor = [UIColor lightGrayColor];
+        self.remark.lineBreakMode = NSLineBreakByTruncatingTail;
         
-        [self.contentView addSubview:({
-            self.priority = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 15 + self.remark.frame.size.height + 10, 375, 20)];
-            self.priority.font = [UIFont systemFontOfSize:14];
-            self.priority.textColor = [UIColor redColor];
-            self.priority;
-        })];
-        
-        [self.contentView addSubview:({
-            self.time = [[UILabel alloc] initWithFrame:CGRectMake(20, self.title.frame.size.height + 15 + self.remark.frame.size.height + 5 + self.priority.frame.size.height + 5, 375, 20)];
-            self.time.font = [UIFont systemFontOfSize:12];
-            self.time.textColor = [UIColor systemBlueColor];
-            self.time;
-        })];
+        self.time = [UILabel newAutoLayoutView];
+        self.time.numberOfLines = 0;
+        self.time.font = [UIFont systemFontOfSize:16];
+        self.time.textColor = [UIColor systemBlueColor];
+        self.time.lineBreakMode = NSLineBreakByTruncatingTail;
 
+
+        [self.contentView addSubview:self.title];
+        [self.contentView addSubview:self.remark];
+        [self.contentView addSubview:self.time];
     }
     
     return self;
 }
 
-- (void) layoutTableViewCell:(TodoItem *)data {
+- (void)layoutTableViewCell:(TodoItem *)data {
     self.title.text = data.title;
     self.remark.text = data.remark;
-    self.priority.text = data.priority;
     self.time.text = [data.datetime stringByAppendingFormat:@"，%@", data.repeat];
 }
 
-- (BOOL) canBecomeFirstResponder {
+- (BOOL)canBecomeFirstResponder {
     return YES;
+}
+
+- (void)updateConstraints
+{
+    if (!self.didSetupConstraints) {
+
+        if (self.title.text) {
+            [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
+                [self.title autoSetContentCompressionResistancePriorityForAxis:ALAxisVertical];
+            }];
+            [self.title autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:kLabelVerticalInsets];
+            [self.title autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:kLabelHorizontalInsets];
+            [self.title autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:kLabelHorizontalInsets];
+        }
+        
+        if (self.remark.text) {
+            if (self.title.text) {
+                [self.remark autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.title withOffset:kLabelVerticalInsets];
+            }
+            
+            [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
+                [self.remark autoSetContentCompressionResistancePriorityForAxis:ALAxisVertical];
+            }];
+            if (!self.title.text) {
+                [self.remark autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:kLabelVerticalInsets];
+            }
+            [self.remark autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:kLabelHorizontalInsets];
+            [self.remark autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:kLabelHorizontalInsets];
+            if (!self.time.text) {
+                [self.remark autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:kLabelVerticalInsets];
+            }
+        }
+        
+        if (self.time.text) {
+            [self.time autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.remark.text ? self.remark : self.title withOffset:kLabelVerticalInsets];
+            
+            [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
+                [self.time autoSetContentCompressionResistancePriorityForAxis:ALAxisVertical];
+            }];
+            [self.time autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:kLabelHorizontalInsets];
+            [self.time autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:kLabelHorizontalInsets];
+            [self.time autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:kLabelVerticalInsets];
+        }
+        
+        self.didSetupConstraints = YES;
+    }
+    
+    [super updateConstraints];
 }
 
 @end
