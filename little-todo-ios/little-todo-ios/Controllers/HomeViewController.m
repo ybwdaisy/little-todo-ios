@@ -17,6 +17,7 @@
 @property(nonatomic, readwrite) NSMutableArray<TodoItem *> *todoList;
 @property(nonatomic, readwrite) NSIndexPath *todoIndexPath;
 @property(nonatomic, readwrite) BOOL isContextMenu;
+@property(nonatomic, readwrite) NSMutableArray *cellMenus;
 
 @end
 
@@ -50,7 +51,6 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
-    self.isContextMenu = YES;
     self.todoList = [[NSMutableArray alloc]init];
     TodoItem *todo = [[TodoItem alloc]init];
     todo.title = @"New Reminder with Remark and Date and Time and Priority and Repeat";
@@ -77,6 +77,8 @@
     self.todoTableView = tableView;
     [self.view addSubview:tableView];
     
+    self.isContextMenu = YES;
+
     // 添加按钮
     UIImage *plusIcon = [UIImage systemImageNamed:@"plus.circle.fill" withConfiguration:[UIImageSymbolConfiguration configurationWithPointSize:50]];
     UIImageView *plusIconImageView = [[UIImageView alloc] initWithImage:plusIcon];
@@ -228,7 +230,7 @@
     TodoItem *todo = self.todoList[self.todoIndexPath.row];
     UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
     pasteboard.string = todo.title;
-    [self.view makeToast:@"Copied" duration:2.0 position:CSToastPositionCenter];
+    [self.view makeToast:@"已复制到剪切板" duration:2.0 position:CSToastPositionCenter];
 }
 
 - (void)shareTodo:(id)sender {
@@ -265,35 +267,29 @@
 }
 
 - (NSArray *)cellActionMenus {
+    TodoMenu *top = [[TodoMenu alloc]initWithName:@"置顶" icon:@"pin" handler:^(__kindof UIAction * _Nonnull action) {
+        [self topTodo:nil];
+    } action:@selector(topTodo:)];
+    TodoMenu *done = [[TodoMenu alloc]initWithName:@"完成" icon:@"bookmark" handler:^(__kindof UIAction * _Nonnull action) {
+        [self doneTodo:nil];
+    } action:@selector(doneTodo:)];
+    TodoMenu *copy = [[TodoMenu alloc]initWithName:@"复制" icon:@"doc.on.doc" handler:^(__kindof UIAction * _Nonnull action) {
+        [self copyTodo:nil];
+    } action:@selector(copyTodo:)];
+    TodoMenu *share = [[TodoMenu alloc]initWithName:@"分享" icon:@"square.and.arrow.up" handler:^(__kindof UIAction * _Nonnull action) {
+        [self shareTodo:nil];
+    } action:@selector(shareTodo:)];
+    TodoMenu *delete = [[TodoMenu alloc]initWithName:@"删除" icon:@"trash" handler:^(__kindof UIAction * _Nonnull action) {
+        [self deleteTodo:nil];
+    } action:@selector(deleteTodo:)];
+    [delete action].attributes = UIMenuElementAttributesDestructive;
+
     if (self.isContextMenu) {
-        UIAction *topAction = [UIAction actionWithTitle:@"置顶" image:[UIImage systemImageNamed:@"pin"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-            [self topTodo:nil];
-        }];
-        UIAction *doneAction = [UIAction actionWithTitle:@"完成" image:[UIImage systemImageNamed:@"bookmark"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-            [self doneTodo:nil];
-        }];
-        UIAction *copyAction = [UIAction actionWithTitle:@"复制" image:[UIImage systemImageNamed:@"doc.on.doc"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-            [self copyTodo:nil];
-        }];
-        UIAction *shareAction = [UIAction actionWithTitle:@"分享" image:[UIImage systemImageNamed:@"square.and.arrow.up"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-            [self shareTodo:nil];
-        }];
-        UIAction *deleteAction = [UIAction actionWithTitle:@"删除" image:[UIImage systemImageNamed:@"trash"] identifier:nil handler:^(__kindof UIAction * _Nonnull action) {
-            [self deleteTodo:nil];
-        }];
-        deleteAction.attributes = UIMenuElementAttributesDestructive;
-        NSArray *menuActions = [NSArray arrayWithObjects:topAction, doneAction, copyAction, shareAction, deleteAction, nil];
+        NSArray *menuActions = [NSArray arrayWithObjects:top.action, done.action, copy.action, share.action, delete.action, nil];
         return menuActions;
     }
 
-    UIMenuItem *topItem = [[UIMenuItem alloc]initWithTitle:@"置顶" action:@selector(topTodo:)];
-    UIMenuItem *doneItem = [[UIMenuItem alloc]initWithTitle:@"完成" action:@selector(doneTodo:)];
-    UIMenuItem *copyItem = [[UIMenuItem alloc]initWithTitle:@"复制" action:@selector(copyTodo:)];
-    UIMenuItem *shareItem = [[UIMenuItem alloc]initWithTitle:@"分享" action:@selector(shareTodo:)];
-    UIMenuItem *deleteItem = [[UIMenuItem alloc]initWithTitle:@"删除" action:@selector(deleteTodo:)];
-
-    NSArray *menuItems = [NSArray arrayWithObjects:topItem, doneItem, copyItem, shareItem, deleteItem, nil];
-
+    NSArray *menuItems = [NSArray arrayWithObjects:top.menu, done.menu, copy.menu, share.menu, delete.menu, nil];
     return menuItems;
 }
 
