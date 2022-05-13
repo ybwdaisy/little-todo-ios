@@ -51,21 +51,21 @@
     // Do any additional setup after loading the view.
     self.view.backgroundColor = [UIColor whiteColor];
     self.isContextMenu = YES;
-//    self.todoList = [[NSMutableArray alloc]init];
-//    TodoItem *todo = [[TodoItem alloc]init];
-//    todo.title = @"New Reminder with Remark and Date and Time and Priority and Repeat";
-//    todo.remark = @"This is a very long note or remark, Test for newline styles. This is a very long note or remark, Test for newline styles.";
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
-//    NSString *dateString = [dateFormatter stringFromDate:[NSDate date]];
-//    todo.datetime = dateString;
-//    todo.repeat = @"每天";
-//    todo.priority = @"高";
-//    [self.todoList addObject:todo];
-//    TodoItem *todo1 = [[TodoItem alloc]init];
-//    todo1.title = @"New Reminder";
-//    todo1.remark = @"remark";
-//    [self.todoList addObject:todo1];
+    self.todoList = [[NSMutableArray alloc]init];
+    TodoItem *todo = [[TodoItem alloc]init];
+    todo.title = @"New Reminder with Remark and Date and Time and Priority and Repeat";
+    todo.remark = @"This is a very long note or remark, Test for newline styles. This is a very long note or remark, Test for newline styles.";
+    todo.datetime = @"2022/06/12 10:00";
+    todo.repeat = @"每天";
+    todo.priority = @"高";
+    todo.uuid = [CommonUtils uuid];
+    [self.todoList addObject:todo];
+    TodoItem *todo1 = [[TodoItem alloc]init];
+    todo1.title = @"New Reminder";
+    todo1.remark = @"remark";
+    todo1.datetime = @"2022/05/12 10:00";
+    todo1.uuid = [CommonUtils uuid];
+    [self.todoList addObject:todo1];
 
     // 设置列表
     UITableView *tableView = [[UITableView alloc]initWithFrame:self.view.bounds];
@@ -203,6 +203,10 @@
 
 - (void)addTodo:(TodoItem *)todo {
     [self.todoList addObject:todo];
+    [self.todoTableView reloadData];
+}
+
+- (void)updateTodo:(TodoItem *)todo {
     [self.todoTableView reloadData];
 }
 

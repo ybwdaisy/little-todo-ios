@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "TodoItem.h"
+#import "CommonUtils.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol AddTodoVCDelegate <NSObject>
 
 - (void)addTodo:(TodoItem *)todo;
+- (void)updateTodo:(TodoItem *)todo;
 
 @end
 

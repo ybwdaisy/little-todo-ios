@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TodoItem : NSObject
 
+@property(nonatomic, readwrite) NSString *uuid;
 @property(nonatomic, readwrite) NSString *title;
 @property(nonatomic, readwrite) NSString *remark;
 @property(nonatomic, nullable, readwrite) NSString *datetime;
