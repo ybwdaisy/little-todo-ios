@@ -11,6 +11,7 @@
 @interface AddTodoViewController ()
 
 @property(nonatomic, readwrite) TodoItem *todo;
+@property(nonatomic, readwrite) BOOL *editing;
 @property(nonatomic, readwrite) UIDatePicker *datePicker;
 @property(nonatomic, readwrite) UIButton *repeatButton;
 @property(nonatomic, readwrite) NSArray *repeatList;
@@ -24,6 +25,7 @@
 - (instancetype)init {
     self = [super init];
     self.todo = [[TodoItem alloc]init];
+    self.editing = FALSE;
     return self;
 }
 
@@ -31,6 +33,7 @@
     self = [super init];
     if (self) {
         self.todo = data;
+        self.editing = TRUE;
     }
     return self;
 }
@@ -57,7 +60,7 @@
     headerTitle.font = [UIFont boldSystemFontOfSize:18];
     [headerTitle setTextAlignment:NSTextAlignmentCenter];
     
-    UIButton *headerRightButton = [self makeButtonWidthTitleAndAction:@"添加" contentHorizontalAlignment:UIControlContentHorizontalAlignmentRight action:@selector(addNewTodo)];
+    UIButton *headerRightButton = [self makeButtonWidthTitleAndAction: @"完成" contentHorizontalAlignment:UIControlContentHorizontalAlignmentRight action:@selector(addNewTodo)];
     
     UIStackView *headerView = [[UIStackView alloc]initWithArrangedSubviews:@[headerLeftButton, headerTitle, headerRightButton]];
     [headerView setFrame:CGRectMake(20, 10, modelViewInnerWidth, 50)];
@@ -194,7 +197,12 @@
         return;
     }
     
-    [self.addTodoVCDelegate addTodo:self.todo];
+    if (self.editing) {
+        [self.addTodoVCDelegate updateTodo:self.todo];
+    } else {
+        self.todo.uuid = [CommonUtils uuid];
+        [self.addTodoVCDelegate addTodo:self.todo];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -10,7 +10,6 @@
 #import <PureLayout/PureLayout.h>
 
 #define kLabelHorizontalInsets      15.0f
-#define kLabelVerticalInsets        10.0f
 
 @interface TDTableViewCell ()
 
@@ -57,7 +56,13 @@
 - (void)layoutTableViewCell:(TodoItem *)data {
     self.title.text = data.title;
     self.remark.text = data.remark;
-    self.time.text = [data.datetime stringByAppendingFormat:@"，%@", data.repeat];
+    if (data.datetime) {
+        self.time.text = data.repeat ? [data.datetime stringByAppendingFormat:@"，%@", data.repeat] : data.datetime;
+        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy/MM/dd HH:mm"];
+        NSDate *datetime = [dateFormatter dateFromString:data.datetime];
+        self.time.textColor = [datetime compare:[NSDate now]] == NSOrderedAscending ? [UIColor systemRedColor] : [UIColor systemBlueColor];
+    }
 }
 
 - (BOOL)canBecomeFirstResponder {
@@ -72,38 +77,38 @@
             [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
                 [self.title autoSetContentCompressionResistancePriorityForAxis:ALAxisVertical];
             }];
-            [self.title autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:kLabelVerticalInsets];
+            [self.title autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:15];
             [self.title autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:kLabelHorizontalInsets];
             [self.title autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:kLabelHorizontalInsets];
         }
         
         if (self.remark.text) {
             if (self.title.text) {
-                [self.remark autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.title withOffset:kLabelVerticalInsets];
+                [self.remark autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.title withOffset:10];
             }
             
             [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
                 [self.remark autoSetContentCompressionResistancePriorityForAxis:ALAxisVertical];
             }];
             if (!self.title.text) {
-                [self.remark autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:kLabelVerticalInsets];
+                [self.remark autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10];
             }
             [self.remark autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:kLabelHorizontalInsets];
             [self.remark autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:kLabelHorizontalInsets];
             if (!self.time.text) {
-                [self.remark autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:kLabelVerticalInsets];
+                [self.remark autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:15];
             }
         }
         
         if (self.time.text) {
-            [self.time autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.remark.text ? self.remark : self.title withOffset:kLabelVerticalInsets];
+            [self.time autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.remark.text ? self.remark : self.title withOffset:5];
             
             [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
                 [self.time autoSetContentCompressionResistancePriorityForAxis:ALAxisVertical];
             }];
             [self.time autoPinEdgeToSuperviewEdge:ALEdgeLeading withInset:kLabelHorizontalInsets];
             [self.time autoPinEdgeToSuperviewEdge:ALEdgeTrailing withInset:kLabelHorizontalInsets];
-            [self.time autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:kLabelVerticalInsets];
+            [self.time autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:15];
         }
         
         self.didSetupConstraints = YES;
