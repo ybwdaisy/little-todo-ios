@@ -11,7 +11,7 @@
 @interface AddTodoViewController ()
 
 @property(nonatomic, readwrite) TodoItem *todo;
-@property(nonatomic, readwrite) BOOL *editing;
+@property(nonatomic, readwrite) BOOL editing;
 @property(nonatomic, readwrite) UIDatePicker *datePicker;
 @property(nonatomic, readwrite) UIButton *repeatButton;
 @property(nonatomic, readwrite) NSArray *repeatList;
@@ -25,7 +25,7 @@
 - (instancetype)init {
     self = [super init];
     self.todo = [[TodoItem alloc]init];
-    self.editing = FALSE;
+    self.editing = NO;
     return self;
 }
 
@@ -33,7 +33,7 @@
     self = [super init];
     if (self) {
         self.todo = data;
-        self.editing = TRUE;
+        self.editing = YES;
     }
     return self;
 }
