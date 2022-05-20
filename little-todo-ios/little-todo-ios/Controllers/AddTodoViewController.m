@@ -71,19 +71,19 @@
     [modalView addSubview:headerView];
     
     // 标题和备注模块
-    UITextView *titleTextView = [self makeTextView:1 value:self.todo.title placeholderText:@"标题" height:40.0];
+    UITextView *titleTextView = [self makeTextView:1 value:self.todo.title placeholderText:@"标题"];
+    [titleTextView.heightAnchor constraintEqualToConstant:50].active = TRUE;
     
     UIView *divideLine = [[UIView alloc]init];
     [divideLine.heightAnchor constraintEqualToConstant:0.5].active = TRUE;
     divideLine.backgroundColor = [[UIColor alloc]initWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1];
     
-    UITextView *remarkTextView = [self makeTextView:2 value:self.todo.remark placeholderText:@"备注" height:40.0];
+    UITextView *remarkTextView = [self makeTextView:2 value:self.todo.remark placeholderText:@"备注"];
     
     UIStackView *inputSectionView = [[UIStackView alloc]initWithArrangedSubviews:@[titleTextView, divideLine, remarkTextView]];
     inputSectionView.backgroundColor = [UIColor whiteColor];
     inputSectionView.spacing = 0;
     inputSectionView.axis = UILayoutConstraintAxisVertical;
-    [inputSectionView.heightAnchor constraintEqualToConstant:80].active = TRUE;
     
     // 日期与时间模块
     
@@ -144,15 +144,13 @@
 
 #pragma mark Custom View Makers
 
-- (UITextView *)makeTextView:(int)tag value:(NSString*)value placeholderText:(NSString *)placeholderText height:(double)height {
+- (UITextView *)makeTextView:(int)tag value:(NSString*)value placeholderText:(NSString *)placeholderText {
     UITextView *textView = [[UITextView alloc]init];
-    if (height) {
-        [textView.heightAnchor constraintEqualToConstant:height].active = TRUE;
-    }
     textView.tag = tag;
     textView.text = value;
     textView.editable = YES;
     textView.font = [UIFont systemFontOfSize:16];
+    textView.translatesAutoresizingMaskIntoConstraints = YES;
     
     if (value == nil) {
         UILabel *placeholder = [[UILabel alloc] init];
