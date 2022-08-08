@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Priority.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -17,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readwrite) NSString *remark;
 @property(nonatomic, nullable, readwrite) NSString *datetime;
 @property(nonatomic, nullable, readwrite) NSString *repeat;
-@property(nonatomic, nullable, readwrite) NSString *priority;
+@property(nonatomic, nullable, readwrite) Priority *priority;
 
 @end
 

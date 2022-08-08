@@ -54,7 +54,23 @@
 }
 
 - (void)layoutTableViewCell:(TodoItem *)data {
-    self.title.text = data.title;
+    NSString *priorityLabel = @"";
+    if (data.priority) {
+        switch (data.priority.value) {
+            case PriorityTypesLow:
+                priorityLabel = @"[!]";
+                break;
+            case PriorityTypesMedium:
+                priorityLabel = @"[!!]";
+                break;
+            case PriorityTypesHigh:
+                priorityLabel = @"[!!!]";
+                break;
+            default:
+                break;
+        }
+    }
+    self.title.text = [priorityLabel stringByAppendingString:data.title];
     self.remark.text = data.remark;
     if (data.datetime) {
         self.time.text = data.repeat ? [data.datetime stringByAppendingFormat:@"，%@", data.repeat] : data.datetime;
