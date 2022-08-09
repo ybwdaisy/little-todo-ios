@@ -55,9 +55,9 @@
     TodoItem *todo = [[TodoItem alloc]init];
     todo.title = @"New Reminder with Remark and Date and Time and Priority and Repeat";
     todo.remark = @"This is a very long note or remark, Test for newline styles. This is a very long note or remark, Test for newline styles.";
-    todo.datetime = @"2022/06/12 10:00";
+    todo.datetime = @"2023/06/12 10:00";
     todo.repeat = @"每天";
-    todo.priority = @"高";
+    todo.priority = [Priority priorityWithName:@"高" andValue:PriorityTypesHigh];
     todo.uuid = [CommonUtils uuid];
     [self.todoList addObject:todo];
     TodoItem *todo1 = [[TodoItem alloc]init];
@@ -267,19 +267,19 @@
 }
 
 - (NSArray *)cellActionMenus {
-    TodoMenu *top = [[TodoMenu alloc]initWithName:@"置顶" icon:@"pin" handler:^(__kindof UIAction * _Nonnull action) {
+    TodoMenu *top = [TodoMenu todoMenuWithName:@"置顶" icon:@"pin" handler:^(__kindof UIAction * _Nonnull action) {
         [self topTodo:nil];
     } action:@selector(topTodo:)];
-    TodoMenu *done = [[TodoMenu alloc]initWithName:@"完成" icon:@"bookmark" handler:^(__kindof UIAction * _Nonnull action) {
+    TodoMenu *done = [TodoMenu todoMenuWithName:@"完成" icon:@"bookmark" handler:^(__kindof UIAction * _Nonnull action) {
         [self doneTodo:nil];
     } action:@selector(doneTodo:)];
-    TodoMenu *copy = [[TodoMenu alloc]initWithName:@"复制" icon:@"doc.on.doc" handler:^(__kindof UIAction * _Nonnull action) {
+    TodoMenu *copy = [TodoMenu todoMenuWithName:@"复制" icon:@"doc.on.doc" handler:^(__kindof UIAction * _Nonnull action) {
         [self copyTodo:nil];
     } action:@selector(copyTodo:)];
-    TodoMenu *share = [[TodoMenu alloc]initWithName:@"分享" icon:@"square.and.arrow.up" handler:^(__kindof UIAction * _Nonnull action) {
+    TodoMenu *share = [TodoMenu todoMenuWithName:@"分享" icon:@"square.and.arrow.up" handler:^(__kindof UIAction * _Nonnull action) {
         [self shareTodo:nil];
     } action:@selector(shareTodo:)];
-    TodoMenu *delete = [[TodoMenu alloc]initWithName:@"删除" icon:@"trash" handler:^(__kindof UIAction * _Nonnull action) {
+    TodoMenu *delete = [TodoMenu todoMenuWithName:@"删除" icon:@"trash" handler:^(__kindof UIAction * _Nonnull action) {
         [self deleteTodo:nil];
     } action:@selector(deleteTodo:)];
     [delete action].attributes = UIMenuElementAttributesDestructive;

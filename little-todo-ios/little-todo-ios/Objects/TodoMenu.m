@@ -19,4 +19,8 @@
     return self;
 }
 
++ (instancetype)todoMenuWithName:(NSString *)name icon:(NSString *)icon handler:(UIActionHandler)handler action:(SEL)action {
+    return [[self alloc]initWithName:name icon:icon handler:handler action:action];
+}
+
 @end

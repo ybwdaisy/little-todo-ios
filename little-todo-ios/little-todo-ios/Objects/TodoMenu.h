@@ -20,6 +20,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (instancetype)initWithName:(NSString *)name icon:(NSString *)icon handler:(UIActionHandler)handler action:(SEL)action;
 
++ (instancetype)todoMenuWithName:(NSString *)name icon:(NSString *)icon handler:(UIActionHandler)handler action:(SEL)action;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

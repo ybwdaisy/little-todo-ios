@@ -42,8 +42,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.repeatList = [[NSArray alloc] initWithObjects:@"永不", @"每小时", @"每天", @"工作日", @"周末", @"每周", @"每两周", @"每月", @"每 3 个月", @"每 6 个月", @"每年", nil];
-    self.priorityList = [[NSArray alloc] initWithObjects:@"低", @"中", @"高", nil];
-    
+    self.priorityList = [[NSArray alloc] initWithObjects:
+        [Priority priorityWithName:@"低" andValue:PriorityTypesLow],
+        [Priority priorityWithName:@"中" andValue:PriorityTypesMedium],
+        [Priority priorityWithName:@"高" andValue:PriorityTypesHigh],
+        nil
+    ];
     // 监听输入
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onTodoTextChanged:) name:@"UITextViewTextDidChangeNotification" object:nil];
     
@@ -123,7 +127,7 @@
     
     UILabel *priorityTitle = [[UILabel alloc]init];
     priorityTitle.text = @"优先级";
-    UIButton *priorityButton = [self makeButtonWidthTitleAndAction:self.todo.priority ? self.todo.priority : @"请选择" contentHorizontalAlignment:UIControlContentHorizontalAlignmentRight action:@selector(selectPriority)];
+    UIButton *priorityButton = [self makeButtonWidthTitleAndAction:self.todo.priority ? self.todo.priority.name : @"请选择" contentHorizontalAlignment:UIControlContentHorizontalAlignmentRight action:@selector(selectPriority)];
     self.priorityButton = priorityButton;
     
     UIStackView *prioritySectionView = [[UIStackView alloc]initWithArrangedSubviews:@[priorityTitle, priorityButton]];
@@ -238,10 +242,11 @@
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:@"优先级" message:@"" preferredStyle:(UIAlertControllerStyleActionSheet)];
     
     for (int i = 0; i < self.priorityList.count; i++) {
-        [actionSheet addAction:[UIAlertAction actionWithTitle:self.priorityList[i] style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
-            NSString *priority = [self.priorityList objectAtIndex:i];
+        Priority *curPriority = [self.priorityList objectAtIndex:i];
+        [actionSheet addAction:[UIAlertAction actionWithTitle:curPriority.name style:(UIAlertActionStyleDefault) handler:^(UIAlertAction * _Nonnull action) {
+            Priority *priority = [self.priorityList objectAtIndex:i];
             self.todo.priority = priority;
-            [self.priorityButton setTitle:priority forState:(UIControlStateNormal)];
+            [self.priorityButton setTitle:priority.name forState:(UIControlStateNormal)];
         }]];
     }
     [actionSheet addAction:[UIAlertAction actionWithTitle:@"取消" style:(UIAlertActionStyleCancel) handler:^(UIAlertAction * _Nonnull action) {
